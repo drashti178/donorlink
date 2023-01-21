@@ -21,6 +21,8 @@ import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import { blue } from "@mui/material/colors";
+import image from "../assets/images/bgLogin.jpg";
+import './style.css';
 
 const UserLogin = () => {
   const [inputs, setInputs] = useState({
@@ -38,13 +40,6 @@ const UserLogin = () => {
       [e.target.name]: e.target.value,
     }));
   };
-
-  // const handleChangeSwitch = (event: ChangeEvent<HTMLInputElement>) => {
-  //   setInputs((prevState) => ({
-  //     ...prevState,
-  //     [event.target.name]: event.target.checked,
-  //   }));
-  // };
 
   const handleClickShowPassword = () => {
     setInputs({
@@ -66,7 +61,10 @@ const UserLogin = () => {
     padding: 20,
     margin: "16vh auto",
     width: 350,
+    
   };
+
+  
 
   const smallDev = {
     padding: 20,
@@ -78,12 +76,12 @@ const UserLogin = () => {
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <Grid align="center">
+    <Grid align="center" className="gridStyle"  >
       <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
         <Grid align="center">
           <Avatar sx={{ width: 60, height: 60 }}>
             <AccountCircleRoundedIcon
-              sx={{ fontSize: 60, backgroundColor: blue[500] }}
+              sx={{ fontSize: 60, backgroundColor: "#9C7875" }}
             />
           </Avatar>
           <Typography sx={{ mt: 1.5 }} variant="h6">
@@ -140,21 +138,21 @@ const UserLogin = () => {
             <Button
               component={Link}
               to="/usignup"
-              style={{ width: "50%", textTransform: "capitalize" }}
+              sx={{ "&:hover": { backgroundColor: '#9C7875', color: 'white', }, width: "50%", textTransform: "capitalize", color: "#9C7875" }}
             >
               Create an account
             </Button>
             <Button
               component={Link}
               to="/forgetPassword"
-              style={{ width: "50%", textTransform: "capitalize" }}
+              sx={{ "&:hover": { backgroundColor: '#9C7875', color: 'white', }, width: "50%", textTransform: "capitalize", color: "#9C7875" }}
             >
               Forgot Password ?
             </Button>
             <Button
               type="submit"
               variant="contained"
-              style={{ marginTop: 10, width: "50%" }}
+              sx={{ "&:hover": { backgroundColor: '#9C7875', color: 'white', }, marginTop: 1, width: "50%",  backgroundColor: '#9C7875'  }}
             >
               Submit
             </Button>
