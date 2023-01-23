@@ -1,6 +1,9 @@
 import './App.css';
 import {Routes, Route, BrowserRouter } from "react-router-dom"
-import NgoLogin from './Components/ngo_login';
+import NgoSignup from './Components/NGO_Signup/ngo_signup';
+
+// import NgoLogin from './Components/ngo_login';
+
 
 function App() {
  
@@ -8,7 +11,8 @@ function App() {
       <>
         <BrowserRouter>
     <Routes>
-      <Route path="/" element={<NgoLogin />} />
+        <Route path="/" element={<NgoSignup/>} />
+      {/* <Route path="/" element={<NgoLogin />} /> */}
   
     </Routes>
   </BrowserRouter>
