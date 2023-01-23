@@ -15,8 +15,22 @@ import FormLabel from '@mui/material/FormLabel';
 
 const Second = (props) => {
   
+  const enabledstyle = {
+    marginTop: "4%",marginRight:"10%",width:"25%", color: 'white', backgroundColor: '#1bbd7e',"&:hover" :{backgroundColor: "#14ae72"}
+  
+  };
 
- 
+  const disabledstyle = {
+    marginTop: "4%",marginRight:"10%",width:"25%", color: 'white', backgroundColor: 'grey',"&:hover" :{backgroundColor: "grey"}
+   
+  };
+  const ibenabledstyle = {
+    marginTop: "4%",width:"5%",marginRight:"2%", color: 'white', backgroundColor: '#1bbd7e',"&:hover" :{backgroundColor: "#14ae72"}
+  };
+  const ibdisabledstyle = {
+  
+    marginTop: "4%",width:"5%",marginRight:"2%", color: 'white', backgroundColor: 'grey',"&:hover" :{backgroundColor: "grey"}
+  };
   return (
     <Grid align="center">
      
@@ -75,7 +89,7 @@ const Second = (props) => {
             required
           />
            <FormControl style={{ marginTop: "3%", width:"50%"}}>
-      <FormLabel id="demo-row-radio-buttons-group-label" style={{  display: 'flex', marginRight: "auto", }}>Is 80-G Certified</FormLabel>
+      <FormLabel id="demo-row-radio-buttons-group-label" style={{  display: 'flex' }}> Is 80-G Certified</FormLabel>
       <RadioGroup
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
@@ -89,11 +103,11 @@ const Second = (props) => {
       </RadioGroup>
     </FormControl>
 
-          <IconButton color="primary" aria-label="upload picture" component="label" style={{ marginTop: "4%",width:"5%",marginRight:"2%", color: 'white', backgroundColor: '#1bbd7e',"&:hover" :{backgroundColor: "#14ae72"} }} onClick={props.onFileChange}>
+          <IconButton color="primary" aria-label="upload picture" component="label" style={props.inputs.certi === 'no'? ibdisabledstyle : ibenabledstyle} onClick={props.onFileChange} disabled={props.inputs.certi === 'no'}>
             <input hidden accept="image/*" type="file" onChange={props.onFileChange}/>
               <FileUpload />
           </IconButton>
-          <Button variant="contained" endIcon={<UploadIcon /> } style={{ marginTop: "4%",marginRight:"10%",width:"25%", color: 'white', backgroundColor: '#1bbd7e',"&:hover" :{backgroundColor: "#14ae72"} }} onClick={props.onFileUpload}>
+          <Button variant="contained" endIcon={<UploadIcon /> } style={props.inputs.certi === 'no'? disabledstyle : enabledstyle}  onClick={props.onFileUpload} disabled={props.inputs.certi === 'no'}>
           80G Certificate
           </Button>
 
