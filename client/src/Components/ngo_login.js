@@ -154,7 +154,7 @@ const NgoLogin = () => {
               control={
                 <Switch
                   component={Link}
-                  to = '/usignup'
+                  to = '/'
                   checked={!inputs.isUser}
                   onClick = {() => { setInputs({ ...inputs, isUser: !inputs.isUser })}}
                   name="isUser"
