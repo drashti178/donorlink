@@ -1,11 +1,12 @@
 import React from "react";
 import { Routes,Route,BrowserRouter } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import UserLogin from "./components/UserLogin";
-import UserSignup from "./components/UserSignup";
-import NgoLogin from "./components/NgoLogin";
-import NgoSignup from "./components/NgoSignup";
-import ForgetPassword from "./components/ForgetPassword";
+import Navbar from "./Components/Navbar";
+import UserLogin from "./Components/UserLogin";
+import UserSignup from "./Components/UserSignup";
+import NgoLogin from "./Components/NgoLogin";
+
+import ForgetPassword from "./Components/ForgetPassword";
+import NgoSignup from "./Components/NGO_Signup/ngo_signup";
 
 const App = () => {
   return (
