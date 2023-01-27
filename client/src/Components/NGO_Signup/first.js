@@ -19,7 +19,7 @@ import UploadIcon from '@mui/icons-material/UploadFile';
 
 const First = (props) => {
   let [showPassword,setShowPassword] = useState(false);
-  console.log(showPassword);
+  
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword,
@@ -37,7 +37,7 @@ const First = (props) => {
         <form>
             
           <TextField
-            name="name"
+            name="ngoname"
             varient="outlined"
             label="NGO Name"
             value={props.inputs.username}
@@ -86,15 +86,13 @@ const First = (props) => {
             />
           </FormControl>
           
-          <IconButton color="primary" aria-label="upload picture" component="label" style={{ marginTop: "3%",width:"5%",marginLeft:"10%", marginRight:"1%",color: 'white', backgroundColor: '#1bbd7e',"&:hover" :{backgroundColor: "#14ae72"} }} onClick={props.onFileChange}>
-            <input hidden accept="image/*" type="file" onChange={props.onFileChange}/>
-              <PhotoCamera />
-          </IconButton>
-          <Button variant="contained" endIcon={<UploadIcon /> } style={{ marginTop: "3%",width:"22%",marginRight:"14%", color: 'white', backgroundColor: '#1bbd7e',"&:hover" :{backgroundColor: "#14ae72"} }} onClick={props.onFileUpload}>
-          <input hidden accept="image/*" type="file" onChange={props.onFileChange}/>
-          
-          Profile Photo
+          <Button color="primary" aria-label="upload picture" component="label" style={{ marginTop: "3%",width:"22%",marginLeft:"15%", marginRight:"15%",color: 'white', backgroundColor: '#1bbd7e',"&:hover" :{backgroundColor: "#14ae72"} }} onClick={props.onFileUpload}>
+            
+            <input hidden accept="image/*" type="file" onChange={props.onFileUpload}/>
+              <PhotoCamera style={{marginRight:"10%" }} onClick={props.onFileUpload}/>
+              Profile Photo
           </Button>
+          
           <TextField
             name="founder"
             varient="outlined"

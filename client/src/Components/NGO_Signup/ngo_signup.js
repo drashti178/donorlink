@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState,useEffect } from "react";
 import {
   
   Grid,
@@ -13,14 +13,15 @@ import First from "./first";
 import Second from "./second";
 import Third from "./third";
 import { Box } from "@mui/system";
-
+import axios from  "axios";
+import base_url from "../../api/bootapi";
 
 const steps = ['Account Information', 'Contact Information', 'Rievew Information'];
 
 
 const NgoSignup = () => {
     let [inputs, setInputs] = useState({
-        name: "",
+        ngoname: "",
         email:"",
         password: "",
         tagline:"",
@@ -30,26 +31,47 @@ const NgoSignup = () => {
         country:"",
         pincode:"",
         mobile:"",
-        link:"",
+        weblink:"",
         certi:"False"
       });
-    let [profile,setProfile] = useState();
-    let [certificate,setCertificate] = useState();
+     
+    let [profile,setProfile] = useState("");
+    let [certificate,setCertificate] = useState("");
     const [activestep,SetActtivestep] = useState(0);
+    const getAllNgos=()=>{
+      axios.get(`${base_url}/ngos`).then(
+        (response)=>{
+          console.log(response);
+
+        },
+        (error)=>{
+          console.log(error);
+        }
+      )
+    }
+    useEffect(()=>{
+      getAllNgos();
+    },[]);
 
     
 
-    let onProfileChange = (event) => {
+  //   let onProfileChange = (event) => {
       
-        setProfile(event.target.files[0]);
-    }
-    let onCertiChange = (event) => {
+  //       setProfile(event.target.files[0]);
+  //   }
+  //   let onCertiChange = (event) => {
       
-      setCertificate(event.target.files[0]);
+  //     setCertificate(event.target.files[0]);
+  // }
+  let onProfileUpload = (event) => {
+    setProfile(event.target.files[0]);
+    
+    
   }
-  let onFileUpload = () => {
-    console.log(profile);
-    console.log(certificate);
+  let onCertiUpload = (event) => {
+    
+    setCertificate(event.target.files[0]);
+   
   }
     
     let onChangeData =  (event) => {
@@ -69,12 +91,29 @@ const NgoSignup = () => {
         SetPageno(pageno - 1)
         SetActtivestep(activestep-1);
     }
-    let submit = () =>{
+    let submit = (e) =>{
         console.log(inputs);
         console.log(profile);
         console.log(certificate);
+        postData(inputs);
+        e.preventDefault();
     }
     
+    const postData=(data)=>
+    {
+      axios.post(`${base_url}/addNgo`,data).then(
+        (response)=>{
+          console.log(response);
+          console.log("success");
+        },
+        (error)=>{
+          console.log(error);
+          console.log("Failure");
+        }
+
+      )
+    }
+
     const paperStyle = {
       padding: 20,
       margin: "16vh auto",
@@ -110,7 +149,7 @@ const NgoSignup = () => {
 
                 </Stepper>
               </Box>
-            {(pageno===1)?<First nextfun={next} changefun={onChangeData} inputs={inputs} onFileChange={onProfileChange} onFileUpload={onFileUpload}/>:(pageno===2)?<Second nextfun={next} prevfun={prev} changefun={onChangeData} inputs={inputs} onFileChange={onCertiChange} onFileUpload={onFileUpload}/>:<Third prevfun={prev} submitfun={submit} changefun={onChangeData} inputs={inputs} profile={profile} certificate={certificate}/>}
+            {(pageno===1)?<First nextfun={next} changefun={onChangeData} inputs={inputs}  onFileUpload={onProfileUpload} prfile={profile.name}/>:(pageno===2)?<Second nextfun={next} prevfun={prev} changefun={onChangeData} inputs={inputs} onFileUpload={onCertiUpload} certificate={certificate.name}/>:<Third prevfun={prev} submitfun={submit} changefun={onChangeData} inputs={inputs} profile={profile} certificate={certificate}/>}
             {/* {(pageno===2 || pageno===3)?<Button onClick={prev}>Prev</Button>:<></>}
             {(pageno===2 || pageno===1)?<Button onClick={next}>Next</Button>:(pageno===3)?<Button onClick={submit}>Submit</Button>:<></>} */}
               </Paper>

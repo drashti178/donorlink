@@ -23,7 +23,7 @@ const Third = (props) => {
         <ListItem>
           <ListItemText
           primary="NGO Name"
-          secondary={props.inputs.name}>
+          secondary={props.inputs.ngoname}>
 
           </ListItemText>
         </ListItem>
@@ -63,7 +63,7 @@ const Third = (props) => {
         <ListItem>
           <ListItemText
             primary="Website Link"
-            secondary={props.inputs.link}
+            secondary={props.inputs.weblink}
           />
         </ListItem>
         <ListItem>
@@ -113,7 +113,7 @@ const Third = (props) => {
               Prev
             </Button>
             
-            <Button  onClick={props.submitfun} variant="contained" sx={{ "&:hover" :{backgroundColor: "#14ae72"}, width: "20%",
+            <Button type="submit" onClick={props.submitfun} variant="contained" sx={{ "&:hover" :{backgroundColor: "#14ae72"}, width: "20%",
             marginLeft:"30%", marginTop: 1, align: "center", color: 'white', backgroundColor: '#1bbd7e' }} >
               Submit
             </Button>

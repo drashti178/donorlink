@@ -25,11 +25,11 @@ const Second = (props) => {
    
   };
   const ibenabledstyle = {
-    marginTop: "4%",width:"5%",marginRight:"2%", color: 'white', backgroundColor: '#1bbd7e',"&:hover" :{backgroundColor: "#14ae72"}
+    marginTop: "4%",width:"25%",marginRight:"2%", color: 'white', backgroundColor: '#1bbd7e',"&:hover" :{backgroundColor: "#14ae72"}
   };
   const ibdisabledstyle = {
   
-    marginTop: "4%",width:"5%",marginRight:"2%", color: 'white', backgroundColor: 'grey',"&:hover" :{backgroundColor: "grey"}
+    marginTop: "4%",width:"25%",marginRight:"2%", color: 'white', backgroundColor: 'grey',"&:hover" :{backgroundColor: "grey"}
   };
   return (
     <Grid align="center">
@@ -69,7 +69,7 @@ const Second = (props) => {
             required
           />
           <TextField
-            name="link"
+            name="weblink"
             varient="outlined"
             label="Website Link"
             value={props.inputs.link}
@@ -103,13 +103,13 @@ const Second = (props) => {
       </RadioGroup>
     </FormControl>
 
-          <IconButton color="primary" aria-label="upload picture" component="label" style={props.inputs.certi === 'no'? ibdisabledstyle : ibenabledstyle} onClick={props.onFileChange} disabled={props.inputs.certi === 'no'}>
-            <input hidden accept="image/*" type="file" onChange={props.onFileChange}/>
+          <Button color="primary" aria-label="upload picture" component="label" style={props.inputs.certi === 'no'? ibdisabledstyle : ibenabledstyle} disabled={props.inputs.certi === 'no'}
+          onClick={props.onFileUpload}>
+            <input hidden accept="image/*" type="file" onChange={props.onFileUpload}/>
               <FileUpload />
-          </IconButton>
-          <Button variant="contained" endIcon={<UploadIcon /> } style={props.inputs.certi === 'no'? disabledstyle : enabledstyle}  onClick={props.onFileUpload} disabled={props.inputs.certi === 'no'}>
-          80G Certificate
+              80G Certificate
           </Button>
+         
 
          
           <Grid
