@@ -1,25 +1,27 @@
-import './App.css';
-import {Routes, Route, BrowserRouter,Link } from "react-router-dom"
-import NgoSignup from './Components/NGO_Signup/ngo_signup';
+import React from "react";
+import { Routes,Route,BrowserRouter } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import UserLogin from "./components/UserLogin";
+import UserSignup from "./components/UserSignup";
+import NgoLogin from "./components/NgoLogin";
+import NgoSignup from "./components/NgoSignup";
+import ForgetPassword from "./components/ForgetPassword";
 
-// import NgoLogin from './Components/ngo_login';
-
-
-function App() {
- 
-    return (
-      <>
-        <BrowserRouter>
-    <Routes>
-        <Route path="/" element={<NgoSignup/>} />
-      {/* <Route path="/" element={<NgoLogin />} /> */}
-  
-    </Routes>
-  </BrowserRouter>
-      </>
-      
-    );
-  
-}
+const App = () => {
+  return (
+    <>
+      <Navbar />
+      <BrowserRouter>
+        <Routes>
+          <Route exact path ='/' element={<UserLogin />} />
+          <Route exact path ='/usignup' element={<UserSignup/>} />
+          <Route exact path ='/nsignup' element={<NgoSignup/>} />
+          <Route exact path ='/forgetpassword' element={<ForgetPassword/>} />
+          <Route exact path ='/nlogin' element={<NgoLogin/>} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
+};
 
 export default App;
