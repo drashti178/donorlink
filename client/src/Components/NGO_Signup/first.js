@@ -85,24 +85,40 @@ const First = (props) => {
               required
             />
           </FormControl>
-          
-          <Button color="primary" aria-label="upload picture" component="label" style={{ marginTop: "3%",width:"22%",marginLeft:"15%", marginRight:"15%",color: 'white', backgroundColor: '#1bbd7e',"&:hover" :{backgroundColor: "#14ae72"} }} onClick={props.onFileUpload}>
+          <Grid
+            container
+            spacing={2}
+            style={{marginTop:0}}
+            direction="row"
+            justifyContent="space-around"
+            alignItems="center"
+            
+          >
+
+          <Button color="primary" aria-label="upload picture" component="label" sx={{display:"flex",marginLeft:"auto", color: 'white', backgroundColor: '#1bbd7e', width:"22%", marginTop:"21px", "&:hover" :{backgroundColor: "#14ae72"} }}>
             
             <input hidden accept="image/*" type="file" onChange={props.onFileUpload}/>
-              <PhotoCamera style={{marginRight:"10%" }} onClick={props.onFileUpload}/>
+              <PhotoCamera style={{marginRight:"10%" }} />
               Profile Photo
           </Button>
-          
+
           <TextField
             name="founder"
             varient="outlined"
             label="Founder"
+
             value={props.inputs.founder}
-            style={{ marginTop: "20px",width:"48%" }}
+            sx={{ display:"flex",marginLeft:"auto", width:"47%",marginTop: "20px" }}
             onChange={props.changefun}
             
             required
           />
+
+          </Grid>
+
+          
+          
+          
           <TextField
             name="tagline"
             varient="outlined"

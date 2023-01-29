@@ -50,7 +50,7 @@ const Third = (props) => {
         <ListItem>
           <ListItemText
             primary="Profile Image"
-            secondary={props.profile.name}
+            secondary={props.imageUrl}
           />
           
         </ListItem>
@@ -69,7 +69,7 @@ const Third = (props) => {
         <ListItem>
           <ListItemText
             primary="80-G Certificate"
-            secondary={props.certificate.name}
+            secondary={props.certiUrl}
           />
           
         </ListItem>

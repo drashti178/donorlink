@@ -135,7 +135,9 @@ const NgoLogin = () => {
             <Button
               component={Link}
               to="/nsignup"
-              sx={{ "&:hover": { backgroundColor: '#1bbd7e', color: 'white', }, color: 'white', width: "50%", textTransform: "capitalize", color: "#1bbd7e" }}
+              sx={{ 
+                // "&:hover": { backgroundColor: '#1bbd7e', color: 'white', },
+              color: 'white', width: "50%", textTransform: "capitalize", color: "#1bbd7e" }}
             >
               Create an account
             </Button>
@@ -143,7 +145,7 @@ const NgoLogin = () => {
               component={Link}
               to="/forgetPassword"
               sx={{
-                "&:hover": { backgroundColor: '#1bbd7e', color: 'white', },
+                // "&:hover": { backgroundColor: '#1bbd7e', color: 'white', },
                 width: "50%",
                 textTransform: "capitalize",
                 color: "#1bbd7e"

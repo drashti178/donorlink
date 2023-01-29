@@ -21,7 +21,6 @@ import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import { blue } from "@mui/material/colors";
-import image from "../assets/images/bgLogin.jpg";
 import './style.css';
 
 const UserLogin = () => {
@@ -61,10 +60,7 @@ const UserLogin = () => {
     padding: 20,
     margin: "16vh auto",
     width: 350,
-    
   };
-
-  
 
   const smallDev = {
     padding: 20,
@@ -76,12 +72,12 @@ const UserLogin = () => {
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <Grid align="center" className="gridStyle"  >
+    <Grid align="center"  className="gridStyle">
       <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
         <Grid align="center">
           <Avatar sx={{ width: 60, height: 60 }}>
             <AccountCircleRoundedIcon
-              sx={{ fontSize: 60, backgroundColor: "#9C7875" }}
+              sx={{ fontSize: 60, backgroundColor: blue[500] }}
             />
           </Avatar>
           <Typography sx={{ mt: 1.5 }} variant="h6">
@@ -138,21 +134,21 @@ const UserLogin = () => {
             <Button
               component={Link}
               to="/usignup"
-              sx={{ "&:hover": { backgroundColor: '#9C7875', color: 'white', }, width: "50%", textTransform: "capitalize", color: "#9C7875" }}
+              sx={{ width: "50%", textTransform: "capitalize" }}
             >
               Create an account
             </Button>
             <Button
               component={Link}
               to="/forgetPassword"
-              sx={{ "&:hover": { backgroundColor: '#9C7875', color: 'white', }, width: "50%", textTransform: "capitalize", color: "#9C7875" }}
+              sx={{ width: "50%", textTransform: "capitalize" }}
             >
               Forgot Password ?
             </Button>
             <Button
               type="submit"
               variant="contained"
-              sx={{ "&:hover": { backgroundColor: '#9C7875', color: 'white', }, marginTop: 1, width: "50%",  backgroundColor: '#9C7875'  }}
+              sx={{ marginTop: 1, width: "50%" }}
             >
               Submit
             </Button>

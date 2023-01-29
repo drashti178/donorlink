@@ -103,8 +103,7 @@ const Second = (props) => {
       </RadioGroup>
     </FormControl>
 
-          <Button color="primary" aria-label="upload picture" component="label" style={props.inputs.certi === 'no'? ibdisabledstyle : ibenabledstyle} disabled={props.inputs.certi === 'no'}
-          onClick={props.onFileUpload}>
+          <Button color="primary" aria-label="upload picture" component="label" style={props.inputs.certi === 'no'? ibdisabledstyle : ibenabledstyle} disabled={props.inputs.certi === 'no'}>
             <input hidden accept="image/*" type="file" onChange={props.onFileUpload}/>
               <FileUpload />
               80G Certificate
