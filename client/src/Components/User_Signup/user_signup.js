@@ -94,21 +94,7 @@ const UserSignup = () => {
     }
 
     const postData = (data) => {
-        axios.post(`${base_url}/addNgo`, data).then(
-          (response) => {
-            console.log(response);
-            console.log("success");
-          },
-          (error) => {
-            console.log(error);
-            console.log("Failure");
-          }
-    
-        )
-      }
-
-    const postData = (data) => {
-        axios.post(`${base_url}/addNgo`, data).then(
+        axios.post(`${base_url}/addUser`, data).then(
             (response) => {
                 console.log(response);
                 console.log("success");

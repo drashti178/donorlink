@@ -159,8 +159,6 @@ const NgoSignup = () => {
             </Stepper>
           </Box>
           {(pageno === 1) ? <First nextfun={next} changefun={onChangeData} inputs={inputs} onFileUpload={onProfileUpload} prfile={profile} /> : (pageno === 2) ? <Second nextfun={next} prevfun={prev} changefun={onChangeData} inputs={inputs} onFileUpload={onCertiUpload} certificate={certificate} /> : <Third prevfun={prev} submitfun={submit} changefun={onChangeData} inputs={inputs} profile={profile} certificate={certificate}  certiUrl={certiUrl} imageUrl={imageUrl} />}
-          {/* {(pageno===2 || pageno===3)?<Button onClick={prev}>Prev</Button>:<></>}
-            {(pageno===2 || pageno===1)?<Button onClick={next}>Next</Button>:(pageno===3)?<Button onClick={submit}>Submit</Button>:<></>} */}
         </Paper>
       </Grid>
     </>

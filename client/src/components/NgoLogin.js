@@ -20,7 +20,6 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-import bgImage from '../assets/images/bgLogin.jpg';
 import './style.css';
 
 

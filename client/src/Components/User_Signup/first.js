@@ -8,21 +8,17 @@ import {
     FormLabel,
     RadioGroup,
     Button,
-    Avatar,
     Select,
     MenuItem
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import FileInput from "./FileInput";
-import { green } from '@mui/material/colors';
-import UploadIcon from '@mui/icons-material/UploadFile';
-import { AssignmentInd } from "@mui/icons-material";
+
 
 
 const First = (props) => {

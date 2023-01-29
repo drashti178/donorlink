@@ -6,8 +6,6 @@ import {
   Button,
   FormControlLabel,
 } from "@mui/material";
-import UploadIcon from '@mui/icons-material/UploadFile';
-import IconButton from "@mui/material/IconButton";
 import FileUpload from '@mui/icons-material/FileUpload';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -15,15 +13,15 @@ import FormLabel from '@mui/material/FormLabel';
 
 const Second = (props) => {
   
-  const enabledstyle = {
-    marginTop: "4%",marginRight:"10%",width:"25%", color: 'white', backgroundColor: '#1bbd7e',"&:hover" :{backgroundColor: "#14ae72"}
+  // const enabledstyle = {
+  //   marginTop: "4%",marginRight:"10%",width:"25%", color: 'white', backgroundColor: '#1bbd7e',"&:hover" :{backgroundColor: "#14ae72"}
   
-  };
+  // };
 
-  const disabledstyle = {
-    marginTop: "4%",marginRight:"10%",width:"25%", color: 'white', backgroundColor: 'grey',"&:hover" :{backgroundColor: "grey"}
+  // const disabledstyle = {
+  //   marginTop: "4%",marginRight:"10%",width:"25%", color: 'white', backgroundColor: 'grey',"&:hover" :{backgroundColor: "grey"}
    
-  };
+  // };
   const ibenabledstyle = {
     marginTop: "4%",width:"25%",marginRight:"2%", color: 'white', backgroundColor: '#1bbd7e',"&:hover" :{backgroundColor: "#14ae72"}
   };
