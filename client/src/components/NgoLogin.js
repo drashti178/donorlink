@@ -22,29 +22,36 @@ import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import bgImage from '../assets/images/bgLogin.jpg';
 import './style.css';
+import axios from "axios";
+import base_url from "../api/bootapi";
 
 
 const NgoLogin = () => {
   const [inputs, setInputs] = useState({
-    username: "",
+    ngoname: "",
     password: "",
+  });
+  const [controls, setControls] = useState({
     showPassword: false,
     isUser: false,
   });
-
   const navigate = useNavigate();
-
+ 
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+    setControls((values) => ({
+      ...values,
+      [e.target.name]:e.target.value
+    }))
   };
 
   const handleClickShowPassword = () => {
-    setInputs({
-      ...inputs,
-      showPassword: !inputs.showPassword,
+    setControls({
+      ...controls,
+      showPassword: !controls.showPassword,
     });
   };
 
@@ -55,8 +62,22 @@ const NgoLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(inputs);
+    onLogin(inputs);
   };
-
+  const onLogin=(data)=>
+  {
+    axios.post(`${base_url}/auth/ngo/login`,data).then(
+      (response)=>{
+        
+        navigate('/forgetpassword');
+        console.log(response);
+      },
+      (error)=>{
+        console.log(error);
+        console.log("Error");
+      }
+    )
+  }
   const paperStyle = {
     padding: 20,
     margin: "16vh auto",
@@ -87,10 +108,10 @@ const NgoLogin = () => {
         </Grid>
         <form onSubmit={handleSubmit}>
           <TextField
-            name="username"
+            name="ngoname"
             varient="outlined"
             label="Username"
-            value={inputs.username}
+            value={inputs.ngoname}
             style={{ marginTop: "25px" }}
             onChange={handleChange}
             fullWidth
@@ -104,7 +125,7 @@ const NgoLogin = () => {
             <OutlinedInput
               id="outlined-adornment-password"
               name="password"
-              type={inputs.showPassword ? "text" : "password"}
+              type={controls.showPassword ? "text" : "password"}
               value={inputs.password}
               onChange={handleChange}
               endAdornment={
@@ -115,7 +136,7 @@ const NgoLogin = () => {
                     onMouseDown={handleMouseDownPassword}
                     edge="end"
                   >
-                    {inputs.showPassword ? <Visibility /> : <VisibilityOff />}
+                    {controls.showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
               }
@@ -135,7 +156,7 @@ const NgoLogin = () => {
             <Button
               component={Link}
               to="/nsignup"
-              sx={{ "&:hover": { backgroundColor: '#1bbd7e', color: 'white', }, color: 'white', width: "50%", textTransform: "capitalize", color: "#1bbd7e" }}
+              sx={{ color: 'white', width: "50%", textTransform: "capitalize", color: "#1bbd7e" }}
             >
               Create an account
             </Button>
@@ -143,7 +164,7 @@ const NgoLogin = () => {
               component={Link}
               to="/forgetPassword"
               sx={{
-                "&:hover": { backgroundColor: '#1bbd7e', color: 'white', },
+                
                 width: "50%",
                 textTransform: "capitalize",
                 color: "#1bbd7e"
@@ -157,16 +178,16 @@ const NgoLogin = () => {
             <FormControlLabel
               control={
                 <Switch
-                  checked={!inputs.isUser}
+                  checked={!controls.isUser}
                   onClick={() => {
                     setTimeout(() => {
                       navigate('/');
                     }, 100);
-                    setInputs({ ...inputs, isUser: !inputs.isUser });
+                    setControls({ ...controls, isUser: !controls.isUser });
                   }
                   }
                   name="isUser"
-                  value={inputs.isUser}
+                  value={controls.isUser}
                 />
               }
               label="NGO"

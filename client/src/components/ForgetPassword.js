@@ -1,7 +1,12 @@
 import React from "react";
+import NavBar from "./Navbar";
 
 const ForgetPassword = () => {
-    return <h1>Hello Forget Password</h1>
+    return (
+        <>
+        <NavBar />
+        </>
+    )
     
 };
 

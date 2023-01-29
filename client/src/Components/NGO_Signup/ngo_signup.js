@@ -38,20 +38,20 @@ const NgoSignup = () => {
     let [profile,setProfile] = useState("");
     let [certificate,setCertificate] = useState("");
     const [activestep,SetActtivestep] = useState(0);
-    const getAllNgos=()=>{
-      axios.get(`${base_url}/ngos`).then(
-        (response)=>{
-          console.log(response);
+    // const getAllNgos=()=>{
+    //   axios.get(`${base_url}/ngos`).then(
+    //     (response)=>{
+    //       console.log(response);
 
-        },
-        (error)=>{
-          console.log(error);
-        }
-      )
-    }
-    useEffect(()=>{
-      getAllNgos();
-    },[]);
+    //     },
+    //     (error)=>{
+    //       console.log(error);
+    //     }
+    //   )
+    // }
+    // useEffect(()=>{
+    //   getAllNgos();
+    // },[]);
 
     
 
@@ -101,7 +101,7 @@ const NgoSignup = () => {
     
     const postData=(data)=>
     {
-      axios.post(`${base_url}/addNgo`,data).then(
+      axios.post(`${base_url}/auth/ngo/signup`,data).then(
         (response)=>{
           console.log(response);
           console.log("success");
@@ -149,9 +149,10 @@ const NgoSignup = () => {
 
                 </Stepper>
               </Box>
-            {(pageno===1)?<First nextfun={next} changefun={onChangeData} inputs={inputs}  onFileUpload={onProfileUpload} prfile={profile.name}/>:(pageno===2)?<Second nextfun={next} prevfun={prev} changefun={onChangeData} inputs={inputs} onFileUpload={onCertiUpload} certificate={certificate.name}/>:<Third prevfun={prev} submitfun={submit} changefun={onChangeData} inputs={inputs} profile={profile} certificate={certificate}/>}
-            {/* {(pageno===2 || pageno===3)?<Button onClick={prev}>Prev</Button>:<></>}
-            {(pageno===2 || pageno===1)?<Button onClick={next}>Next</Button>:(pageno===3)?<Button onClick={submit}>Submit</Button>:<></>} */}
+            {(pageno===1)?<First nextfun={next} changefun={onChangeData} inputs={inputs}  onFileUpload={onProfileUpload} prfile={profile.name}/>:(pageno===2)?
+            <Second nextfun={next} prevfun={prev} changefun={onChangeData} inputs={inputs} onFileUpload={onCertiUpload} certificate={certificate.name}/>:
+            <Third prevfun={prev} submitfun={submit} changefun={onChangeData} inputs={inputs} profile={profile} certificate={certificate}/>}
+            
               </Paper>
               </Grid>
             </>
