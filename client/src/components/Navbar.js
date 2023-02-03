@@ -36,7 +36,7 @@ function NavBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{backgroundColor:"#9C7875"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -48,14 +48,14 @@ function NavBar() {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
+              fontFamily: "'Aboreto', cursive;",
               fontWeight: 700,
-              letterSpacing: '.3rem',
+              // letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Donor Link
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

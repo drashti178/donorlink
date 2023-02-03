@@ -40,7 +40,7 @@ const First = (props) => {
             name="ngoname"
             varient="outlined"
             label="NGO Name"
-            value={props.inputs.username}
+            value={props.inputs.ngoname}
             style={{ marginTop: "25px" }}
             onChange={props.changefun}
             fullWidth
@@ -58,7 +58,7 @@ const First = (props) => {
           />
         
 
-          <FormControl sx={{ marginTop: "20px", width: "48%" }} variant="outlined">
+          <FormControl sx={{ marginTop: "20px", width: "48%" }} required variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">
               Password
             </InputLabel>

@@ -1,11 +1,11 @@
 package com.example.server.controller;
 
-import com.example.server.dao.NgoDao;
-import com.example.server.models.Ngo;
+import com.example.server.dao.UserDao;
+import com.example.server.models.User;
 import com.example.server.security.TokenGenerator;
-import com.example.server.services.NgoService;
+import com.example.server.services.UserService;
 import dto.AuthResponseDto;
-import dto.NgoLoginDto;
+import dto.UserLoginDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,18 +20,18 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/auth")
-public class NgoController {
+public class UserController {
 
     @Autowired
-    private NgoDao ngoDao;
-     private AuthenticationManager authenticationManager;
+    private UserDao userDao;
+    private AuthenticationManager authenticationManager;
     private PasswordEncoder passwordEncoder;
 
     private TokenGenerator tokenGenerator;
 
     @Autowired
-    public NgoController(AuthenticationManager authenticationManager,
-                          PasswordEncoder passwordEncoder, TokenGenerator tokenGenerator) {
+    public UserController(AuthenticationManager authenticationManager,
+                         PasswordEncoder passwordEncoder, TokenGenerator tokenGenerator) {
 
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
@@ -39,30 +39,28 @@ public class NgoController {
     }
 
     @Autowired
-    private NgoService ngoService;
-    @GetMapping("home")
-    public String home(){
-        return "Welcome to Donorlinker";
-    }
-    @PostMapping("/ngo/signup")
-    public ResponseEntity<String> addNgo(@RequestBody Ngo ngo){
-        if(ngoDao.existsByNgoname(ngo.getNgoname()))
+    private UserService userService;
+
+    @PostMapping("/user/signup")
+    public ResponseEntity<String> addUser(@RequestBody User user){
+        if(userDao.existsByusername(user.getUsername()))
         {
             return new ResponseEntity<>("Ngoname exist ", HttpStatus.BAD_REQUEST);
         }
-        ngo.setPassword(passwordEncoder.encode(ngo.getPassword()));
-        ngoDao.save(ngo);
-        return new ResponseEntity<>("User regested successfully", HttpStatus.OK);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userDao.save(user);
+        return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
     }
-    @PostMapping("/ngo/login")
-    public ResponseEntity<AuthResponseDto> login(@RequestBody NgoLoginDto logindto)
+
+    @PostMapping("/user/login")
+    public ResponseEntity<AuthResponseDto> login(@RequestBody UserLoginDto logindto)
     {
-        if(ngoDao.existsByEmail(logindto.getNgoname()))
+        if(userDao.existsByEmail(logindto.getUsername()))
         {
-            logindto.setNgoname(ngoDao.findByEmail(logindto.getNgoname()).getNgoname());
+            logindto.setUsername(userDao.findByEmail(logindto.getUsername()).getUsername());
         }
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(logindto.getNgoname(),logindto.getPassword())
+                new UsernamePasswordAuthenticationToken(logindto.getUsername(),logindto.getPassword())
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = tokenGenerator.generateToken(authentication);

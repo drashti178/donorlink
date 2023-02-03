@@ -12,8 +12,8 @@ import First from "./first";
 import Second from "./second";
 import { Box } from "@mui/system";
 import axios from "axios";
-import base_url from "../../api/bootapi";
-
+import base_url from "../../../api/bootapi";
+import {useNavigate} from 'react-router-dom';
 const steps = ['Account Information', 'Review Information'];
 
 const UserSignup = () => {
@@ -29,34 +29,25 @@ const UserSignup = () => {
         type: "",
     });
 
+    const navigate = useNavigate();
     let [profile, setProfile] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
     const [activestep, SetActivestep] = useState(0);
-    //   const getAllNgos = () => {
-    //     axios.get(`${base_url}/ngos`).then(
-    //       (response) => {
-    //         console.log(response);
+      const getAllUsers = () => {
+        axios.get(`${base_url}/users`).then(
+          (response) => {
+            console.log(response);
 
-    //       },
-    //       (error) => {
-    //         console.log(error);
-    //       }
-    //     )
-    //   }
-    //   useEffect(() => {
-    //     getAllNgos();
-    //   }, []);
+          },
+          (error) => {
+            console.log(error);
+          }
+        )
+      }
+      useEffect(() => {
+        getAllUsers();
+      }, []);
 
-
-
-    //   let onProfileChange = (event) => {
-
-    //       setProfile(event.target.files[0]);
-    //   }
-    //   let onCertiChange = (event) => {
-
-    //     setCertificate(event.target.files[0]);
-    // }
     useEffect(() => {
         if (profile) {
             // console.log(profile);
@@ -71,7 +62,7 @@ const UserSignup = () => {
     let onChangeData = (event) => {
         let name = event.target.name;
         let value = event.target.value;
-        console.log(name,value);
+        // console.log(name,value);
         setInputs((values) => ({ ...values, [name]: value }));
     }
 
@@ -94,10 +85,11 @@ const UserSignup = () => {
     }
 
     const postData = (data) => {
-        axios.post(`${base_url}/addUser`, data).then(
+        axios.post(`${base_url}/auth/user/signup`, data).then(
             (response) => {
                 console.log(response);
                 console.log("success");
+                navigate('/user/login');
             },
             (error) => {
                 console.log(error);
@@ -125,7 +117,7 @@ const UserSignup = () => {
     const isMatch = useMediaQuery(theme.breakpoints.down("md"));
     return (
         <>
-            <Grid align="center" >
+            <Grid align="center" className="gridStyle" >
                 <Paper elevation = {5} style={!isMatch ? paperStyle : smallDev}>
                     <Box>
                         <Stepper activeStep={activestep}  >

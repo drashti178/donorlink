@@ -4,14 +4,17 @@ import com.example.server.dao.NgoDao;
 import com.example.server.models.Ngo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
+
 
 @Service
 public class NgoServiceImpl implements  NgoService{
    @Autowired
     private NgoDao ngoDao;
     @Override
+    @CrossOrigin(origins = "http://localhost:3000")
     public List<Ngo> getNgos() {
         List<Ngo> ngos;
         try{
@@ -25,6 +28,7 @@ public class NgoServiceImpl implements  NgoService{
     }
 
     @Override
+    @CrossOrigin(origins = "http://localhost:3000")
     public Ngo addNgo(Ngo ngo) {
         try{
             ngoDao.save(ngo);

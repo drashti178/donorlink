@@ -22,7 +22,6 @@ public class CustomerUserDetailService implements UserDetailsService
     @Autowired
     private NgoDao ngoDao;
 
-
     @Override
     public UserDetails loadUserByUsername(String ngoname) throws UsernameNotFoundException
     {

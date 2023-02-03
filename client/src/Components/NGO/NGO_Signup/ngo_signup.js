@@ -1,6 +1,5 @@
 import { React, useState, useEffect } from "react";
 import {
-
   Grid,
   Paper,
   useTheme,
@@ -14,9 +13,9 @@ import Second from "./second";
 import Third from "./third";
 import { Box } from "@mui/system";
 import axios from "axios";
-import base_url from "../../api/bootapi";
-
-const steps = ['Account Information', 'Contact Information', 'Rievew Information'];
+import base_url from "../../../api/bootapi";
+import {useNavigate} from 'react-router-dom';
+const steps = ['Account Information', 'Contact Information', 'Review Information'];
 
 
 const NgoSignup = () => {
@@ -35,11 +34,13 @@ const NgoSignup = () => {
     certi: "False"
   });
 
+  const navigate = useNavigate();
   let [profile, setProfile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [certiUrl, setCertiUrl] = useState(null);
   let [certificate, setCertificate] = useState("");
   const [activestep, SetActtivestep] = useState(0);
+
   const getAllNgos = () => {
     axios.get(`${base_url}/ngos`).then(
       (response) => {
@@ -55,16 +56,6 @@ const NgoSignup = () => {
     getAllNgos();
   }, []);
 
-
-
-  //   let onProfileChange = (event) => {
-
-  //       setProfile(event.target.files[0]);
-  //   }
-  //   let onCertiChange = (event) => {
-
-  //     setCertificate(event.target.files[0]);
-  // }
   useEffect(() => {
     if (profile) {
       window.alert('Image Uploaded Successfully');
@@ -76,7 +67,7 @@ const NgoSignup = () => {
       window.alert('Pdf Uploaded Successfully');
       setCertiUrl(URL.createObjectURL(certificate));
     }
-  }, [profile]);
+  }, [certificate]);
   let onProfileUpload = (event) => {
     setProfile(event.target.files[0]);
   }
@@ -102,18 +93,19 @@ const NgoSignup = () => {
     SetActtivestep(activestep - 1);
   }
   let submit = (e) => {
-    console.log(inputs);
-    console.log(profile);
-    console.log(certificate);
+    // console.log(inputs);
+    // console.log(profile);
+    // console.log(certificate);
     postData(inputs);
     e.preventDefault();
   }
 
   const postData = (data) => {
-    axios.post(`${base_url}/addNgo`, data).then(
+    axios.post(`${base_url}/auth/ngo/signup`, data).then(
       (response) => {
         console.log(response);
         console.log("success");
+        navigate('/ngo/login')
       },
       (error) => {
         console.log(error);
@@ -125,7 +117,7 @@ const NgoSignup = () => {
 
   const paperStyle = {
     padding: 20,
-    margin: "16vh auto",
+    margin: "10vh auto",
     width: 860,
   };
 
@@ -139,7 +131,7 @@ const NgoSignup = () => {
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <>
-      <Grid align="center">
+      <Grid align="center" className="gridStyle">
 
         <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
           <Box>

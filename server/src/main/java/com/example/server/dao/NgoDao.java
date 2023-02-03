@@ -12,9 +12,4 @@ public interface NgoDao extends JpaRepository<Ngo,Long> {
 
     public Boolean existsByNgoname(String ngoname);
     public Boolean existsByEmail(String email);
-
-
-
-
-
 }
