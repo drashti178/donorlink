@@ -155,7 +155,7 @@ const NgoLogin = () => {
             <Button
               component={Link}
               to="/ngo/signup"
-              sx={{ color: 'white', width: "50%", textTransform: "capitalize", color: "#1bbd7e" }}
+              sx={{ width: "50%", textTransform: "capitalize", color: "#1bbd7e" }}
             >
               Create an account
             </Button>
