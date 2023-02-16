@@ -102,10 +102,9 @@ const UserSignup = () => {
     const paperStyle = {
         
         padding: 20,
-        width: 400,
-        margin:"16vh auto",
-        maxHeight: 400,
-        overflow: "auto",
+        width: 900,
+        marginTop : "4%"
+     
     };
 
     const smallDev = {
@@ -120,7 +119,8 @@ const UserSignup = () => {
             <Grid align="center" className="gridStyle" >
                 <Paper elevation = {5} style={!isMatch ? paperStyle : smallDev}>
                     <Box>
-                        <Stepper activeStep={activestep}  >
+                        <Stepper activeStep={activestep} style={{marginTop:"5%" ,marginLeft:"15%",
+    width: "70%"}} >
                             {steps.map((label, index) => {
 
                                 return (

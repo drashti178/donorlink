@@ -1,13 +1,15 @@
-import React from "react";
+import {React} from "react";
 import { Routes,Route,BrowserRouter } from "react-router-dom";
-import Navbar from "./Components/Navbar";
+
 import UserLogin from "./Components/User/UserLogin";
 import NgoLogin from "./Components/NGO/NgoLogin";
 import ForgetPassword from "./Components/ForgetPassword";
-import NgoSignup from "./Components/NGO/NGO_Signup/ngo_signup";
+
 import UserSignup from "./Components/User/User_Signup/user_signup";
 import Home from "./Components/HomePage/index";
+import NgoSignup from "./Components/NGO/NGO_Signup/NGO_Signup/ngo_signup";
 const App = () => {
+ 
   return (
     <>
 

@@ -1,6 +1,8 @@
 package com.example.server.controller;
 
+import com.example.server.dao.ActivityDao;
 import com.example.server.dao.NgoDao;
+import com.example.server.models.Activity;
 import com.example.server.models.Ngo;
 import com.example.server.security.TokenGenerator;
 import com.example.server.services.NgoService;
@@ -17,59 +19,34 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.util.List;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/auth")
 public class NgoController {
 
     @Autowired
-    private NgoDao ngoDao;
-     private AuthenticationManager authenticationManager;
-    private PasswordEncoder passwordEncoder;
-
-    private TokenGenerator tokenGenerator;
-
-    @Autowired
-    public NgoController(AuthenticationManager authenticationManager,
-                          PasswordEncoder passwordEncoder, TokenGenerator tokenGenerator) {
-
-        this.authenticationManager = authenticationManager;
-        this.passwordEncoder = passwordEncoder;
-        this.tokenGenerator = tokenGenerator;
-    }
-
-    @Autowired
-    private NgoService ngoService;
-    @GetMapping("home")
-    public String home(){
-        return "Welcome to Donorlinker";
-    }
-    @PostMapping("/ngo/signup")
-    public ResponseEntity<String> addNgo(@RequestBody Ngo ngo){
-        if(ngoDao.existsByNgoname(ngo.getNgoname()))
-        {
-            return new ResponseEntity<>("Ngoname exist ", HttpStatus.BAD_REQUEST);
+    private ActivityDao activityDao;
+    @PostMapping("ngo/addactivity")
+    public ResponseEntity<String> addActivity(@RequestBody Activity activity){
+        try{
+            activityDao.save(activity);
         }
-        ngo.setPassword(passwordEncoder.encode(ngo.getPassword()));
-        ngoDao.save(ngo);
-        return new ResponseEntity<>("User regested successfully", HttpStatus.OK);
-    }
-    @PostMapping("/ngo/login")
-    public ResponseEntity<AuthResponseDto> login(@RequestBody NgoLoginDto logindto)
-    {
-        if(ngoDao.existsByEmail(logindto.getNgoname()))
+        catch (Exception e)
         {
-            logindto.setNgoname(ngoDao.findByEmail(logindto.getNgoname()).getNgoname());
+            throw e;
         }
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(logindto.getNgoname(),logindto.getPassword())
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = tokenGenerator.generateToken(authentication);
-
-
-        return new ResponseEntity<>(new AuthResponseDto(token),HttpStatus.OK);
-
+        return new ResponseEntity<>("Activity added succesfully",HttpStatus.OK);
     }
+
+//    @GetMapping("ngo/showactivites")
+//    public ResponseEntity<Activity> showActivities()
+//    {
+//        try{
+//
+//        }
+//    }
+
 
 }

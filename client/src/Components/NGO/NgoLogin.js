@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, } from "react";
 import {
   Typography,
   Avatar,
@@ -59,8 +59,9 @@ const NgoLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
+    
     onLogin(inputs);
+    console.log(inputs);
   };
   const onLogin=(data)=>
   {
@@ -153,7 +154,7 @@ const NgoLogin = () => {
           >
             <Button
               component={Link}
-              to="/nsignup"
+              to="/ngo/signup"
               sx={{ color: 'white', width: "50%", textTransform: "capitalize", color: "#1bbd7e" }}
             >
               Create an account
