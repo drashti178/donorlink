@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import {
+
   Grid,
   Paper,
   useTheme,
@@ -13,8 +14,9 @@ import Second from "./second";
 import Third from "./third";
 import { Box } from "@mui/system";
 import axios from "axios";
-import base_url from "../../../api/bootapi";
-import {useNavigate} from 'react-router-dom';
+import base_url from "../../../../api/bootapi";
+
+
 const steps = ['Account Information', 'Contact Information', 'Review Information'];
 
 
@@ -34,13 +36,11 @@ const NgoSignup = () => {
     certi: "False"
   });
 
-  const navigate = useNavigate();
   let [profile, setProfile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [certiUrl, setCertiUrl] = useState(null);
   let [certificate, setCertificate] = useState("");
   const [activestep, SetActtivestep] = useState(0);
-
   const getAllNgos = () => {
     axios.get(`${base_url}/ngos`).then(
       (response) => {
@@ -93,9 +93,9 @@ const NgoSignup = () => {
     SetActtivestep(activestep - 1);
   }
   let submit = (e) => {
-    // console.log(inputs);
-    // console.log(profile);
-    // console.log(certificate);
+    console.log(inputs);
+    console.log(profile);
+    console.log(certificate);
     postData(inputs);
     e.preventDefault();
   }
@@ -105,7 +105,6 @@ const NgoSignup = () => {
       (response) => {
         console.log(response);
         console.log("success");
-        navigate('/ngo/login')
       },
       (error) => {
         console.log(error);

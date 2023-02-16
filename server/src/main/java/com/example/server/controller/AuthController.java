@@ -1,14 +1,13 @@
 package com.example.server.controller;
-
 import com.example.server.dao.NgoDao;
 import com.example.server.dao.UserDao;
 import com.example.server.models.Ngo;
-import com.example.server.models.User;
 import com.example.server.security.TokenGenerator;
+import com.example.server.models.User;
 import com.example.server.services.NgoService;
-import com.example.server.services.UserService;
 import dto.AuthResponseDto;
 import dto.NgoLoginDto;
+import com.example.server.services.UserService;
 import dto.UserLoginDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,20 +20,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/auth")
-public class AuthController {
 
+public class AuthController {
     @Autowired
     private NgoDao ngoDao;
     private AuthenticationManager authenticationManager;
     private PasswordEncoder passwordEncoder;
-
     private TokenGenerator tokenGenerator;
-
-    @Autowired
-    private UserDao userDao;
 
     @Autowired
     public AuthController(AuthenticationManager authenticationManager,
@@ -46,8 +43,9 @@ public class AuthController {
     }
 
     @Autowired
+    private UserDao userDao;
+    @Autowired
     private NgoService ngoService;
-
     @Autowired
     private UserService userService;
 
@@ -65,9 +63,8 @@ public class AuthController {
         }
         ngo.setPassword(passwordEncoder.encode(ngo.getPassword()));
         ngoDao.save(ngo);
-        return new ResponseEntity<>("User regested successfully", HttpStatus.OK);
+        return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
     }
-
     @PostMapping("/ngo/login")
     public ResponseEntity<AuthResponseDto> ngoLogin(@RequestBody NgoLoginDto logindto)
     {
@@ -90,11 +87,15 @@ public class AuthController {
     public ResponseEntity<String> addUser(@RequestBody User user){
         if(userDao.existsByusername(user.getUsername()))
         {
-            return new ResponseEntity<>("Ngoname exist ", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Username exist ", HttpStatus.BAD_REQUEST);
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.save(user);
+
+
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
+
+
     }
 
     @PostMapping("/user/login")
@@ -111,8 +112,10 @@ public class AuthController {
         String token = tokenGenerator.generateToken(authentication);
 
 
+
         return new ResponseEntity<>(new AuthResponseDto(token),HttpStatus.OK);
 
     }
+
 
 }

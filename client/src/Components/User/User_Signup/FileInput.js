@@ -12,11 +12,14 @@ const FileInput = (props) => {
                 accept="image/*"
                 type="file"
                 id="select-image"
-                style={{ display: "none"}}
+                style={{ width: "20%" ,display: "none",marginRight:"590px",marginTop:"-80px",
+            }} 
+                
                 onChange={props.onFileUpload}
             />
-            <label htmlFor="select-image">
-                <Button component="span" sx={{ marginTop:"15px"}}>
+            <label htmlFor="select-image" >
+                <Button  style={{ width: "20%" ,display:"flex",marginRight:"auto",marginTop:"-80px",flexWrap:"nowrap",
+            justifyContent:"flex-start"}} component="span">
                     <Avatar sx={{ bgcolor: "#9C7875", height: 130, width: 130 }}>
                         {(props.imageUrl && props.profile) ? (
                             <Avatar alt="" style={{ margin: "center center", height: 130, width: 130 }} src={props.imageUrl} />

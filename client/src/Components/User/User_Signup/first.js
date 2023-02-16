@@ -40,13 +40,13 @@ const First = (props) => {
         <Grid >
 
             <form>
-                <FileInput nextfun={props.nextFun} changefun={props.changefun} inputs={props.inputs} onFileUpload={props.onFileUpload} profile={props.profile} imageUrl={props.imageUrl} />
+                <FileInput nextfun={props.nextFun} changefun={props.changefun} inputs={props.inputs} onFileUpload={props.onFileUpload} profile={props.profile} imageUrl={props.imageUrl}  />
                 <TextField
                     name="name"
                     varient="outlined"
                     label="Name"
                     value={props.inputs.name}
-                    style={{ marginTop: "30px" }}
+                    style={{ marginTop: "4%",width: "48%",marginRight:"2%"}}
                     onChange={props.changefun}
                     fullWidth
                     required
@@ -56,7 +56,7 @@ const First = (props) => {
                     varient="outlined"
                     label="Username"
                     value={props.inputs.username}
-                    style={{ marginTop: "10px" }}
+                    style={{ marginTop: "4%",width: "48%",marginRight:"2%" }}
                     onChange={props.changefun}
                     fullWidth
                     required
@@ -66,14 +66,14 @@ const First = (props) => {
                     varient="outlined"
                     label="Email"
                     value={props.inputs.email}
-                    style={{ marginTop: "10px" }}
+                    style={{ marginTop: "2%",width: "48%",marginRight:"2%" }}
                     onChange={props.changefun}
                     fullWidth
                     required
                 />
 
 
-                <FormControl sx={{ marginTop: "10px" }} fullWidth required variant="outlined">
+                <FormControl  style={{ marginTop: "2%",width: "48%",marginRight:"2%" }} fullWidth required variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">
                         Password
                     </InputLabel>
@@ -98,7 +98,7 @@ const First = (props) => {
                         label="Password"
                     />
                 </FormControl>
-                <FormControl sx={{ marginTop: "10px" }} fullWidth required variant="outlined">
+                <FormControl style={{ marginTop: "2%",width: "48%",marginRight:"2%" }} fullWidth required variant="outlined">
                     <InputLabel id="demo-simple-select-label">Country</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
@@ -119,7 +119,7 @@ const First = (props) => {
                     varient="outlined"
                     label="Contact No"
                     value={props.inputs.contactno}
-                    style={{ marginTop: "10px" }}
+                    style={{ marginTop: "2%",width: "48%",marginRight:"2%" }}
                     onChange={props.changefun}
                     fullWidth
                     required
@@ -129,7 +129,7 @@ const First = (props) => {
                     varient="outlined"
                     label="Adhar No"
                     value={props.inputs.adharno}
-                    style={{ marginTop: "10px" }}
+                    style={{ marginTop: "2%",width: "48%",marginRight:"2%" }}
                     onChange={props.changefun}
                     fullWidth
                     required
@@ -139,7 +139,7 @@ const First = (props) => {
                     varient="outlined"
                     label="Profession"
                     value={props.inputs.profession}
-                    style={{ marginTop: "10px" }}
+                    style={{ marginTop: "2%",width: "48%",marginRight:"2%" }}
                     onChange={props.changefun}
                     fullWidth
                     required

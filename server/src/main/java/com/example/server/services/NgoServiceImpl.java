@@ -1,6 +1,8 @@
 package com.example.server.services;
 
+import com.example.server.dao.ActivityDao;
 import com.example.server.dao.NgoDao;
+import com.example.server.models.Activity;
 import com.example.server.models.Ngo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,9 @@ import java.util.List;
 public class NgoServiceImpl implements  NgoService{
    @Autowired
     private NgoDao ngoDao;
+
+   @Autowired
+   private ActivityDao activityDao;
     @Override
     @CrossOrigin(origins = "http://localhost:3000")
     public List<Ngo> getNgos() {
@@ -52,6 +57,31 @@ public class NgoServiceImpl implements  NgoService{
             throw e;
         }
         return ngo;
+    }
+
+    @Override
+    public Activity getActivity(Long id) {
+        Activity activity = new Activity();
+        try{
+            activity = activityDao.getReferenceById(id);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+        return activity;
+    }
+
+    @Override
+    public Activity addActivity(Activity activity) {
+        try{
+            activityDao.save(activity);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+        return  activity;
     }
 
 }
