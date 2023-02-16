@@ -153,7 +153,7 @@ const UserLogin = () => {
           >
             <Button
               component={Link}
-              to="/usignup"
+              to="/user/signup"
               sx={{ width: "50%", textTransform: "capitalize", color: "#9C7875" }}
             >
               Create an account
@@ -178,7 +178,7 @@ const UserLogin = () => {
                   checked={!inputs.isUser}
                   onClick = {() => { 
                       setTimeout(()=> {
-                        navigate('/nlogin');
+                        navigate('/ngo/login');
                       },100);
                       setInputs({ ...inputs, isUser: !inputs.isUser });
                     }
