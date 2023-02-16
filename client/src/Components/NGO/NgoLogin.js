@@ -171,7 +171,7 @@ const NgoLogin = () => {
             >
               Forgot Password ?
             </Button>
-            <Button type="submit" variant="contained" sx={{ "&:hover": { backgroundColor: "#14ae72" }, align: "center", color: 'white', backgroundColor: '#1bbd7e', marginTop: 1, width: "50%" }} >
+            <Button type="submit" variant="contained" sx={{align: "center", color: 'white', backgroundColor: '#1bbd7e', marginTop: 1, width: "50%" }} >
               Submit
             </Button>
             <FormControlLabel

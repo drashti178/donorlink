@@ -156,7 +156,7 @@ const UserLogin = () => {
             <Button
               component={Link}
               to="/user/signup"
-              sx={{ "&:hover": { backgroundColor: '#9C7875', color: 'white', }, width: "50%", textTransform: "capitalize", color: "#9C7875" }}
+              sx={{ width: "50%", textTransform: "capitalize", color: "#9C7875" }}
             >
               Create an account
             </Button>
