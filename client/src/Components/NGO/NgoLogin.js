@@ -98,7 +98,7 @@ const NgoLogin = () => {
         <Grid align="center">
           <Avatar sx={{ width: 60, height: 60 }}>
             <AccountCircleRoundedIcon
-              sx={{ fontSize: 60, backgroundColor: "#1bbd7e" }}
+              sx={{ fontSize: 60, backgroundColor: "darkcyan" }}
             />
           </Avatar>
           <Typography sx={{ mt: 1.5 }} variant="h6">
@@ -155,7 +155,7 @@ const NgoLogin = () => {
             <Button
               component={Link}
               to="/ngo/signup"
-              sx={{ width: "50%", textTransform: "capitalize", color: "#1bbd7e" }}
+              sx={{ width: "50%", textTransform: "capitalize", color: "darkcyan" }}
             >
               Create an account
             </Button>
@@ -166,17 +166,23 @@ const NgoLogin = () => {
                 
                 width: "50%",
                 textTransform: "capitalize",
-                color: "#1bbd7e"
+                color: "darkcyan"
               }}
             >
               Forgot Password ?
             </Button>
-            <Button type="submit" variant="contained" sx={{align: "center", color: 'white', backgroundColor: '#1bbd7e', marginTop: 1, width: "50%" }} >
+            <Button type="submit" variant="contained" sx={{ "&:hover": { backgroundColor: "darkcyan", color: 'white', }, align: "center", color: 'white', backgroundColor: "darkcyan", marginTop: 1, width: "50%" }} >
               Submit
             </Button>
             <FormControlLabel
+            style={{
+              color: "darkcyan"
+            }}
               control={
                 <Switch
+                style={{
+                  color: "darkcyan"
+                }}
                   checked={!controls.isUser}
                   onClick={() => {
                     setTimeout(() => {

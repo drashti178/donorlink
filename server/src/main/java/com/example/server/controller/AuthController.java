@@ -1,14 +1,15 @@
 package com.example.server.controller;
 import com.example.server.dao.NgoDao;
-import com.example.server.dao.UserDao;
+import com.example.server.dao.DonorDao;
+import com.example.server.models.Donor;
 import com.example.server.models.Ngo;
 import com.example.server.security.TokenGenerator;
-import com.example.server.models.User;
 import com.example.server.services.NgoService;
 import dto.AuthResponseDto;
 import dto.NgoLoginDto;
-import com.example.server.services.UserService;
+import com.example.server.services.DonorService;
 import dto.UserLoginDto;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +22,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 
-
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/auth")
 
 public class AuthController {
-    @Autowired
-    private NgoDao ngoDao;
     private AuthenticationManager authenticationManager;
     private PasswordEncoder passwordEncoder;
     private TokenGenerator tokenGenerator;
@@ -41,13 +39,14 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
         this.tokenGenerator = tokenGenerator;
     }
-
     @Autowired
-    private UserDao userDao;
+    private NgoDao ngoDao;
+    @Autowired
+    private DonorDao donorDao;
     @Autowired
     private NgoService ngoService;
     @Autowired
-    private UserService userService;
+    private DonorService donorService;
 
     @GetMapping("home")
     public String home(){
@@ -68,7 +67,7 @@ public class AuthController {
     @PostMapping("/ngo/login")
     public ResponseEntity<AuthResponseDto> ngoLogin(@RequestBody NgoLoginDto logindto)
     {
-        if(ngoDao.existsByEmail(logindto.getNgoname()))
+        if(donorDao.existsByEmail(logindto.getNgoname()))
         {
             logindto.setNgoname(ngoDao.findByEmail(logindto.getNgoname()).getNgoname());
         }
@@ -84,26 +83,22 @@ public class AuthController {
     }
 
     @PostMapping("/user/signup")
-    public ResponseEntity<String> addUser(@RequestBody User user){
-        if(userDao.existsByusername(user.getUsername()))
+    public ResponseEntity<String> addUser(@RequestBody Donor donor){
+
+        if(donorDao.existsByusername(donor.getUsername()))
         {
-            return new ResponseEntity<>("Username exist ", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Donorname already exist ", HttpStatus.BAD_REQUEST);
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDao.save(user);
-
-
+        donor.setPassword(passwordEncoder.encode(donor.getPassword()));
+        donorDao.save(donor);
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
-
-
     }
-
     @PostMapping("/user/login")
     public ResponseEntity<AuthResponseDto> userLogin(@RequestBody UserLoginDto logindto)
     {
-        if(userDao.existsByEmail(logindto.getUsername()))
+        if(donorDao.existsByEmail(logindto.getUsername()))
         {
-            logindto.setUsername(userDao.findByEmail(logindto.getUsername()).getUsername());
+            logindto.setUsername(donorDao.findByEmail(logindto.getUsername()).getUsername());
         }
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(logindto.getUsername(),logindto.getPassword())
@@ -111,11 +106,14 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = tokenGenerator.generateToken(authentication);
 
-
-
         return new ResponseEntity<>(new AuthResponseDto(token),HttpStatus.OK);
 
     }
+
+
+
+
+
 
 
 }

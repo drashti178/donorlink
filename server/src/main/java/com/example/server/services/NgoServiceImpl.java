@@ -15,11 +15,10 @@ import java.util.List;
 public class NgoServiceImpl implements  NgoService{
    @Autowired
     private NgoDao ngoDao;
-
    @Autowired
    private ActivityDao activityDao;
+
     @Override
-    @CrossOrigin(origins = "http://localhost:3000")
     public List<Ngo> getNgos() {
         List<Ngo> ngos;
         try{

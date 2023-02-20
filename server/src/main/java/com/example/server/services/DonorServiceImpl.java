@@ -1,24 +1,23 @@
 package com.example.server.services;
 
-import com.example.server.dao.UserDao;
-import com.example.server.models.Ngo;
-import com.example.server.models.User;
+import com.example.server.dao.DonorDao;
+import com.example.server.models.Donor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class DonorServiceImpl implements DonorService {
 
     @Autowired
-    private UserDao userDao;
+    private DonorDao userDao;
 
     @Override
-    public List<User> getUsers() {
-        List<User> users;
+    public List<Donor> getUsers() {
+        List<Donor> users;
         try{
-            users = (List<User>)userDao.findAll();
+            users = (List<Donor>)userDao.findAll();
         }
         catch (Exception e)
         {
@@ -28,7 +27,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User addUser(User user) {
+    public Donor addUser(Donor user) {
         try{
             userDao.save(user);
         }
@@ -39,8 +38,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(Long id) {
-        User user = new User();
+    public Donor getUser(Long id) {
+        Donor user = new Donor();
         try{
             user = userDao.getReferenceById(id);
         }

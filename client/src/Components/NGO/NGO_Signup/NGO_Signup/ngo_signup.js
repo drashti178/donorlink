@@ -15,6 +15,7 @@ import Third from "./third";
 import { Box } from "@mui/system";
 import axios from "axios";
 import base_url from "../../../../api/bootapi";
+import { useNavigate } from "react-router-dom";
 
 
 const steps = ['Account Information', 'Contact Information', 'Review Information'];
@@ -33,7 +34,7 @@ const NgoSignup = () => {
     pincode: "",
     mobile: "",
     weblink: "",
-    certi: "False"
+    has80G: "False"
   });
 
   let [profile, setProfile] = useState(null);
@@ -41,21 +42,8 @@ const NgoSignup = () => {
   const [certiUrl, setCertiUrl] = useState(null);
   let [certificate, setCertificate] = useState("");
   const [activestep, SetActtivestep] = useState(0);
-  const getAllNgos = () => {
-    axios.get(`${base_url}/ngos`).then(
-      (response) => {
-        console.log(response);
-
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
-  }
-  useEffect(() => {
-    getAllNgos();
-  }, []);
-
+ 
+  const navigate = useNavigate();
   useEffect(() => {
     if (profile) {
       window.alert('Image Uploaded Successfully');
@@ -96,15 +84,22 @@ const NgoSignup = () => {
     console.log(inputs);
     console.log(profile);
     console.log(certificate);
-    postData(inputs);
+    postData(inputs,profile,certificate);
     e.preventDefault();
   }
-
-  const postData = (data) => {
-    axios.post(`${base_url}/auth/ngo/signup`, data).then(
+  const headers = {
+    'Content-Type': 'multipart/form-data'
+    
+  }
+  
+  const postData = (data,profile,certificate) => {
+    axios.post(`${base_url}/ngo/signup`, data,{
+      headers: headers
+    }).then(
       (response) => {
         console.log(response);
         console.log("success");
+        navigate('/ngo/login');
       },
       (error) => {
         console.log(error);

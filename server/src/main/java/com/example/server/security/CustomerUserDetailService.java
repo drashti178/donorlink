@@ -1,6 +1,8 @@
 package com.example.server.security;
 
 import com.example.server.dao.NgoDao;
+import com.example.server.dao.DonorDao;
+import com.example.server.models.Donor;
 import com.example.server.models.Ngo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,17 +23,27 @@ public class CustomerUserDetailService implements UserDetailsService
 {
     @Autowired
     private NgoDao ngoDao;
+    @Autowired
+    private DonorDao userDao;
 
     @Override
-    public UserDetails loadUserByUsername(String ngoname) throws UsernameNotFoundException
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException
     {
-        Ngo ngo = ngoDao.findByNgoname(ngoname).orElseThrow(() -> new UsernameNotFoundException("Ngoname not found"));
-        return new User(ngo.getNgoname(),ngo.getPassword(), mapRolesToAuthority("user"));
+        Ngo ngo = ngoDao.findByNgoname(name);
+        if(ngo==null)
+        {
+            Donor donor = userDao.findByusername(name).orElseThrow(()->new UsernameNotFoundException("Username not found"));
+            return new User(donor.getUsername(), donor.getPassword(), mapRolesToAuthority("user"));
+        }
+
+
+        return new User(ngo.getNgoname(),ngo.getPassword(), mapRolesToAuthority("ngo"));
     }
     private Collection<GrantedAuthority> mapRolesToAuthority(String userRole)
     {
         List<String> roles = new ArrayList<String>();
         roles.add(userRole);
+
         return roles.stream().map(role -> new SimpleGrantedAuthority(role)).collect(Collectors.toList());
     }
 

@@ -20,7 +20,7 @@ const Second = (props) => {
     ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua &amp; Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia &amp; Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Cape Verde", "Cayman Islands", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cruise Ship", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyz Republic", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Namibia", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre &amp; Miquelon", "Samoa", "San Marino", "Satellite", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea", "Spain", "Sri Lanka", "St Kitts &amp; Nevis", "St Lucia", "St Vincent", "St. Lucia", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad &amp; Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks &amp; Caicos", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
 
   const ibenabledstyle = {
-    marginTop: "4%", width: "25%", marginRight: "2%", color: 'white', backgroundColor: '#1bbd7e', "&:hover": { backgroundColor: "#14ae72" }
+    marginTop: "4%", width: "25%", marginRight: "2%", color: 'white', backgroundColor: "darkcyan", "&:hover": { backgroundColor: "darkcyan" }
   };
   const ibdisabledstyle = {
 
@@ -94,8 +94,8 @@ const Second = (props) => {
           <RadioGroup
             row
             aria-labelledby="demo-row-radio-buttons-group-label"
-            name="certi"
-            value={props.inputs.certi}
+            name="has80G"
+            value={props.inputs.has80G}
             onChange={props.changefun}
           >
             <FormControlLabel value="yes" control={<Radio />} label="Yes" />
@@ -104,7 +104,7 @@ const Second = (props) => {
           </RadioGroup>
         </FormControl>
 
-        <Button color="primary" aria-label="upload picture" component="label" style={props.inputs.certi === 'no' ? ibdisabledstyle : ibenabledstyle} disabled={props.inputs.certi === 'no'}>
+        <Button color="primary" aria-label="upload picture" component="label" style={props.inputs.has80G === 'no' ? ibdisabledstyle : ibenabledstyle} disabled={props.inputs.has80G === 'no'}>
           <input hidden accept="image/*" type="file" onChange={props.onFileUpload} />
           <FileUpload />
           80G Certificate
@@ -122,15 +122,15 @@ const Second = (props) => {
         >
 
           <Button onClick={props.prevfun} variant="contained" sx={{
-            "&:hover": { backgroundColor: "#14ae72" }, width: "20%",
-            marginRight: "28%", marginLeft: "2%", marginTop: 1, align: "center", color: 'white', backgroundColor: '#1bbd7e'
+            "&:hover": { backgroundColor: "darkcyan" }, width: "20%",
+            marginRight: "28%", marginLeft: "2%", marginTop: 1, align: "center", color: 'white', backgroundColor: "darkcyan"
           }} >
             Prev
           </Button>
 
           <Button onClick={props.nextfun} variant="contained" sx={{
-            "&:hover": { backgroundColor: "#14ae72" }, width: "20%",
-            marginLeft: "30%", marginTop: 1, align: "center", color: 'white', backgroundColor: '#1bbd7e'
+            "&:hover": { backgroundColor: "darkcyan" }, width: "20%",
+            marginLeft: "30%", marginTop: 1, align: "center", color: 'white', backgroundColor: "darkcyan"
           }} >
             Next
           </Button>

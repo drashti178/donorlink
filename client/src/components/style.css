@@ -1,5 +1,6 @@
 .gridStyle::before {
-    background: url('../assets/images/bgLogin.jpg') no-repeat center center/cover;
+    /* background: url('../assets/images/bg_img.jpg') no-repeat center center/cover; */
+    background-color: darkcyan;
     content: "";
     position: absolute;
     top:0;
@@ -8,4 +9,5 @@
     height: 100%;
     z-index: -1;
     opacity: 0.9;
+    overflow-y: auto;
 }

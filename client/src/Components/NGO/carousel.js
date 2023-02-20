@@ -39,7 +39,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Carousel = ({ images, captions }) => {
+const Carousel = ({images}) => {
   const classes = useStyles();
   const [index, setIndex] = useState(0);
 
