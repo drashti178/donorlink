@@ -1,7 +1,8 @@
 import React from 'react'
 
-export default function requests() {
+const Requests = () => {
   return (
     <div>requests</div>
   )
 }
+export default Requests;

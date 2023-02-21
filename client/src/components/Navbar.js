@@ -9,14 +9,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 
 function NavBar(props) {
+  
   const [anchorElNav, setAnchorElNav] = useState(0);
   const navigate = useNavigate();
 
@@ -35,16 +35,7 @@ function NavBar(props) {
   const LogoutNgo = (event) => {
     navigate('/ngo/login');
   };
-  const clickMyactivities = (event) =>
-  {
-    console.log("1");
-  }
-  const clickDonations = (event) =>{
-    console.log("2");
-  }
-  const clickMyRequest = (event) =>{
-    console.log("3");
-  }
+  
 
 
   const handleCloseNavMenu = () => {
@@ -262,6 +253,20 @@ function NavBar(props) {
   }
   if(props.type === "ngoprofile")
   {
+    
+    const clickMyactivities = (event) =>
+  {
+    props.onDataReceived("Activities");
+    console.log("1");
+  }
+  const clickDonations = (event) =>{
+    props.onDataReceived("Donations");
+    console.log("2");
+  }
+  const clickMyRequest = (event) =>{
+    props.onDataReceived("Requests");
+    console.log("3");
+  }
     const pages = [{"page":"MyActivities","event":clickMyactivities}, {"page":"Donation","event":clickDonations},{"page":"MyRequests","event":clickMyRequest},];
     return (
       <AppBar position="static" sx={{backgroundColor:"darkcyan"}}>

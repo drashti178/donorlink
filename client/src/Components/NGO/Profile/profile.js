@@ -1,7 +1,8 @@
-import React from 'react';
+import { React,useState} from 'react';
 import NavBar from '../../Navbar';
 import './ButtonDiv.css';
 import { Button } from '@mui/material';
+import Datacomponent from './datacomponent';
 
 function ButtonDiv() {
   return (
@@ -22,12 +23,16 @@ function ButtonDiv() {
 
 
 const NgoProfile = () => {
-  
+  const [data, setData] = useState("Activities");
+  const handleDataReceived = (childData) => {
+    setData(childData);
+  };
   
   return (
     <>
-    <NavBar type="ngoprofile"/>
+    <NavBar type="ngoprofile" onDataReceived={handleDataReceived}/>
     <ButtonDiv></ButtonDiv>
+    <Datacomponent  load={data}></Datacomponent>
     
     </>
    
