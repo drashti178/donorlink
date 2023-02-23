@@ -21,8 +21,9 @@ import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import axios from "axios";
-import base_url from "../../api/bootapi";
-import '../style.css';
+
+import '../../style.css';
+import base_url from "../../../api/bootapi";
 
 const NgoLogin = () => {
   const [inputs, setInputs] = useState({

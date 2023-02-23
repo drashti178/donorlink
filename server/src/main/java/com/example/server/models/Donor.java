@@ -1,9 +1,6 @@
 package com.example.server.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Donor {
@@ -11,6 +8,7 @@ public class Donor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private long id;
+
     private String name;
     private String username;
     private String password;
@@ -20,8 +18,10 @@ public class Donor {
     private long adharno;
     private String profession;
     private String type;
+    private String ProfileImgName;
     private long totaldonation;
-    private String role = "user";
+    @ManyToMany
+    private Role role;
 
     public Donor(long id, String name, String username, String password, String email, String country, long contactno, long adharno, String profession, String type) {
         this.id = id;
@@ -120,15 +120,19 @@ public class Donor {
         this.type = type;
     }
 
-    public String getRole() {
-        return role;
-    }
-
     public long getTotaldonation() {
         return totaldonation;
     }
 
     public void setTotaldonation(long totaldonation) {
         this.totaldonation = totaldonation;
+    }
+
+    public String getProfileImgName() {
+        return ProfileImgName;
+    }
+
+    public void setProfileImgName(String profileImgName) {
+        ProfileImgName = profileImgName;
     }
 }

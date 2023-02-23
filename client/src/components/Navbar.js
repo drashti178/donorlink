@@ -123,7 +123,7 @@ function NavBar(props) {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Donor Link
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -225,7 +225,7 @@ function NavBar(props) {
                 textDecoration: 'none',
               }}
             >
-              LOGO
+              Donor Link
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (
@@ -344,7 +344,7 @@ function NavBar(props) {
                 textDecoration: 'none',
               }}
             >
-              LOGO
+             Donor Link
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((p) => (

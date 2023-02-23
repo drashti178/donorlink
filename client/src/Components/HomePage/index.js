@@ -212,8 +212,9 @@
 import React from 'react';
 import { Button } from '@mui/material';
 import NavBar from '../Navbar';
-import Carousel from '../NGO/carousel';
+
 import Activities from '../NGO/Activity';
+import Carousel from '../carousel';
 
 
 import React, { useContext } from "react";
@@ -299,7 +300,7 @@ const Home = () => {
       <Button />
     </div>
     <div>
-      <Carousel images={images}/>
+    <Carousel images={images}/>
     </div>
     <div>
       <Activities cards={cards} />

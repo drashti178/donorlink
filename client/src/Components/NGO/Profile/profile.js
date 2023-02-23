@@ -1,20 +1,18 @@
 import { React,useState} from 'react';
 import NavBar from '../../Navbar';
 import './ButtonDiv.css';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import Datacomponent from './datacomponent';
+import AddActivity from './addActivity';
+import AddFundraiser from './addFundraiser';
+import AddRequest from './addRequest';
 
 function ButtonDiv() {
   return (
     <div className="button-div">
-     <Button to="/ngo/signup"
-              sx={{ width: "20%", marginLeft:"2%" ,textTransform: "capitalize", backgroundColor: "darkcyan",color:"white",fontSize:"110%"}}>Add Activity</Button>
-     <Button to="/ngo/signup"
-              sx={{ width: "20%",  marginLeft:"10%" ,textTransform: "capitalize", backgroundColor: "darkcyan",color:"white",
-              fontSize:"110%"}}>Add FundRaiser</Button>
-     <Button to="/ngo/signup"
-              sx={{ width: "20%",  marginLeft:"10%" ,textTransform: "capitalize", backgroundColor: "darkcyan",color:"white",
-              fontSize:"110%"}}>Add Request</Button>
+     <Box sx={{ width: "20%",marginLeft:"0%"}}><AddActivity/></Box>
+     <Box sx={{ width: "20%",  marginLeft:"4%" }}><AddFundraiser/></Box>
+     <Box sx={{ width: "20%",   marginLeft:"4%"}}><AddRequest/></Box>
     </div>
   );
 }

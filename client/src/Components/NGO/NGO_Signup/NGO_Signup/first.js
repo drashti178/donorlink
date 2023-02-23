@@ -13,8 +13,6 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 
-import UploadIcon from '@mui/icons-material/UploadFile';
-
 
 
 const First = (props) => {

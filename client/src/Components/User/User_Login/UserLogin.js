@@ -20,10 +20,10 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-import { blue } from "@mui/material/colors";
-import base_url from "../../api/bootapi";
+
 import axios from "axios";
-import '../style.css';
+import '../../style.css';
+import base_url from "../../../api/bootapi";
 
 const UserLogin = () => {
   const [inputs, setInputs] = useState({
