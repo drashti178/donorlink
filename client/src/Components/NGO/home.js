@@ -213,7 +213,7 @@ import React from 'react';
 import Activities from './Activity';
 import NavBar from '../Navbar';
 import { Button } from '@mui/material';
-import Carousel from './carousel';
+
 
 
 

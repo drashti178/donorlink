@@ -9,31 +9,45 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "activities")
 public class Activity {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long aid;
+    private Long a_id;
+
     private String activityname;
     private String description;
-    @Column(nullable = true,length = 64)
-    private String img;
-    public Activity(long aid, String activityname, String description, String img) {
-        this.aid = aid;
+
+    private Long participation;
+
+    private String activityImgName;
+
+
+    @ManyToOne
+    @JoinColumn(name = "ngo_id")
+    private Ngo ngo;
+
+    public Ngo getNgo() {
+        return ngo;
+    }
+
+    public void setNgo(Ngo ngo) {
+        this.ngo = ngo;
+    }
+
+    public Activity(String activityname, String description) {
         this.activityname = activityname;
         this.description = description;
-        this.img = img;
+
     }
 
     public Activity() {
     }
 
-    public long getAid() {
-        return aid;
+    public Long getA_id() {
+        return a_id;
     }
 
-    public void setAid(long aid) {
-        this.aid = aid;
+    public void setA_id(Long a_id) {
+        this.a_id = a_id;
     }
 
     public String getActivityname() {
@@ -52,11 +66,19 @@ public class Activity {
         this.description = description;
     }
 
-    public String getImg() {
-        return img;
+    public String getActivityImgName() {
+        return activityImgName;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setActivityImgName(String activityImgName) {
+        this.activityImgName = activityImgName;
+    }
+
+    public Long getParticipation() {
+        return participation;
+    }
+
+    public void setParticipation(Long participation) {
+        this.participation = participation;
     }
 }

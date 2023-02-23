@@ -7,32 +7,21 @@ import com.example.server.models.Ngo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
 public class NgoServiceImpl implements  NgoService{
-   @Autowired
+    @Autowired
     private NgoDao ngoDao;
-   @Autowired
-   private ActivityDao activityDao;
-
     @Override
-    public List<Ngo> getNgos() {
-        List<Ngo> ngos;
-        try{
-            ngos = (List<Ngo>)ngoDao.findAll();
-        }
-        catch (Exception e)
-        {
-            throw e;
-        }
-        return ngos;
-    }
-
-    @Override
-    @CrossOrigin(origins = "http://localhost:3000")
     public Ngo addNgo(Ngo ngo) {
         try{
             ngoDao.save(ngo);
@@ -59,28 +48,22 @@ public class NgoServiceImpl implements  NgoService{
     }
 
     @Override
-    public Activity getActivity(Long id) {
-        Activity activity = new Activity();
-        try{
-            activity = activityDao.getReferenceById(id);
-        }
-        catch (Exception e)
+    public String uploadImage(String path, MultipartFile file) throws IOException {
+        String name=file.getOriginalFilename();
+//        String filePath = path+ File.separator+name;
+        String randomID= UUID.randomUUID().toString();
+        String fileName=randomID.concat(name.substring(name.lastIndexOf(".")));
+        String filePath = path+ File.separator+fileName;
+        File f=new File(path);
+        if(!f.exists())
         {
-            throw e;
+            f.mkdir();
         }
-        return activity;
+        Files.copy(file.getInputStream(), Paths.get(filePath));
+
+
+        return fileName;
     }
 
-    @Override
-    public Activity addActivity(Activity activity) {
-        try{
-            activityDao.save(activity);
-        }
-        catch (Exception e)
-        {
-            throw e;
-        }
-        return  activity;
-    }
 
 }

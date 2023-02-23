@@ -1,4 +1,4 @@
-package dto;
+package com.example.server.dto;
 
 public class NgoLoginDto {
     String ngoname;

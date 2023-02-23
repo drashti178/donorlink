@@ -1,4 +1,4 @@
-import { React, useState, } from "react";
+import { React, useState } from "react";
 import {
   Typography,
   Avatar,
@@ -14,42 +14,40 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Link, useNavigate } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-import axios from "axios";
-import base_url from "../../api/bootapi";
-import '../style.css';
 
-const NgoLogin = () => {
+import axios from "axios";
+import '../../style.css';
+import base_url from "../../../api/bootapi";
+
+
+
+const UserLogin = () => {
   const [inputs, setInputs] = useState({
-    ngoname: "",
+    username: "",
     password: "",
-  });
-  const [controls, setControls] = useState({
     showPassword: false,
-    isUser: false,
+    isUser: true,
   });
+
   const navigate = useNavigate();
- 
+
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
-    setControls((values) => ({
-      ...values,
-      [e.target.name]:e.target.value
-    }))
   };
 
   const handleClickShowPassword = () => {
-    setControls({
-      ...controls,
-      showPassword: !controls.showPassword,
+    setInputs({
+      ...inputs,
+      showPassword: !inputs.showPassword,
     });
   };
 
@@ -59,15 +57,14 @@ const NgoLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    onLogin(inputs);
     console.log(inputs);
+    onLogin(inputs)
   };
+
   const onLogin=(data)=>
   {
-    axios.post(`${base_url}/auth/ngo/login`,data).then(
+    axios.post(`${base_url}/auth/user/login`,data).then(
       (response)=>{
-        
         navigate('/');
         console.log(response);
       },
@@ -77,11 +74,15 @@ const NgoLogin = () => {
       }
     )
   }
+
   const paperStyle = {
     padding: 20,
     margin: "16vh auto",
     width: 350,
+    
   };
+
+  
 
   const smallDev = {
     padding: 20,
@@ -93,12 +94,12 @@ const NgoLogin = () => {
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <Grid align="center" className="gridStyle">
+    <Grid align="center" className="gridStyle"  >
       <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
         <Grid align="center">
           <Avatar sx={{ width: 60, height: 60 }}>
             <AccountCircleRoundedIcon
-              sx={{ fontSize: 60, backgroundColor: "darkcyan" }}
+              sx={{ fontSize: 60, backgroundColor: "#9C7875" }}
             />
           </Avatar>
           <Typography sx={{ mt: 1.5 }} variant="h6">
@@ -107,24 +108,24 @@ const NgoLogin = () => {
         </Grid>
         <form onSubmit={handleSubmit}>
           <TextField
-            name="ngoname"
+            name="username"
             varient="outlined"
             label="Username"
-            value={inputs.ngoname}
+            value={inputs.username}
             style={{ marginTop: "25px" }}
             onChange={handleChange}
             fullWidth
             required
           />
 
-          <FormControl sx={{ width: "100%", marginTop: 2 }} required variant="outlined">
+          <FormControl sx={{ width: "100%", marginTop: 2 }} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">
               Password
             </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
               name="password"
-              type={controls.showPassword ? "text" : "password"}
+              type={inputs.showPassword ? "text" : "password"}
               value={inputs.password}
               onChange={handleChange}
               endAdornment={
@@ -135,7 +136,7 @@ const NgoLogin = () => {
                     onMouseDown={handleMouseDownPassword}
                     edge="end"
                   >
-                    {controls.showPassword ? <Visibility /> : <VisibilityOff />}
+                    {inputs.showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
               }
@@ -154,56 +155,47 @@ const NgoLogin = () => {
           >
             <Button
               component={Link}
-              to="/ngo/signup"
-              sx={{ width: "50%", textTransform: "capitalize", color: "darkcyan" }}
+              to="/user/signup"
+              sx={{ width: "50%", textTransform: "capitalize", color: "#9C7875" }}
             >
               Create an account
             </Button>
             <Button
               component={Link}
               to="/forgetPassword"
-              sx={{
-                
-                width: "50%",
-                textTransform: "capitalize",
-                color: "darkcyan"
-              }}
+              sx={{ width: "50%", textTransform: "capitalize", color: "#9C7875" }}
             >
               Forgot Password ?
             </Button>
-            <Button type="submit" variant="contained" sx={{ "&:hover": { backgroundColor: "darkcyan", color: 'white', }, align: "center", color: 'white', backgroundColor: "darkcyan", marginTop: 1, width: "50%" }} >
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{ "&:hover": { backgroundColor: '#9C7875', color: 'white', }, marginTop: 1, width: "50%",  backgroundColor: '#9C7875'  }}
+            >
               Submit
             </Button>
             <FormControlLabel
-            style={{
-              color: "darkcyan"
-            }}
               control={
                 <Switch
-                style={{
-                  color: "darkcyan"
-                }}
-                  checked={!controls.isUser}
-                  onClick={() => {
-                    setTimeout(() => {
-                      navigate('/user/login');
-                    }, 100);
-                    setControls({ ...controls, isUser: !controls.isUser });
-                  }
+                  checked={!inputs.isUser}
+                  onClick = {() => { 
+                      setTimeout(()=> {
+                        navigate('/ngo/login');
+                      },100);
+                      setInputs({ ...inputs, isUser: !inputs.isUser });
+                    }
                   }
                   name="isUser"
-                  value={controls.isUser}
+                  value={inputs.isUser}
                 />
               }
               label="NGO"
             />
           </Grid>
-
-
-
         </form>
       </Paper>
     </Grid>
   );
 };
-export default NgoLogin;
+
+export default UserLogin;

@@ -1,16 +1,14 @@
 package com.example.server.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Ngo {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private long id;
+    @Column(name="ngo_id")
+    private long NgoId;
 
     private String ngoname;
     private String password;
@@ -24,9 +22,13 @@ public class Ngo {
     private String mobile;
     private String weblink;
     private long totaldonation;
+    private boolean has80G;
+    private String ProfileImgName;
+    private String CertiImgName;
 
-    public Ngo(long id, String ngoname, String password, String email, String tagline, String founder, String areaofwork, String address, String country, String pincode, String mobile, String weblink) {
-        this.id = id;
+
+    public Ngo( String ngoname, String password, String email, String tagline, String founder, String areaofwork, String address, String country, String pincode, String mobile, String weblink,Boolean has80G) {
+
         this.ngoname = ngoname;
         this.password = password;
         this.email = email;
@@ -38,21 +40,11 @@ public class Ngo {
         this.pincode = pincode;
         this.mobile = mobile;
         this.weblink = weblink;
-        this.totaldonation = 0;
+        this.has80G=has80G;
     }
-
     public Ngo() {
 
     }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getNgoname() {
         return ngoname;
     }
@@ -147,5 +139,37 @@ public class Ngo {
 
     public void setTotaldonation(long totaldonation) {
         this.totaldonation = totaldonation;
+    }
+
+    public long getNgoId() {
+        return NgoId;
+    }
+
+    public void setNgoId(long ngoId) {
+        NgoId = ngoId;
+    }
+
+    public boolean isHas80G() {
+        return has80G;
+    }
+
+    public void setHas80G(boolean has80G) {
+        this.has80G = has80G;
+    }
+
+    public String getProfileImgName() {
+        return ProfileImgName;
+    }
+
+    public void setProfileImgName(String profileImgName) {
+        ProfileImgName = profileImgName;
+    }
+
+    public String getCertiImgName() {
+        return CertiImgName;
+    }
+
+    public void setCertiImgName(String certiImgName) {
+        CertiImgName = certiImgName;
     }
 }
