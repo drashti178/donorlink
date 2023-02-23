@@ -1,6 +1,5 @@
 import { React, useState, useEffect } from "react";
 import {
-
   Grid,
   Paper,
   useTheme,
@@ -15,12 +14,14 @@ import Third from "./third";
 import { Box } from "@mui/system";
 import axios from "axios";
 import base_url from "../../../../api/bootapi";
+import { useNavigate } from "react-router-dom";
 
 
 const steps = ['Account Information', 'Contact Information', 'Review Information'];
 
 
 const NgoSignup = () => {
+  const navigate = useNavigate();
   let [inputs, setInputs] = useState({
     ngoname: "",
     email: "",
@@ -42,7 +43,7 @@ const NgoSignup = () => {
   let [certificate, setCertificate] = useState("");
   const [activestep, SetActtivestep] = useState(0);
   const getAllNgos = () => {
-    axios.get(`${base_url}/ngos`).then(
+    axios.get(`${base_url}/getNgos`).then(
       (response) => {
         console.log(response);
 
@@ -101,10 +102,11 @@ const NgoSignup = () => {
   }
 
   const postData = (data) => {
-    axios.post(`${base_url}/auth/ngo/signup`, data).then(
+    axios.post(`${base_url}/authNgo/ngo/signup`, data).then(
       (response) => {
         console.log(response);
         console.log("success");
+        navigate('/ngo/login');
       },
       (error) => {
         console.log(error);

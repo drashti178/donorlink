@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -55,18 +55,38 @@ const UserLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
     onLogin(inputs)
   };
 
-  const onLogin=(data)=>
-  {
-    axios.post(`${base_url}/auth/user/login`,data).then(
-      (response)=>{
-        navigate('/');
-        console.log(response);
+  // const setRole = () => {
+  //   // const token = localStorage.getItem("accessToken");
+
+  //   axios.get(`${base_url}/authUser/profile`, { headers: { "Authorization": `Bearer ${token}` } }).then(
+  //     (response) => {
+  //       console.log(response);
+  //       console.log("success");
+  //       setRole(response.role);
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //       console.log("Failure");
+  //     }
+  //   )
+  // }
+
+  const onLogin = (data) => {
+    axios.post(`${base_url}/authUser/user/login`, data).then(
+      (response) => {
+        // localStorage.setItem("AccessToken", response.data.accessToken);
+        // if(re){
+        //   setTimeout(() => {
+        //     localStorage.setItem("role","user");
+        //     alert("Login Successful");
+        //   }, 100);
+        //   navigate('/');
+          console.log(response);
       },
-      (error)=>{
+      (error) => {
         console.log(error);
         console.log("Error");
       }
@@ -77,10 +97,10 @@ const UserLogin = () => {
     padding: 20,
     margin: "16vh auto",
     width: 350,
-    
+
   };
 
-  
+
 
   const smallDev = {
     padding: 20,
@@ -168,7 +188,7 @@ const UserLogin = () => {
             <Button
               type="submit"
               variant="contained"
-              sx={{ "&:hover": { backgroundColor: '#9C7875', color: 'white', }, marginTop: 1, width: "50%",  backgroundColor: '#9C7875'  }}
+              sx={{ "&:hover": { backgroundColor: '#9C7875', color: 'white', }, marginTop: 1, width: "50%", backgroundColor: '#9C7875' }}
             >
               Submit
             </Button>
@@ -176,12 +196,12 @@ const UserLogin = () => {
               control={
                 <Switch
                   checked={!inputs.isUser}
-                  onClick = {() => { 
-                      setTimeout(()=> {
-                        navigate('/ngo/login');
-                      },100);
-                      setInputs({ ...inputs, isUser: !inputs.isUser });
-                    }
+                  onClick={() => {
+                    setTimeout(() => {
+                      navigate('/ngo/login');
+                    }, 100);
+                    setInputs({ ...inputs, isUser: !inputs.isUser });
+                  }
                   }
                   name="isUser"
                   value={inputs.isUser}

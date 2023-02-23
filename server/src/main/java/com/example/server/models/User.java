@@ -11,7 +11,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private long id;
-
     private String name;
     private String username;
     private String password;
@@ -22,6 +21,7 @@ public class User {
     private String profession;
     private String type;
     private long totaldonation;
+    private String role = "user";
 
     public User(long id, String name, String username, String password, String email, String country, long contactno, long adharno, String profession, String type) {
         this.id = id;
@@ -118,6 +118,10 @@ public class User {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     public long getTotaldonation() {

@@ -24,6 +24,7 @@ public class Ngo {
     private String mobile;
     private String weblink;
     private long totaldonation;
+    private String role = "ngo";
 
     public Ngo(long id, String ngoname, String password, String email, String tagline, String founder, String areaofwork, String address, String country, String pincode, String mobile, String weblink) {
         this.id = id;
@@ -39,6 +40,7 @@ public class Ngo {
         this.mobile = mobile;
         this.weblink = weblink;
         this.totaldonation = 0;
+        this.role = "ngo";
     }
 
     public Ngo() {
@@ -67,6 +69,10 @@ public class Ngo {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     public String getEmail() {

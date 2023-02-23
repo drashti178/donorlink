@@ -1,0 +1,214 @@
+import React, { useEffect, useState } from "react";
+import {
+    Typography,
+    Avatar,
+    Grid,
+    TextField,
+    Paper,
+    Button,
+    useTheme,
+    useMediaQuery,
+} from "@mui/material";
+import CreditScoreSharpIcon from '@mui/icons-material/CreditScoreSharp';
+import axios from "axios";
+import base_url from "../../api/bootapi";
+
+const PaymentInfo = () => {
+    const id = 4;
+
+    const [valid, setValid] = useState(false);
+    const [login, setLogin] = useState(false);
+    const [inputs, setInputs] = useState({
+        amount: 0,
+        remarks: "",
+    });
+
+    useEffect(() => {
+        loadUser();
+    },[]);
+
+    const loadUser = async () => {
+        await axios.get(`${base_url}/user/profile/${id}`).then(
+            (response) => {
+                // console.log(response.data);
+                // console.log(typeof response.data)
+                setUser(response.data)
+            },
+            (error) => {
+                console.log(error);
+            }
+        )
+        // console.log(inputs);
+    }
+
+    const [user,setUser] = useState({
+        name: "",
+        username: "",
+        password: "",
+        email: "",
+        country: "",
+        contactno: "",
+        adharno: "",    
+        profession: "",
+        type: "",
+    })
+
+    // useEffect(() => {
+    //     loadUser();
+    // },[]);
+    // useEffect(() => {
+
+    // },[inputs]);
+
+    const initPayment = () => {
+        const options = {
+            key: "rzp_test_ye5vdixvFR6hVR",
+            amount: inputs.amount*100,
+            currency: "INR",
+            name: "Donation",
+            description: "Test Transaction",
+            image: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Y2hhcml0eXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+            // callback_url:`http://localhost:3000/user/updateDonation/${id}/${inputs.amount}`,
+            "customer": {
+                "contact": user.contactno,
+                "email": user.email,
+                "name": user.name
+            },
+            "notify": {
+                "email": true,
+                "sms": true
+            },
+            handler: async (response) => {
+                try {
+                    const verifyUrl = `${base_url}/user/updateDonation/${id}/${inputs.amount}`;
+                    const { data } = await axios.post(verifyUrl, response);
+                    console.log(data);
+                    
+                } catch (error) {
+                    console.log(error);
+                }
+            },
+
+            theme: {
+                color: "#3399cc",
+            },
+        };
+        const rzp1 = new window.Razorpay(options);
+        const payment = rzp1.open();
+        rzp1.on('payment.failed', function (response){
+            alert(response.error.code);
+            alert(response.error.description);
+            alert(response.error.source);
+            alert(response.error.step);
+            alert(response.error.reason);
+            alert(response.error.metadata.order_id);
+            alert(response.error.metadata.payment_id);
+        })
+        console.log(payment.id);
+        // rzp1.close();
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        initPayment();
+        // onLogin(inputs)
+    };
+
+    const handleChange = (e) => {
+        if (e.target.name === "amount" && e.target.value > 10000 && !login) {
+            alert('You cannot make payment of more than 10000 without login.');
+        }
+        else {
+            setInputs((prevState) => ({
+                ...prevState,
+                [e.target.name]: e.target.value,
+            }));
+            if (e.target.value > 0) {
+                setValid(true);
+            }
+            else {
+                setValid(false);
+            }
+        }
+
+
+    };
+
+    const paperStyle = {
+        padding: 20,
+        margin: "14.1vh auto",
+        width: 350,
+
+    };
+
+    const smallDev = {
+        padding: 20,
+        margin: "14.1vh auto",
+        width: 320,
+    };
+
+    const theme = useTheme();
+    const isMatch = useMediaQuery(theme.breakpoints.down("md"));
+
+    return (
+        <Grid align="center" className="gridStyle"  >
+            <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
+                <Grid align="center">
+                    <Avatar sx={{ width: 80, height: 80, backgroundColor: "#94726c" }}>
+                        <CreditScoreSharpIcon
+                            sx={{ fontSize: 70, backgroundColor: "#94726c" }}
+                        />
+                    </Avatar>
+                    <Typography sx={{ mt: 1.5 }} variant="h6">
+                        Payment
+                    </Typography>
+                </Grid>
+                <form onSubmit={handleSubmit}>
+
+                    <TextField
+                        name="amount"
+                        varient="outlined"
+                        label="Amount"
+                        value={inputs.amount}
+                        style={{ marginTop: "25px" }}
+                        onChange={handleChange}
+                        fullWidth
+                        required
+                    />
+
+                    <TextField
+                        name="remarks"
+                        varient="outlined"
+                        label="Remarks"
+                        value={inputs.remarks}
+                        style={{ marginTop: "25px" }}
+                        onChange={handleChange}
+                        fullWidth
+                    />
+
+                    <Grid
+                        container
+                        spacing={2}
+                        style={{ marginTop: "20px" }}
+                        direction="row"
+                        justifyContent="space-around"
+                        alignItems="center"
+                    >
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            sx={{ "&:hover": { backgroundColor: '#94726c', color: 'white', }, marginTop: 1, width: "50%", backgroundColor: '#94726c' }}
+                            disabled={!valid}
+                        >
+                            Pay
+                        </Button>
+                    </Grid>
+                </form>
+            </Paper>
+        </Grid>
+    )
+
+
+}
+
+export default PaymentInfo

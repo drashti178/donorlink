@@ -5,10 +5,13 @@ import com.example.server.models.Ngo;
 import com.example.server.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@CrossOrigin("*")
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -39,10 +42,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(Long id) {
-        User user = new User();
+    public Optional<User> getUser(Long id) {
+
+        Optional<User> user = null;
         try{
-            user = userDao.getReferenceById(id);
+            user = userDao.findById(id);
         }
         catch (Exception e)
         {
@@ -50,4 +54,12 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
+
+    @Override
+    public User getUserByToken() {
+        return null;
+    }
+
+
+
 }

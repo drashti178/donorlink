@@ -3,6 +3,7 @@ package dto;
 public class NgoLoginDto {
     String ngoname;
     String password;
+    String email;
 
     public String getNgoname()
     {
@@ -10,6 +11,14 @@ public class NgoLoginDto {
     }
     public String getPassword(){
         return password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setNgoname(String ngoname) {

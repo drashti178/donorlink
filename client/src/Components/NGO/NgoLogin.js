@@ -65,11 +65,14 @@ const NgoLogin = () => {
   };
   const onLogin=(data)=>
   {
-    axios.post(`${base_url}/auth/ngo/login`,data).then(
+    axios.post(`${base_url}/authNgo/ngo/login`,data).then(
       (response)=>{
-        
+        // localStorage.setItem("AccessToken",response.data.accessToken);
+        localStorage.setItem("role","ngo");
+        setTimeout(() => {
+          alert("Login Successful");
+        }, 100);
         navigate('/');
-        console.log(response);
       },
       (error)=>{
         console.log(error);

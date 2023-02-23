@@ -8,16 +8,16 @@ import {
     Step,
     StepLabel,
 } from "@mui/material";
-import First from "./first";
-import Second from "./second";
+import First from "../User/User_Signup/first";
+import Second from "../User/User_Signup/second";
 import { Box } from "@mui/system";
 import axios from "axios";
-import base_url from "../../../api/bootapi";
+import base_url from "../../api/bootapi";
 import {useNavigate} from 'react-router-dom';
+import "../../Components/style.css"
 const steps = ['Account Information', 'Review Information'];
 
-const UserSignup = () => {
-
+const EditUser = () => {
     let [inputs, setInputs] = useState({
         name: "",
         username: "",
@@ -34,21 +34,7 @@ const UserSignup = () => {
     let [profile, setProfile] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
     const [activestep, SetActivestep] = useState(0);
-    //   const getAllUsers = () => {
-    //     axios.get(`${base_url}/users`).then(
-    //       (response) => {
-    //         console.log(response);
-
-    //       },
-    //       (error) => {
-    //         console.log(error);
-    //       }
-    //     )
-    //   }
-    //   useEffect(() => {
-    //     getAllUsers();
-    //   }, []);
-
+    const id = 5;
     useEffect(() => {
         if (profile) {
             // console.log(profile);
@@ -85,18 +71,34 @@ const UserSignup = () => {
         
     }
 
+    useEffect(() => {
+        loadUser();
+    },[]);
+
+    const loadUser = async () => {
+        await axios.get(`${base_url}/user/profile/${id}`).then(
+            (response) => {
+                console.log(response.data);
+                console.log(typeof response.data)
+                setInputs(response.data)
+            },
+            (error) => {
+                console.log(error);
+            }
+        )
+        // console.log(inputs);
+    }
     const postData = (data) => {
-        axios.post(`${base_url}/authUser/user/signup`, data).then(
+        axios.put(`${base_url}/user/edit`, data).then(
             (response) => {
                 console.log(response);
                 console.log("success");
-                navigate('/user/login');
+                navigate(`/user/profile/${id}`);
             },
             (error) => {
                 console.log(error);
                 console.log("Failure");
             }
-
         )
     }
 
@@ -140,8 +142,7 @@ const UserSignup = () => {
                 </Paper>
             </Grid>
         </>
-
-
     );
-};
-export default UserSignup;
+}
+
+export default EditUser;
