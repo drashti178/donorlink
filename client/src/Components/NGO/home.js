@@ -275,30 +275,14 @@ let cards = [
 ]
 const NgoHome = () => {
   
-  let images = [
-    
-      'https://via.placeholder.com/355x140'
-    ,
-    
-      'https://via.placeholder.com/345x140'
-    
-  ]
-  let captions = [
-    
-   "img1"
-  ,
-  "img2"
-]
   
   return (
     <>
-    <NavBar />
+    <NavBar type="ngohome"/>
     <div>
       <Button />
     </div>
-    <div>
-      <Carousel images={images} captions={captions}/>
-    </div>
+    
     <div>
       <Activities cards={cards} />
     </div>

@@ -95,7 +95,7 @@ const First = (props) => {
             
           >
 
-          <Button color="primary" aria-label="upload picture" component="label" sx={{display:"flex",marginLeft:"auto", color: 'white', backgroundColor: '#1bbd7e', width:"22%", marginTop:"21px", "&:hover" :{backgroundColor: "#14ae72"} }}>
+          <Button color="primary" aria-label="upload picture" component="label" sx={{display:"flex",marginLeft:"auto", color: 'white', backgroundColor: "darkcyan", width:"22%", marginTop:"21px", "&:hover" :{backgroundColor: "darkcyan"} }}>
             
             <input hidden accept="image/*" type="file" onChange={props.onFileUpload}/>
               <PhotoCamera style={{marginRight:"10%" }} />
@@ -149,7 +149,7 @@ const First = (props) => {
             justifyContent="space-around"
             alignItems="center"
           >
-            <Button  onClick={props.nextfun} variant="contained" sx={{ "&:hover" :{backgroundColor: "#14ae72"}, width: "20%",marginTop: 1, display: 'flex', marginLeft: "auto", color: 'white', backgroundColor: '#1bbd7e' }} >
+            <Button  onClick={props.nextfun} variant="contained" sx={{ "&:hover" :{backgroundColor: "darkcyan"}, width: "20%",marginTop: 1, display: 'flex', marginLeft: "auto", color: 'white', backgroundColor: "darkcyan" }} >
               Next
             </Button>
             

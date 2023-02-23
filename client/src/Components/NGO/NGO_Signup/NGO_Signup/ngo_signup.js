@@ -15,6 +15,7 @@ import { Box } from "@mui/system";
 import axios from "axios";
 import base_url from "../../../../api/bootapi";
 import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const steps = ['Account Information', 'Contact Information', 'Review Information'];
@@ -34,7 +35,7 @@ const NgoSignup = () => {
     pincode: "",
     mobile: "",
     weblink: "",
-    certi: "False"
+    has80G: "False"
   });
 
   let [profile, setProfile] = useState(null);
@@ -97,15 +98,22 @@ const NgoSignup = () => {
     console.log(inputs);
     console.log(profile);
     console.log(certificate);
-    postData(inputs);
+    postData(inputs,profile,certificate);
     e.preventDefault();
   }
-
-  const postData = (data) => {
-    axios.post(`${base_url}/authNgo/ngo/signup`, data).then(
+  const headers = {
+    'Content-Type': 'multipart/form-data'
+    
+  }
+  
+  const postData = (data,profile,certificate) => {
+    axios.post(`${base_url}/ngo/signup`, data,{
+      headers: headers
+    }).then(
       (response) => {
         console.log(response);
         console.log("success");
+        navigate('/ngo/login');
         navigate('/ngo/login');
       },
       (error) => {

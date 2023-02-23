@@ -12,15 +12,13 @@ import java.util.List;
 
 
 @Service
-@CrossOrigin("*")
 public class NgoServiceImpl implements  NgoService{
    @Autowired
     private NgoDao ngoDao;
-
    @Autowired
    private ActivityDao activityDao;
 
-   @Override
+    @Override
     public List<Ngo> getNgos() {
         List<Ngo> ngos;
         try{
@@ -34,6 +32,7 @@ public class NgoServiceImpl implements  NgoService{
     }
 
     @Override
+    @CrossOrigin(origins = "http://localhost:3000")
     public Ngo addNgo(Ngo ngo) {
         try{
             ngoDao.save(ngo);

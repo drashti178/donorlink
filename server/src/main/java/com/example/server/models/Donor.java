@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class User {
+public class Donor {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -23,7 +23,7 @@ public class User {
     private long totaldonation;
     private String role = "user";
 
-    public User(long id, String name, String username, String password, String email, String country, long contactno, long adharno, String profession, String type) {
+    public Donor(long id, String name, String username, String password, String email, String country, long contactno, long adharno, String profession, String type) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -37,7 +37,7 @@ public class User {
         this.totaldonation = 0;
     }
 
-    public User() {
+    public Donor() {
     }
 
     public long getId() {

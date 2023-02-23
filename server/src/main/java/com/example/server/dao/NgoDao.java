@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface NgoDao extends JpaRepository<Ngo,Long> {
 
-    public Optional<Ngo> findByNgoname(String ngoname);
+    public Ngo findByNgoname(String ngoname);
     public Ngo findByEmail(String email);
 
     public Boolean existsByNgoname(String ngoname);

@@ -4,29 +4,41 @@ import com.example.server.dao.ActivityDao;
 import com.example.server.dao.NgoDao;
 import com.example.server.models.Activity;
 import com.example.server.models.Ngo;
-//import com.example.server.security.TokenGenerator;
+import com.example.server.security.TokenGenerator;
 import com.example.server.services.NgoService;
 import dto.AuthResponseDto;
 import dto.NgoLoginDto;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.authentication.AuthenticationManager;
-//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
+@RolesAllowed("ngo")
 @CrossOrigin("*")
 @RestController
+@RequestMapping("/ngo")
 public class NgoController {
 
-//    @Autowired
-//    private ActivityDao activityDao;
+    @Autowired
+    private ActivityDao activityDao;
+
+
+    @GetMapping("/")
+    public String home()
+    {
+        return "ngo page";
+
+    }
+
 //    @PostMapping("ngo/addactivity")
 //    public ResponseEntity<String> addActivity(@RequestBody Activity activity){
 //        try{
