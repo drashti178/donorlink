@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useContext, useState } from "react";
 import {
   Typography,
   Avatar,
@@ -24,6 +24,7 @@ import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import axios from "axios";
 import '../../Components/style.css';
 import base_url from "../../api/bootapi";
+import { UserContext } from "../../Context/UserContext";
 
 const UserLogin = () => {
   const [inputs, setInputs] = useState({
@@ -34,6 +35,7 @@ const UserLogin = () => {
   });
 
   const navigate = useNavigate();
+  const {user,setUser } = useContext(UserContext);
 
   const handleChange = (e) => {
     setInputs((prevState) => ({
@@ -74,13 +76,33 @@ const UserLogin = () => {
   //   )
   // }
 
-  const onLogin = (data) => {
-    axios.post(`${base_url}/auth/user/login`, data).then(
+  const onLogin = async (data) => {
+    await axios.post(`${base_url}/auth/user/login`, data).then(
       (response) => {
         localStorage.setItem("AccessToken", response.data.accessToken);
+        //  window.location.href = "/";
+        const getUser = async () => {
+          const token = "Bearer " + localStorage.getItem("AccessToken");
+          // console.log(token);
+          await axios.get(`${base_url}/user/profile`, {
+            headers: {
+              'Authorization': token,
+            }
+          }).then(
+            (response) => {
+              console.log(response.data);
+              setUser(response.data);
+              console.log(user);
+            },
+            (error) => {
+              console.log(error);
+            }
+          )
+        }
         setTimeout(() => {
           alert("Login Successful");
         }, 100);
+        getUser();
         navigate('/');
       },
       (error) => {

@@ -3,6 +3,7 @@ package com.example.server.controller;
 import com.example.server.dao.ActivityDao;
 import com.example.server.dao.NgoDao;
 import com.example.server.models.Activity;
+import com.example.server.models.Donor;
 import com.example.server.models.Ngo;
 import com.example.server.services.ActivityService;
 import com.example.server.services.NgoService;
@@ -113,6 +114,16 @@ public class NgoController {
         {
             return new ResponseEntity<>("Error in deleting activity",HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<Ngo> getUser(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Ngo ngo = ngoDao.findByNgoname(username);
+        if(ngo == null){
+            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(ngo,HttpStatus.OK);
     }
 
 }

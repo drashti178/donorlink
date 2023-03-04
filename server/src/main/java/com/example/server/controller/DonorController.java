@@ -55,10 +55,13 @@ public class DonorController {
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<Donor> getUser(){
+    public ResponseEntity<?> getUser(){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Donor donor = donorDao.findByusername(username);
         if(donor == null){
+            Ngo ngo = ngoDao.findByNgoname(username);
+            if(ngo != null)
+                return new ResponseEntity<>(ngo,HttpStatus.OK);
             return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(donor,HttpStatus.OK);

@@ -1,4 +1,4 @@
-import { React, useState, } from "react";
+import { React, useContext, useState, } from "react";
 import {
   Typography,
   Avatar,
@@ -24,6 +24,7 @@ import axios from "axios";
 
 import '../../style.css';
 import base_url from "../../../api/bootapi";
+import { UserContext } from "../../../Context/UserContext";
 
 const NgoLogin = () => {
   const [inputs, setInputs] = useState({
@@ -34,6 +35,8 @@ const NgoLogin = () => {
     showPassword: false,
     isUser: false,
   });
+
+  const {user,setUser } = useContext(UserContext);
   const navigate = useNavigate();
  
   const handleChange = (e) => {
@@ -62,21 +65,39 @@ const NgoLogin = () => {
     e.preventDefault();
     
     onLogin(inputs);
-    console.log(inputs);
+    // console.log(inputs);
   };
-  const onLogin=(data)=>
+  const onLogin = async (data)=>
   {
-    axios.post(`${base_url}/auth/ngo/login`,data).then(
+    await axios.post(`${base_url}/auth/ngo/login`,data).then(
       (response)=>{
         localStorage.setItem("AccessToken",response.data.accessToken);
+        const getUser = async () => {
+          const token = "Bearer " + localStorage.getItem("AccessToken");
+          // console.log(token);
+          await axios.get(`${base_url}/user/profile`, {
+            headers: {
+              'Authorization': token,
+            }
+          }).then(
+            (response) => {
+              console.log(response.data);
+              setUser(response.data);
+            },
+            (error) => {
+              console.log(error);
+            }
+          )
+        }
         setTimeout(() => {
           alert("Login Successful");
         }, 100);
+        getUser();
         navigate('/');
       },
       (error)=>{
         console.log(error);
-        window.alert('Ngo name or password not matching');
+        // window.alert('Ngo name or password not matching');
         navigate('/ngo/login');
       }
     )

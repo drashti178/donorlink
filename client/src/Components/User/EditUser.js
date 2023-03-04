@@ -38,20 +38,45 @@ const EditUser = () => {
         type: "",
     });
 
-    useEffect(() => {
-        // console.log(context);
-        if (context == null) {
+    // console.log(context.user);
+    setTimeout(() => {
+        if (context.user == null) {
             setTimeout(() => {
                 alert('Log in First');
             }, 100);
             navigate('/user/login');
         }
         else {
-            context.password = "";
-            setInputs(context);
+            context.user.password = "";
+            setInputs(context.user);
         }
+    }, 100);
 
-    }, []);
+    // useEffect(() => {
+    //     console.log(context);
+    //     if (context == null) {
+    //         setTimeout(() => {
+    //             alert('Log in First');
+    //         }, 100);
+    //         navigate('/user/login');
+    //     }
+    //     else {
+    //         context.password = "";
+    //         setInputs(context);
+    //     }
+
+    // }, []);
+    // console.log(context);
+    // if (context == null) {
+    //     setTimeout(() => {
+    //         alert('Log in First');
+    //     }, 100);
+    //     navigate('/user/login');
+    // }
+    // else{
+    //     context.user.password = "";
+    //     setInputs(context.user);
+    // }
 
 
 

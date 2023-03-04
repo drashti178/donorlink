@@ -1,4 +1,4 @@
-import { React, useContext, useEffect, useState } from 'react';
+import { createContext, React, useContext, useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,7 +14,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import base_url from '../api/bootapi';
-import { UserContext } from '../Context/UserContext';
+import { DispatchUserContext, UserContext } from '../Context/UserContext';
 
 
 
@@ -22,6 +22,18 @@ function NavBar(props) {
 
   const [anchorElNav, setAnchorElNav] = useState(0);
   const navigate = useNavigate();
+
+  let role = "user";
+  const context = useContext(UserContext);
+
+  setTimeout(() => {
+    if (context.user) {
+      console.log(context);
+      role = context.user.role;
+    }
+    // console.log(context.user.role);
+    localStorage.setItem("role", role);
+  }, 100);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -38,29 +50,20 @@ function NavBar(props) {
   const LogoutNgo = (event) => {
     localStorage.removeItem("role");
     localStorage.removeItem("AccessToken");
+    // context = null;
+    // dispatchContext(null);
+    // context.setUser(null);
+    // context = useContext(UserContext);
     navigate('/ngo/login');
   };
 
-  const [role, setRole] = useState("user");
 
-  useEffect(() => {
-    decideRole();
-  }, []);
-
-  const context = useContext(UserContext);
-  const decideRole = () => {
-    if(context != null){
-      setRole(context.role);
-    }
-    console.log(role);
-    localStorage.setItem("role",role);
-  }
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  
+
 
   if (props.type === "home") {
     const pages = ['Activities', 'FundRaisers'];

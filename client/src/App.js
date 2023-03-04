@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useMemo, useState } from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 import ForgetPassword from "./Components/ForgetPassword";
@@ -13,15 +13,18 @@ import NgoHome from "./Components/NGO/home";
 import NgoProfile from "./Components/NGO/Profile/profile";
 import NgoLogin from "./Components/NGO/Ngo_Login/NgoLogin";
 import UserLogin from "./Components/User/UserLogin";
-import { UserContextProvider } from './Context/UserContext';
+import { UserContext } from "./Context/UserContext";
+// import { UserContextProvider } from './Context/UserContext';
 
 const App = () => {
 
+  const [user,setUser] = useState(null);
 
+  const value = useMemo(() => ({user,setUser}), [user,setUser]);
 
   return (
     <>
-      <UserContextProvider>
+      <UserContext.Provider value = {value}>
         <BrowserRouter>
           <Routes>
             <Route exact path='/user/login' element={<UserLogin />} />
@@ -39,7 +42,7 @@ const App = () => {
             <Route exact path='/forgetpassword' element={<ForgetPassword />} />
           </Routes>
         </BrowserRouter>
-      </UserContextProvider>
+      </UserContext.Provider>
     </>
   );
 };

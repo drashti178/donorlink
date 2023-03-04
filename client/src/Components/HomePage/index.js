@@ -109,7 +109,7 @@
 //   },
 //   cardcontainer : {
 //     display:"flex",
-    
+
 //     flexDirection: 'row',
 //     overflow:'auto',
 //     flexWrap: 'wrap' ,
@@ -285,43 +285,43 @@ let cards = [
   },
 ]
 const Home = () => {
-  
+
   let images = [
-    
-      'https://via.placeholder.com/355x140'
+
+    'https://via.placeholder.com/355x140'
     ,
-    
-      'https://via.placeholder.com/345x140'
-    
+
+    'https://via.placeholder.com/345x140'
+
   ]
 
-  const role = localStorage.getItem("role");
+  // const role = localStorage.getItem("role");
 
   return (
     <>
-    <NavBar type="ngohome"/>
-    <div>
-      <Button />
-    </div>
-    <div>
-    <Carousel images={images}/>
-    </div>
-    
+      <NavBar type="ngohome" />
+      <div>
+        <Button />
+      </div>
+      <div>
+        <Carousel images={images} />
+      </div>
+
       <Grid container spacing={5} margin="2">
-      <NgoCard />
-      <NgoCard />
-      <NgoCard />
-      <NgoCard />
+        <NgoCard />
+        <NgoCard />
+        <NgoCard />
+        <NgoCard />
       </Grid>
-    <Typography></Typography>
-    <h1 style={{}}>
-      Activities
-    </h1>
-    <div>
-      <Activities cards={cards} />
-    </div>
+      <Typography></Typography>
+      <h1 style={{}}>
+        Activities
+      </h1>
+      <div>
+        <Activities cards={cards} />
+      </div>
     </>
-   
+
   );
 };
 

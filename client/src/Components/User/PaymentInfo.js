@@ -89,7 +89,7 @@ const PaymentInfo = () => {
                 theme: {
                     color: "#3399cc",
                 }
-            }  
+            }
         }
         const token = "Bearer " + localStorage.getItem("AccessToken");
         const options = {
@@ -127,124 +127,124 @@ const PaymentInfo = () => {
                 color: "#3399cc",
             }
         }
+        const rzp1 = new window.Razorpay(options);
+        const payment = rzp1.open();
+        rzp1.on('payment.failed', function (response) {
+            alert(response.error.code);
+            alert(response.error.description);
+            alert(response.error.source);
+            alert(response.error.step);
+            alert(response.error.reason);
+            alert(response.error.metadata.order_id);
+            alert(response.error.metadata.payment_id);
+        })
+        console.log(payment.id);
     };
 
-    const rzp1 = new window.Razorpay(options);
-    const payment = rzp1.open();
-    rzp1.on('payment.failed', function (response) {
-        alert(response.error.code);
-        alert(response.error.description);
-        alert(response.error.source);
-        alert(response.error.step);
-        alert(response.error.reason);
-        alert(response.error.metadata.order_id);
-        alert(response.error.metadata.payment_id);
-    })
-    console.log(payment.id);
+
     // rzp1.close();
-};
 
-const handleSubmit = async (e) => {
-    e.preventDefault();
-    initPayment();
-    // onLogin(inputs)
-};
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        initPayment();
+        // onLogin(inputs)
+    };
 
-const handleChange = (e) => {
-    if (e.target.name === "amount" && e.target.value > 10000 && !login) {
-        alert('You cannot make payment of more than 10000 without login.');
-    }
-    else {
-        setInputs((prevState) => ({
-            ...prevState,
-            [e.target.name]: e.target.value,
-        }));
-        if (e.target.value > 0) {
-            setValid(true);
+    const handleChange = (e) => {
+        if (e.target.name === "amount" && e.target.value > 10000 && !login) {
+            alert('You cannot make payment of more than 10000 without login.');
         }
         else {
-            setValid(false);
+            setInputs((prevState) => ({
+                ...prevState,
+                [e.target.name]: e.target.value,
+            }));
+            if (e.target.value > 0) {
+                setValid(true);
+            }
+            else {
+                setValid(false);
+            }
         }
-    }
 
 
-};
+    };
 
-const paperStyle = {
-    padding: 20,
-    margin: "14.1vh auto",
-    width: 350,
+    const paperStyle = {
+        padding: 20,
+        margin: "14.1vh auto",
+        width: 350,
 
-};
+    };
 
-const smallDev = {
-    padding: 20,
-    margin: "14.1vh auto",
-    width: 320,
-};
+    const smallDev = {
+        padding: 20,
+        margin: "14.1vh auto",
+        width: 320,
+    };
 
-const theme = useTheme();
-const isMatch = useMediaQuery(theme.breakpoints.down("md"));
+    const theme = useTheme();
+    const isMatch = useMediaQuery(theme.breakpoints.down("md"));
 
-return (
-    <>
-        <NavBar type="home" />
-        <Grid align="center" className="gridStyle"  >
-            <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
-                <Grid align="center">
-                    <Avatar sx={{ width: 80, height: 80, backgroundColor: "#94726c" }}>
-                        <CreditScoreSharpIcon
-                            sx={{ fontSize: 70, backgroundColor: "#94726c" }}
-                        />
-                    </Avatar>
-                    <Typography sx={{ mt: 1.5 }} variant="h6">
-                        Payment
-                    </Typography>
-                </Grid>
-                <form onSubmit={handleSubmit}>
-
-                    <TextField
-                        name="amount"
-                        varient="outlined"
-                        label="Amount"
-                        value={inputs.amount}
-                        style={{ marginTop: "25px" }}
-                        onChange={handleChange}
-                        fullWidth
-                        required
-                    />
-
-                    <TextField
-                        name="remarks"
-                        varient="outlined"
-                        label="Remarks"
-                        value={inputs.remarks}
-                        style={{ marginTop: "25px" }}
-                        onChange={handleChange}
-                        fullWidth
-                    />
-
-                    <Grid
-                        container
-                        spacing={2}
-                        style={{ marginTop: "20px" }}
-                        direction="row"
-                        justifyContent="space-around"
-                        alignItems="center"
-                    >
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            sx={{ "&:hover": { backgroundColor: '#94726c', color: 'white', }, marginTop: 1, width: "50%", backgroundColor: '#94726c' }}
-                            disabled={!valid}
-                        >
-                            Donate
-                        </Button>
+    return (
+        <>
+            <NavBar type="home" />
+            <Grid align="center" className="gridStyle"  >
+                <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
+                    <Grid align="center">
+                        <Avatar sx={{ width: 80, height: 80, backgroundColor: "#94726c" }}>
+                            <CreditScoreSharpIcon
+                                sx={{ fontSize: 70, backgroundColor: "#94726c" }}
+                            />
+                        </Avatar>
+                        <Typography sx={{ mt: 1.5 }} variant="h6">
+                            Payment
+                        </Typography>
                     </Grid>
-                </form>
-            </Paper>
-        </Grid>
-    </>
-)
+                    <form onSubmit={handleSubmit}>
 
+                        <TextField
+                            name="amount"
+                            varient="outlined"
+                            label="Amount"
+                            value={inputs.amount}
+                            style={{ marginTop: "25px" }}
+                            onChange={handleChange}
+                            fullWidth
+                            required
+                        />
+
+                        <TextField
+                            name="remarks"
+                            varient="outlined"
+                            label="Remarks"
+                            value={inputs.remarks}
+                            style={{ marginTop: "25px" }}
+                            onChange={handleChange}
+                            fullWidth
+                        />
+
+                        <Grid
+                            container
+                            spacing={2}
+                            style={{ marginTop: "20px" }}
+                            direction="row"
+                            justifyContent="space-around"
+                            alignItems="center"
+                        >
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                sx={{ "&:hover": { backgroundColor: '#94726c', color: 'white', }, marginTop: 1, width: "50%", backgroundColor: '#94726c' }}
+                                disabled={!valid}
+                            >
+                                Donate
+                            </Button>
+                        </Grid>
+                    </form>
+                </Paper>
+            </Grid>
+        </>
+    )
+}
 export default PaymentInfo

@@ -1,6 +1,8 @@
 package com.example.server.controller;
+import com.example.server.dao.DonationDao;
 import com.example.server.dao.NgoDao;
 import com.example.server.dao.DonorDao;
+import com.example.server.models.Donation;
 import com.example.server.models.Donor;
 import com.example.server.models.Ngo;
 import com.example.server.security.TokenGenerator;
@@ -10,6 +12,7 @@ import com.example.server.dto.NgoLoginDto;
 import com.example.server.services.DonorService;
 import com.example.server.dto.DonorLoginDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.catalina.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Date;
 
 
 @CrossOrigin("*")
@@ -46,6 +50,8 @@ public class AuthController {
     private NgoDao ngoDao;
     @Autowired
     private DonorDao donorDao;
+    @Autowired
+    private DonationDao donationDao;
     @Autowired
     private NgoService ngoService;
     @Autowired
