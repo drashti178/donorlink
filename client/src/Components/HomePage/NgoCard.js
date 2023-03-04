@@ -5,8 +5,10 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const NgoCard = () => {
+  const navigate = useNavigate();
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
@@ -16,7 +18,7 @@ const NgoCard = () => {
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          NGO
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Lizards are a widespread group of squamate reptiles, with over 6,000
@@ -24,7 +26,7 @@ const NgoCard = () => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Click for More Details</Button>
+        <Button size="small" onClick = {() => { navigate('/user/payment') }} >Donate</Button>
       </CardActions>
     </Card>
   );

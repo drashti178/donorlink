@@ -54,16 +54,12 @@ public class NgoController {
         ObjectMapper objectMapper = new ObjectMapper();
         Activity activity = objectMapper.readValue(activityBody, Activity.class);
 
-
-
         activity.setNgo(ngo);
         if(file1.isEmpty())
         {
             return new ResponseEntity<>("Provide profile Image", HttpStatus.BAD_REQUEST);
-
         }
         else{
-
             String filename = this.ngoService.uploadImage(activitypath,file1);
             System.out.println("123\n");
             System.out.println(filename);

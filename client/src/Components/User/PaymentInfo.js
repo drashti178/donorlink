@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
     Typography,
     Avatar,
@@ -12,63 +12,93 @@ import {
 import CreditScoreSharpIcon from '@mui/icons-material/CreditScoreSharp';
 import axios from "axios";
 import base_url from "../../api/bootapi";
+import NavBar from "../Navbar";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../Context/UserContext";
 
 const PaymentInfo = () => {
-    const id = 4;
+    const id = 13;
+    const ngoId = 2;
 
+    const context = useContext(UserContext);
+    const navigate = useNavigate();
     const [valid, setValid] = useState(false);
     const [login, setLogin] = useState(false);
+
     const [inputs, setInputs] = useState({
         amount: 0,
         remarks: "",
     });
 
-    useEffect(() => {
-        loadUser();
-    },[]);
-
-    const loadUser = async () => {
-        await axios.get(`${base_url}/user/profile/${id}`).then(
-            (response) => {
-                // console.log(response.data);
-                // console.log(typeof response.data)
-                setUser(response.data)
-            },
-            (error) => {
-                console.log(error);
-            }
-        )
-        // console.log(inputs);
-    }
-
-    const [user,setUser] = useState({
+    const [user, setUser] = useState({
         name: "",
         username: "",
         password: "",
         email: "",
         country: "",
         contactno: "",
-        adharno: "",    
+        adharno: "",
         profession: "",
         type: "",
     })
 
-    // useEffect(() => {
-    //     loadUser();
-    // },[]);
-    // useEffect(() => {
+    useEffect(() => {
+        // console.log(context);
+        if (context != null) {
+            setUser(context);
+            setLogin(true);
+        }
+        else {
+            setLogin(false);
+        }
 
-    // },[inputs]);
+    }, []);
 
     const initPayment = () => {
+        if (localStorage.getItem("AccessToken") == null && inputs.amount <= 10000) {
+            const options = {
+                key: "rzp_test_ye5vdixvFR6hVR",
+                amount: inputs.amount * 100,
+                currency: "INR",
+                name: "Donation",
+                description: "Test Transaction",
+                image: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Y2hhcml0eXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+                "customer": {
+                    "contact": user.contactno,
+                    "email": user.email,
+                    "name": user.name
+                },
+                "notify": {
+                    "email": true,
+                    "sms": true
+                },
+                handler: async () => {
+                    await axios.post(`${base_url}/auth/donation/update/${ngoId}/${inputs.amount}`, {
+                        headers: {
+                            'Access-Control-Allow-Origin': "*"
+                        }
+                    }).then(
+                        (response) => {
+                            console.log(response);
+                        },
+                        (error) => {
+                            console.log(error);
+                        }
+                    )
+                },
+                theme: {
+                    color: "#3399cc",
+                }
+            }  
+        }
+        const token = "Bearer " + localStorage.getItem("AccessToken");
         const options = {
             key: "rzp_test_ye5vdixvFR6hVR",
-            amount: inputs.amount*100,
+            amount: inputs.amount * 100,
             currency: "INR",
             name: "Donation",
             description: "Test Transaction",
             image: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Y2hhcml0eXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-            // callback_url:`http://localhost:3000/user/updateDonation/${id}/${inputs.amount}`,
             "customer": {
                 "contact": user.contactno,
                 "email": user.email,
@@ -78,79 +108,87 @@ const PaymentInfo = () => {
                 "email": true,
                 "sms": true
             },
-            handler: async (response) => {
-                try {
-                    const verifyUrl = `${base_url}/user/updateDonation/${id}/${inputs.amount}`;
-                    const { data } = await axios.post(verifyUrl, response);
-                    console.log(data);
-                    
-                } catch (error) {
-                    console.log(error);
-                }
+            handler: async () => {
+                await axios.post(`${base_url}/donation/update/${ngoId}/${inputs.amount}`, {
+                    headers: {
+                        'Authorization': token,
+                        'Access-Control-Allow-Origin': "*"
+                    }
+                }).then(
+                    (response) => {
+                        console.log(response);
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                )
             },
-
             theme: {
                 color: "#3399cc",
-            },
-        };
-        const rzp1 = new window.Razorpay(options);
-        const payment = rzp1.open();
-        rzp1.on('payment.failed', function (response){
-            alert(response.error.code);
-            alert(response.error.description);
-            alert(response.error.source);
-            alert(response.error.step);
-            alert(response.error.reason);
-            alert(response.error.metadata.order_id);
-            alert(response.error.metadata.payment_id);
-        })
-        console.log(payment.id);
-        // rzp1.close();
+            }
+        }
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        initPayment();
-        // onLogin(inputs)
-    };
+    const rzp1 = new window.Razorpay(options);
+    const payment = rzp1.open();
+    rzp1.on('payment.failed', function (response) {
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+    })
+    console.log(payment.id);
+    // rzp1.close();
+};
 
-    const handleChange = (e) => {
-        if (e.target.name === "amount" && e.target.value > 10000 && !login) {
-            alert('You cannot make payment of more than 10000 without login.');
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    initPayment();
+    // onLogin(inputs)
+};
+
+const handleChange = (e) => {
+    if (e.target.name === "amount" && e.target.value > 10000 && !login) {
+        alert('You cannot make payment of more than 10000 without login.');
+    }
+    else {
+        setInputs((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+        }));
+        if (e.target.value > 0) {
+            setValid(true);
         }
         else {
-            setInputs((prevState) => ({
-                ...prevState,
-                [e.target.name]: e.target.value,
-            }));
-            if (e.target.value > 0) {
-                setValid(true);
-            }
-            else {
-                setValid(false);
-            }
+            setValid(false);
         }
+    }
 
 
-    };
+};
 
-    const paperStyle = {
-        padding: 20,
-        margin: "14.1vh auto",
-        width: 350,
+const paperStyle = {
+    padding: 20,
+    margin: "14.1vh auto",
+    width: 350,
 
-    };
+};
 
-    const smallDev = {
-        padding: 20,
-        margin: "14.1vh auto",
-        width: 320,
-    };
+const smallDev = {
+    padding: 20,
+    margin: "14.1vh auto",
+    width: 320,
+};
 
-    const theme = useTheme();
-    const isMatch = useMediaQuery(theme.breakpoints.down("md"));
+const theme = useTheme();
+const isMatch = useMediaQuery(theme.breakpoints.down("md"));
 
-    return (
+return (
+    <>
+        <NavBar type="home" />
         <Grid align="center" className="gridStyle"  >
             <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
                 <Grid align="center">
@@ -200,15 +238,13 @@ const PaymentInfo = () => {
                             sx={{ "&:hover": { backgroundColor: '#94726c', color: 'white', }, marginTop: 1, width: "50%", backgroundColor: '#94726c' }}
                             disabled={!valid}
                         >
-                            Pay
+                            Donate
                         </Button>
                     </Grid>
                 </form>
             </Paper>
         </Grid>
-    )
-
-
-}
+    </>
+)
 
 export default PaymentInfo

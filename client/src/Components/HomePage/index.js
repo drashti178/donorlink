@@ -209,20 +209,23 @@
 //   );
 // }
 
-import React from 'react';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import NavBar from '../Navbar';
 
 import Activities from '../NGO/Activity';
 import Carousel from '../carousel';
 
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { Grid, Box } from "@mui/material";
-import './style.css'
+import '../../Components/style.css'
 import Images from "../../constants/images";
 import { UserContext } from "../../Context/UserContext";
+import NgoCard from './NgoCard';
+import axios from 'axios';
+import base_url from '../../api/bootapi';
+
 
 
 let cards = [
@@ -292,16 +295,28 @@ const Home = () => {
     
   ]
 
-  
+  const role = localStorage.getItem("role");
+
   return (
     <>
-    <NavBar type="home"/>
+    <NavBar type="ngohome"/>
     <div>
       <Button />
     </div>
     <div>
     <Carousel images={images}/>
     </div>
+    
+      <Grid container spacing={5} margin="2">
+      <NgoCard />
+      <NgoCard />
+      <NgoCard />
+      <NgoCard />
+      </Grid>
+    <Typography></Typography>
+    <h1 style={{}}>
+      Activities
+    </h1>
     <div>
       <Activities cards={cards} />
     </div>

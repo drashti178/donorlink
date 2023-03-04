@@ -8,8 +8,7 @@ import com.example.server.services.NgoService;
 import com.example.server.dto.AuthResponseDto;
 import com.example.server.dto.NgoLoginDto;
 import com.example.server.services.DonorService;
-import com.example.server.dto.UserLoginDto;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.example.server.dto.DonorLoginDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +28,6 @@ import java.io.IOException;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/auth")
-
 public class AuthController {
     private AuthenticationManager authenticationManager;
     private PasswordEncoder passwordEncoder;
@@ -43,6 +41,7 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
         this.tokenGenerator = tokenGenerator;
     }
+
     @Autowired
     private NgoDao ngoDao;
     @Autowired
@@ -62,7 +61,7 @@ public class AuthController {
     }
 
     @PostMapping("/ngo/signup")
-    public ResponseEntity<String> addNgo(@RequestParam("NgoBody") String ngoBody, @RequestParam("profile") MultipartFile file1, @RequestParam("certificate") MultipartFile file2) throws IOException {
+    public ResponseEntity<String> addNgo(@RequestParam("data") String ngoBody, @RequestParam("profile") MultipartFile file1, @RequestParam("certificate") MultipartFile file2) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         Ngo ngo= objectMapper.readValue(ngoBody,Ngo.class);
         if(ngoDao.existsByNgoname(ngo.getNgoname()))
@@ -102,9 +101,9 @@ public class AuthController {
     @PostMapping("/ngo/login")
     public ResponseEntity<AuthResponseDto> ngoLogin(@RequestBody NgoLoginDto logindto)
     {
-        if(donorDao.existsByEmail(logindto.getNgoname()))
+        if(ngoDao.existsByEmail(logindto.getEmail()))
         {
-            logindto.setNgoname(ngoDao.findByEmail(logindto.getNgoname()).getNgoname());
+            logindto.setNgoname(ngoDao.findByEmail(logindto.getEmail()).getNgoname());
         }
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(logindto.getNgoname(),logindto.getPassword())
@@ -118,7 +117,7 @@ public class AuthController {
     }
 
     @PostMapping("/user/signup")
-    public ResponseEntity<String> addUser(@RequestParam("donorBody") String donorBody, @RequestParam("profile") MultipartFile file1) throws IOException {
+    public ResponseEntity<String> addUser(@RequestParam("data") String donorBody, @RequestParam("profile") MultipartFile file1) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         Donor donor= objectMapper.readValue(donorBody, Donor.class);
 
@@ -129,10 +128,9 @@ public class AuthController {
         if(file1.isEmpty())
         {
             return new ResponseEntity<>("Provide profile Image", HttpStatus.BAD_REQUEST);
-
         }
         else{
-            String filename = this.ngoService.uploadImage(userprofilepath,file1);
+            String filename = this.donorService.uploadImage(userprofilepath,file1);
             System.out.println("123\n");
             System.out.println(filename);
             donor.setProfileImgName(filename);
@@ -143,12 +141,12 @@ public class AuthController {
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
     }
     @PostMapping("/user/login")
-    public ResponseEntity<AuthResponseDto> userLogin(@RequestBody UserLoginDto logindto)
+    public ResponseEntity<AuthResponseDto> userLogin(@RequestBody DonorLoginDto logindto)
     {
-        if(donorDao.existsByEmail(logindto.getUsername()))
-        {
-            logindto.setUsername(donorDao.findByEmail(logindto.getUsername()).getUsername());
-        }
+//        if(donorDao.existsByusername(logindto.getUsername()))
+//        {
+//            logindto.setEmail(donorDao.findByusername(logindto.getUsername()).getUsername());
+//        }
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(logindto.getUsername(),logindto.getPassword())
         );
@@ -159,10 +157,16 @@ public class AuthController {
 
     }
 
+    @PostMapping("/donation/update/{ngo_id}/{amount}")
+    public ResponseEntity<String> updateDonation(@PathVariable Long ngo_id, @PathVariable Long amount) {
+        Ngo ngo = ngoService.getNgo(ngo_id);
 
+        Date date = new Date();
+        ngo.setTotaldonation(amount);
 
-
-
-
+        Donation donation = new Donation(ngo, null, date, (amount > 2000) ? true : false, amount);
+        donationDao.save(donation);
+        return new ResponseEntity<>("Donation updated successfully", HttpStatus.OK);
+    }
 
 }

@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import {
     Grid,
     Paper,
@@ -13,7 +13,8 @@ import Second from "./second";
 import { Box } from "@mui/system";
 import axios from "axios";
 import base_url from "../../../api/bootapi";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from "../../../Context/UserContext";
 const steps = ['Account Information', 'Review Information'];
 
 const UserSignup = () => {
@@ -25,7 +26,7 @@ const UserSignup = () => {
         email: "",
         country: "",
         contactno: "",
-        adharno: "",    
+        adharno: "",
         profession: "",
         type: "",
     });
@@ -77,16 +78,20 @@ const UserSignup = () => {
         SetPageno(pageno - 1)
         SetActivestep(activestep - 1);
     }
+
+    var formData = new FormData();
+    formData.append("data",JSON.stringify(inputs));
+    formData.append("profile",profile);
+    
+    // console.log(JSON.stringify(inputs));
     let submit = (e) => {
         e.preventDefault();
-        // console.log(inputs);
-        // console.log(profile);
-        postData(inputs);
-        
+        postData(formData);
     }
 
     const postData = (data) => {
-        axios.post(`${base_url}/authUser/user/signup`, data).then(
+        console.log(data);
+        axios.post(`${base_url}/auth/user/signup`, data).then(
             (response) => {
                 console.log(response);
                 console.log("success");
@@ -96,32 +101,34 @@ const UserSignup = () => {
                 console.log(error);
                 console.log("Failure");
             }
-
         )
     }
 
     const paperStyle = {
-        
         padding: 20,
         width: 900,
-        marginTop : "4%"
-     
+        marginTop: "4%"
+
     };
 
     const smallDev = {
         padding: 20,
         width: 500,
     };
+    
+    
 
     const theme = useTheme();
     const isMatch = useMediaQuery(theme.breakpoints.down("md"));
     return (
         <>
             <Grid align="center" className="gridStyle" >
-                <Paper elevation = {5} style={!isMatch ? paperStyle : smallDev}>
+                <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
                     <Box>
-                        <Stepper activeStep={activestep} style={{marginTop:"5%" ,marginLeft:"15%",
-    width: "70%"}} >
+                        <Stepper activeStep={activestep} style={{
+                            marginTop: "5%", marginLeft: "15%",
+                            width: "70%"
+                        }} >
                             {steps.map((label, index) => {
 
                                 return (

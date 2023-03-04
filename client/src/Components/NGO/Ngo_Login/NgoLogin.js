@@ -66,10 +66,9 @@ const NgoLogin = () => {
   };
   const onLogin=(data)=>
   {
-    axios.post(`${base_url}/authNgo/ngo/login`,data).then(
+    axios.post(`${base_url}/auth/ngo/login`,data).then(
       (response)=>{
-        // localStorage.setItem("AccessToken",response.data.accessToken);
-        localStorage.setItem("role","ngo");
+        localStorage.setItem("AccessToken",response.data.accessToken);
         setTimeout(() => {
           alert("Login Successful");
         }, 100);
@@ -77,7 +76,8 @@ const NgoLogin = () => {
       },
       (error)=>{
         console.log(error);
-        console.log("Error");
+        window.alert('Ngo name or password not matching');
+        navigate('/ngo/login');
       }
     )
   }
@@ -97,7 +97,7 @@ const NgoLogin = () => {
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <Grid align="center" className="gridStyle">
+    <Grid align="center" className="gridNgoStyle">
       <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
         <Grid align="center">
           <Avatar sx={{ width: 60, height: 60 }}>

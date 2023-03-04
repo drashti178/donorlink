@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import {
+
   Grid,
   Paper,
   useTheme,
@@ -14,19 +15,17 @@ import Third from "./third";
 import { Box } from "@mui/system";
 import axios from "axios";
 import base_url from "../../../../api/bootapi";
-import { useNavigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 
 
 const steps = ['Account Information', 'Contact Information', 'Review Information'];
 
 
 const NgoSignup = () => {
-  const navigate = useNavigate();
   let [inputs, setInputs] = useState({
     ngoname: "",
-    email: "",
     password: "",
+    email: "",
     tagline: "",
     founder: "",
     areaofwork: "",
@@ -35,7 +34,7 @@ const NgoSignup = () => {
     pincode: "",
     mobile: "",
     weblink: "",
-    has80G: "False"
+    has80G: "false"
   });
 
   let [profile, setProfile] = useState(null);
@@ -43,21 +42,8 @@ const NgoSignup = () => {
   const [certiUrl, setCertiUrl] = useState(null);
   let [certificate, setCertificate] = useState("");
   const [activestep, SetActtivestep] = useState(0);
-  const getAllNgos = () => {
-    axios.get(`${base_url}/getNgos`).then(
-      (response) => {
-        console.log(response);
-
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
-  }
-  useEffect(() => {
-    getAllNgos();
-  }, []);
-
+ 
+  const navigate = useNavigate();
   useEffect(() => {
     if (profile) {
       window.alert('Image Uploaded Successfully');
@@ -80,8 +66,9 @@ const NgoSignup = () => {
   let onChangeData = (event) => {
     let name = event.target.name;
     let value = event.target.value;
-
     setInputs((values) => ({ ...values, [name]: value }));
+    // console.log(inputs.has80G);
+    
   }
 
   let [pageno, SetPageno] = useState(1);
@@ -94,26 +81,29 @@ const NgoSignup = () => {
     SetPageno(pageno - 1)
     SetActtivestep(activestep - 1);
   }
+  var formData = new FormData();
+  formData.append("data",JSON.stringify(inputs));
+
+ 
+  formData.append("profile",profile);
+  formData.append("certificate",certificate);
+  // console.log(JSON.stringify(inputs));
+
+ 
   let submit = (e) => {
-    console.log(inputs);
-    console.log(profile);
-    console.log(certificate);
-    postData(inputs,profile,certificate);
+    // console.log(inputs);
+    // console.log(profile);
+    // console.log(certificate);
+    // console.log(formData);
+    postData(formData);
     e.preventDefault();
   }
-  const headers = {
-    'Content-Type': 'multipart/form-data'
-    
-  }
-  
-  const postData = (data,profile,certificate) => {
-    axios.post(`${base_url}/ngo/signup`, data,{
-      headers: headers
-    }).then(
+
+  const postData = (data) => {
+    axios.post(`${base_url}/auth/ngo/signup`, data).then(
       (response) => {
         console.log(response);
         console.log("success");
-        navigate('/ngo/login');
         navigate('/ngo/login');
       },
       (error) => {
@@ -153,7 +143,6 @@ const NgoSignup = () => {
                   </Step>
 
                 );
-
               })}
 
 
@@ -163,8 +152,6 @@ const NgoSignup = () => {
         </Paper>
       </Grid>
     </>
-
-
   );
 };
 export default NgoSignup;

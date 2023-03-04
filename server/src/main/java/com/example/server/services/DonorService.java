@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.util.List;
 
 public interface DonorService {
-    public List<Donor> getUsers();
+    public List<Donor> getDonors();
 
-    public Donor addUser(Donor user);
-    public Donor getUser(Long id);
+    public Donor addDonor(Donor donor);
+    public Donor getDonor(Long id);
     public String uploadImage(String path, MultipartFile file) throws IOException;
 
 }

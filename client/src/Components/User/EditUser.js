@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import {
     Grid,
     Paper,
@@ -13,11 +13,19 @@ import Second from "../User/User_Signup/second";
 import { Box } from "@mui/system";
 import axios from "axios";
 import base_url from "../../api/bootapi";
-import {useNavigate} from 'react-router-dom';
-import "../../Components/style.css"
+import { useNavigate } from 'react-router-dom';
+import "../../Components/style.css";
+import { UserContext } from "../../Context/UserContext";
+// import pics from "../../../../server/static/images/userprofileImgs";
+
 const steps = ['Account Information', 'Review Information'];
 
+
 const EditUser = () => {
+
+    const navigate = useNavigate();
+    const context = useContext(UserContext);
+
     let [inputs, setInputs] = useState({
         name: "",
         username: "",
@@ -25,12 +33,28 @@ const EditUser = () => {
         email: "",
         country: "",
         contactno: "",
-        adharno: "",    
+        adharno: "",
         profession: "",
         type: "",
     });
 
-    const navigate = useNavigate();
+    useEffect(() => {
+        // console.log(context);
+        if (context == null) {
+            setTimeout(() => {
+                alert('Log in First');
+            }, 100);
+            navigate('/user/login');
+        }
+        else {
+            context.password = "";
+            setInputs(context);
+        }
+
+    }, []);
+
+
+
     let [profile, setProfile] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
     const [activestep, SetActivestep] = useState(0);
@@ -38,7 +62,10 @@ const EditUser = () => {
     useEffect(() => {
         if (profile) {
             // console.log(profile);
-            setImageUrl(URL.createObjectURL(profile));
+            var binaryData = [];
+            binaryData.push(profile);
+            setImageUrl(window.URL.createObjectURL(new Blob(binaryData, { type: "application/zip" })));
+
         }
     }, [profile]);
 
@@ -63,37 +90,30 @@ const EditUser = () => {
         SetPageno(pageno - 1)
         SetActivestep(activestep - 1);
     }
+
+    var formData = new FormData();
+    formData.append("data", JSON.stringify(inputs));
+    formData.append("profile", profile);
+
     let submit = (e) => {
         e.preventDefault();
         // console.log(inputs);
         // console.log(profile);
-        postData(inputs);
-        
+        postData(formData);
     }
 
-    useEffect(() => {
-        loadUser();
-    },[]);
-
-    const loadUser = async () => {
-        await axios.get(`${base_url}/user/profile/${id}`).then(
-            (response) => {
-                console.log(response.data);
-                console.log(typeof response.data)
-                setInputs(response.data)
-            },
-            (error) => {
-                console.log(error);
-            }
-        )
-        // console.log(inputs);
-    }
     const postData = (data) => {
-        axios.put(`${base_url}/user/edit`, data).then(
+        console.log(data);
+        const token = "Bearer " + localStorage.getItem("AccessToken");
+        axios.put(`${base_url}/user/edit`, data, {
+            headers: {
+                'Authorization': token,
+            }
+        }).then(
             (response) => {
                 console.log(response);
                 console.log("success");
-                navigate(`/user/profile/${id}`);
+                navigate(`/user/profile`);
             },
             (error) => {
                 console.log(error);
@@ -103,11 +123,11 @@ const EditUser = () => {
     }
 
     const paperStyle = {
-        
+
         padding: 20,
         width: 900,
-        marginTop : "4%"
-     
+        marginTop: "4%"
+
     };
 
     const smallDev = {
@@ -120,10 +140,12 @@ const EditUser = () => {
     return (
         <>
             <Grid align="center" className="gridStyle" >
-                <Paper elevation = {5} style={!isMatch ? paperStyle : smallDev}>
+                <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
                     <Box>
-                        <Stepper activeStep={activestep} style={{marginTop:"5%" ,marginLeft:"15%",
-    width: "70%"}} >
+                        <Stepper activeStep={activestep} style={{
+                            marginTop: "5%", marginLeft: "15%",
+                            width: "70%"
+                        }} >
                             {steps.map((label, index) => {
 
                                 return (
@@ -134,8 +156,6 @@ const EditUser = () => {
                                 );
 
                             })}
-
-
                         </Stepper>
                     </Box>
                     {(pageno === 1) ? <First nextfun={next} changefun={onChangeData} inputs={inputs} onFileUpload={onProfileUpload} profile={profile} imageUrl={imageUrl} /> : <Second nextfun={next} prevfun={prev} submitfun={submit} changefun={onChangeData} inputs={inputs} />}

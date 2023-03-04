@@ -17,43 +17,43 @@ import java.util.UUID;
 public class DonorServiceImpl implements DonorService {
 
     @Autowired
-    private DonorDao userDao;
+    private DonorDao donorDao;
 
     @Override
-    public List<Donor> getUsers() {
-        List<Donor> users;
+    public List<Donor> getDonors() {
+        List<Donor> donors;
         try{
-            users = (List<Donor>)userDao.findAll();
+            donors = (List<Donor>)donorDao.findAll();
         }
         catch (Exception e)
         {
             throw e;
         }
-        return users;
+        return donors;
     }
 
     @Override
-    public Donor addUser(Donor user) {
+    public Donor addDonor(Donor donor) {
         try{
-            userDao.save(user);
+            donorDao.save(donor);
         }
         catch(Exception e){
             throw e;
         }
-        return user;
+        return donor;
     }
 
     @Override
-    public Donor getUser(Long id) {
-        Donor user = new Donor();
+    public Donor getDonor(Long id) {
+        Donor donor = new Donor();
         try{
-            user = userDao.getReferenceById(id);
+            donor = donorDao.getReferenceById(id);
         }
         catch (Exception e)
         {
             throw e;
         }
-        return user;
+        return donor;
     }
     @Override
     public String uploadImage(String path, MultipartFile file) throws IOException {

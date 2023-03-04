@@ -1,4 +1,4 @@
-import { React,useState} from 'react';
+import { React, useContext, useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,11 +12,14 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import base_url from '../api/bootapi';
+import { UserContext } from '../Context/UserContext';
 
 
 
 function NavBar(props) {
-  
+
   const [anchorElNav, setAnchorElNav] = useState(0);
   const navigate = useNavigate();
 
@@ -24,7 +27,7 @@ function NavBar(props) {
     setAnchorElNav(event.currentTarget);
   };
   const NgoProfile = (event) => {
-    navigate('/ngo/profile');
+    navigate('/user/edit');
   };
   const UserProfile = (event) => {
     navigate('/user/profile');
@@ -33,124 +36,37 @@ function NavBar(props) {
     navigate('/ngo/login');
   };
   const LogoutNgo = (event) => {
+    localStorage.removeItem("role");
+    localStorage.removeItem("AccessToken");
     navigate('/ngo/login');
   };
-  
 
+  const [role, setRole] = useState("user");
+
+  useEffect(() => {
+    decideRole();
+  }, []);
+
+  const context = useContext(UserContext);
+  const decideRole = () => {
+    if(context != null){
+      setRole(context.role);
+    }
+    console.log(role);
+    localStorage.setItem("role",role);
+  }
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
+  
 
-
-  if(props.type === "home")
-  {
+  if (props.type === "home") {
     const pages = ['Activities', 'FundRaisers'];
 
-  return (
-    <AppBar position="static" sx={{backgroundColor:"darkcyan"}}>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: "'Aboreto', cursive;",
-              fontWeight: 700,
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            Donor Link
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            Donor Link
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
-             <Button sx={{color:"white"}} onClick={LoginPage}>Login</Button>
-          </Box>
-
-         
-        </Toolbar>
-      </Container>
-    </AppBar>
-  );
-              }
-  if(props.type === "ngohome")
-  {
-    const pages = ['Activities', 'FundRaisers'];
     return (
-      <AppBar position="static" sx={{backgroundColor:"darkcyan"}}>
+      <AppBar position="static" sx={{ backgroundColor: "darkcyan" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -164,14 +80,13 @@ function NavBar(props) {
                 display: { xs: 'none', md: 'flex' },
                 fontFamily: "'Aboreto', cursive;",
                 fontWeight: 700,
-                // letterSpacing: '.3rem',
                 color: 'inherit',
                 textDecoration: 'none',
               }}
             >
               Donor Link
             </Typography>
-  
+
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size="large"
@@ -238,38 +153,20 @@ function NavBar(props) {
                 </Button>
               ))}
             </Box>
-           
             <Box sx={{ flexGrow: 0 }}>
-            <Button sx={{color:"white"}} onClick={LogoutNgo}>Logout</Button>
-                <IconButton onClick={NgoProfile} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                </IconButton>
+              <Button sx={{ color: "white" }} onClick={LoginPage}>Login</Button>
             </Box>
+
+
           </Toolbar>
         </Container>
       </AppBar>
     );
-
   }
-  if(props.type === "ngoprofile")
-  {
-    
-    const clickMyactivities = (event) =>
-  {
-    props.onDataReceived("Activities");
-    console.log("1");
-  }
-  const clickDonations = (event) =>{
-    props.onDataReceived("Donations");
-    console.log("2");
-  }
-  const clickMyRequest = (event) =>{
-    props.onDataReceived("Requests");
-    console.log("3");
-  }
-    const pages = [{"page":"MyActivities","event":clickMyactivities}, {"page":"Donation","event":clickDonations},{"page":"MyRequests","event":clickMyRequest},];
+  if (props.type === "ngohome") {
+    const pages = ['Activities', 'FundRaisers'];
     return (
-      <AppBar position="static" sx={{backgroundColor:"darkcyan"}}>
+      <AppBar position="static" sx={{ backgroundColor: "darkcyan" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -290,7 +187,124 @@ function NavBar(props) {
             >
               Donor Link
             </Typography>
-  
+
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'none' },
+                }}
+              >
+                {pages.map((page) => (
+                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{page}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href=""
+              sx={{
+                mr: 2,
+                display: { xs: 'flex', md: 'none' },
+                flexGrow: 1,
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              Donor Link
+            </Typography>
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+              {pages.map((page) => (
+                <Button
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  {page}
+                </Button>
+              ))}
+            </Box>
+
+            <Box sx={{ flexGrow: 0 }}>
+              <Button sx={{ color: "white" }} onClick={LogoutNgo}>Logout</Button>
+              <IconButton onClick={NgoProfile} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+    );
+
+  }
+  if (props.type === "ngoprofile") {
+
+    const clickMyactivities = (event) => {
+      props.onDataReceived("Activities");
+      console.log("1");
+    }
+    const clickDonations = (event) => {
+      props.onDataReceived("Donations");
+      console.log("2");
+    }
+    const clickMyRequest = (event) => {
+      props.onDataReceived("Requests");
+      console.log("3");
+    }
+    const pages = [{ "page": "MyActivities", "event": clickMyactivities }, { "page": "Donation", "event": clickDonations }, { "page": "MyRequests", "event": clickMyRequest },];
+    return (
+      <AppBar position="static" sx={{ backgroundColor: "darkcyan" }}>
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: "'Aboreto', cursive;",
+                fontWeight: 700,
+                // letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              Donor Link
+            </Typography>
+
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size="large"
@@ -344,7 +358,7 @@ function NavBar(props) {
                 textDecoration: 'none',
               }}
             >
-             Donor Link
+              Donor Link
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((p) => (
@@ -357,10 +371,10 @@ function NavBar(props) {
                 </Button>
               ))}
             </Box>
-  
+
             <Box sx={{ flexGrow: 0 }}>
-            <Button sx={{color:"white"}} onClick={LogoutNgo}>Logout</Button>
-                
+              <Button sx={{ color: "white" }} onClick={LogoutNgo}>Logout</Button>
+
             </Box>
           </Toolbar>
         </Container>
