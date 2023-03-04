@@ -25,6 +25,7 @@ public class Ngo {
     private boolean has80G;
     private String ProfileImgName;
     private String CertiImgName;
+    private String role="ngo";
 
 
     public Ngo( String ngoname, String password, String email, String tagline, String founder, String areaofwork, String address, String country, String pincode, String mobile, String weblink,Boolean has80G) {
@@ -171,5 +172,13 @@ public class Ngo {
 
     public void setCertiImgName(String certiImgName) {
         CertiImgName = certiImgName;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

@@ -17,11 +17,9 @@ public class Donor {
     private long contactno;
     private long adharno;
     private String profession;
-    private String type;
+    private String role="user";
     private String ProfileImgName;
     private long totaldonation;
-    @ManyToMany
-    private Role role;
 
     public Donor(long id, String name, String username, String password, String email, String country, long contactno, long adharno, String profession, String type) {
         this.id = id;
@@ -33,7 +31,7 @@ public class Donor {
         this.contactno = contactno;
         this.adharno = adharno;
         this.profession = profession;
-        this.type = type;
+        this.role = type;
         this.totaldonation = 0;
     }
 
@@ -112,12 +110,12 @@ public class Donor {
         this.profession = profession;
     }
 
-    public String getType() {
-        return type;
+    public String getRole() {
+        return role;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setROle(String type) {
+        this.role = type;
     }
 
     public long getTotaldonation() {

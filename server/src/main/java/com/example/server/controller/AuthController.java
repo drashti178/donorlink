@@ -61,8 +61,8 @@ public class AuthController {
         return "Welcome to Donorlinker";
     }
 
-    @PostMapping("/ngo/signup")
-    public ResponseEntity<String> addNgo(@RequestParam("NgoBody") String ngoBody, @RequestParam("profile") MultipartFile file1, @RequestParam("certificate") MultipartFile file2) throws IOException {
+    @PostMapping("ngo/signup")
+    public ResponseEntity<String> addNgo(@RequestParam("data") String ngoBody, @RequestParam("profile") MultipartFile file1, @RequestParam("certificate") MultipartFile file2) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         Ngo ngo= objectMapper.readValue(ngoBody,Ngo.class);
         if(ngoDao.existsByNgoname(ngo.getNgoname()))
@@ -102,10 +102,11 @@ public class AuthController {
     @PostMapping("/ngo/login")
     public ResponseEntity<AuthResponseDto> ngoLogin(@RequestBody NgoLoginDto logindto)
     {
-        if(donorDao.existsByEmail(logindto.getNgoname()))
+        if(ngoDao.existsByEmail(logindto.getNgoname()))
         {
             logindto.setNgoname(ngoDao.findByEmail(logindto.getNgoname()).getNgoname());
         }
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(logindto.getNgoname(),logindto.getPassword())
         );

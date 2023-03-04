@@ -1,4 +1,4 @@
-import { React,useState} from 'react';
+import { React,useContext,useEffect,useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,6 +12,8 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from "react-router-dom";
+import { UserContext } from './Context/UserContext';
+
 
 
 
@@ -33,8 +35,26 @@ function NavBar(props) {
     navigate('/ngo/login');
   };
   const LogoutNgo = (event) => {
+    localStorage.removeItem("role");
+    localStorage.removeItem("AccessToken");
     navigate('/ngo/login');
   };
+
+  const [role, setRole] = useState("user");
+  
+  useEffect(() => {
+    decideRole();
+  }, []);
+
+  const context = useContext(UserContext);
+  const decideRole = () => {
+    if(context != null){
+      setRole(context.role);
+
+    }
+    console.log(role);
+    localStorage.setItem("role",role);
+  }
   
 
 
@@ -46,7 +66,18 @@ function NavBar(props) {
 
   if(props.type === "home")
   {
-    const pages = ['Activities', 'FundRaisers'];
+   
+    const clickNgos = (event) =>
+  {
+    props.onDataReceived("Ngos");
+   
+  }
+  const clickFundraisers = (event) =>{
+    props.onDataReceived("Fundraisers");
+    console.log("2");
+  }
+ 
+    const pages = [{"page":"Ngos","event":clickNgos}, {"page":"Fundraisers","event":clickFundraisers}];
 
   return (
     <AppBar position="static" sx={{backgroundColor:"darkcyan"}}>
@@ -99,11 +130,11 @@ function NavBar(props) {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+              {pages.map((p) => (
+                  <MenuItem key={p.page} onClick={p.page}>
+                    <Typography textAlign="center" >{p.page}</Typography>
+                  </MenuItem>
+                ))}
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -126,13 +157,13 @@ function NavBar(props) {
             Donor Link
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {pages.map((p) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                key={p.page}
+                onClick={p.event}
+                sx={{ my: 2, backgroundColor:"darkcyan", color: 'white', display: 'block' }}
               >
-                {page}
+                {p.page}
               </Button>
             ))}
           </Box>
@@ -148,7 +179,18 @@ function NavBar(props) {
               }
   if(props.type === "ngohome")
   {
-    const pages = ['Activities', 'FundRaisers'];
+    const clickNgos = (event) =>
+  {
+    props.onDataReceived("Ngos");
+   
+  }
+  const clickColaborations = (event) =>{
+    props.onDataReceived("Colaborations");
+    console.log("2");
+  }
+ 
+    const pages = [{"page":"Ngos","event":clickNgos}, {"page":"Colaborations","event":clickColaborations}];
+
     return (
       <AppBar position="static" sx={{backgroundColor:"darkcyan"}}>
         <Container maxWidth="xl">
@@ -201,9 +243,9 @@ function NavBar(props) {
                   display: { xs: 'block', md: 'none' },
                 }}
               >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                {pages.map((p) => (
+                  <MenuItem key={p.page} onClick={p.event}>
+                    <Typography textAlign="center">{p.page}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -228,13 +270,13 @@ function NavBar(props) {
               Donor Link
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {pages.map((page) => (
+              {pages.map((p) => (
                 <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  key={p.page}
+                  onClick={p.event}
+                  sx={{ my: 2, backgroundColor:"darkcyan", color: 'white', display: 'block' }}
                 >
-                  {page}
+                  {p.page}
                 </Button>
               ))}
             </Box>
@@ -351,7 +393,7 @@ function NavBar(props) {
                 <Button
                   key={p.page}
                   onClick={p.event}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  sx={{ my: 2, backgroundColor:"darkcyan", color: 'white', display: 'block' }}
                 >
                   {p.page}
                 </Button>

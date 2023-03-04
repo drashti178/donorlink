@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 
 import { makeStyles } from '@mui/styles';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
@@ -15,8 +15,8 @@ const useStyles = makeStyles(() => ({
     height: '100%',
   },
   imageContainer: {
-    height: '80%',
-    width: '50%',
+    height: '50vh',
+    width: '100%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -24,53 +24,42 @@ const useStyles = makeStyles(() => ({
     backgroundColor: 'black',
   },
   image: {
-    height: '100%',
+    height: '50vh',
     width: '100%',
     objectFit: 'cover',
   },
-  caption: {
-    padding: 2,
-    textAlign: 'center',
-  },
+ 
   controls: {
     display: 'flex',
-    justifyContent: 'center',
-    padding:2,
+    justifyContent: 'center'
   },
 }));
 
-const Carousel = ({images}) => {
+const Carouseldiv = ({images}) => {
   const classes = useStyles();
   const [index, setIndex] = useState(0);
+  useEffect(() => {   
+    const interval = setInterval(() => {
+      setIndex((index + images.length - 1) % images.length);
+    }, 5000); 
+  } );
 
-  const handlePrevious = () => {
-    setIndex((index + images.length - 1) % images.length);
-  };
-
-  const handleNext = () => {
-    setIndex((index + 1) % images.length);
-  };
+ 
 
   return (
     <Box className={classes.root}>
-      <IconButton onClick={handlePrevious}>
-          <KeyboardArrowLeftIcon />
-        </IconButton>
+      
       <Box className={classes.imageContainer}>
+     
         <img src={images[index]} alt="slide" className={classes.image} />
+      
       </Box>
-      {/* <Typography variant="body1" className={classes.caption}>
-        {captions[index]}
-      </Typography> */}
-      {/* <Box className={classes.controls}>
-         */}
-        <IconButton onClick={handleNext}>
-          <KeyboardArrowRightIcon />
-        </IconButton>
-      {/* </Box> */}
+      
+       
+      
     </Box>
   );
 };
 
 
-export default Carousel;
+export default Carouseldiv;

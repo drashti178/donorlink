@@ -98,13 +98,13 @@ const Second = (props) => {
             value={props.inputs.has80G}
             onChange={props.changefun}
           >
-            <FormControlLabel value="yes" control={<Radio />} label="Yes" />
-            <FormControlLabel value="no" control={<Radio />} label="No" />
+            <FormControlLabel value="true" control={<Radio />} label="Yes" />
+            <FormControlLabel value="false" control={<Radio />} label="No" />
 
           </RadioGroup>
         </FormControl>
 
-        <Button color="primary" aria-label="upload picture" component="label" style={props.inputs.has80G === 'no' ? ibdisabledstyle : ibenabledstyle} disabled={props.inputs.has80G === 'no'}>
+        <Button color="primary" aria-label="upload picture" component="label" style={props.inputs.has80G === 'false' ? ibdisabledstyle : ibenabledstyle} disabled={props.inputs.has80G === 'false'}>
           <input hidden accept="image/*" type="file" onChange={props.onFileUpload} />
           <FileUpload />
           80G Certificate

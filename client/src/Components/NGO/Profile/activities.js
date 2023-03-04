@@ -5,7 +5,8 @@ import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { Button, Grid } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
+import EditActivity from './editActivity';
 const activities = [
   {
     id: 1,
@@ -47,12 +48,17 @@ const useStyles = makeStyles({
     justifyContent: 'space-between',
     width:"60%",
     backgroundColor:"darkcyan"
-  },
+  }
 });
 
 const ProductCard = ({ product }) => {
   const classes = useStyles();
   const { name, image, description, price } = product;
+  const deleteActivity = () =>{
+    console.log("activity deleted");
+
+  }
+
 
   return (
     <Card className={classes.root}>
@@ -79,17 +85,15 @@ const ProductCard = ({ product }) => {
             justifyContent="space-around"
             alignItems="center"
           >
-           <Button
-             type="submit"
-             variant="contained"
-             sx={{ "&:hover": { backgroundColor: "darkcyan", color: 'white', },marginLeft:"55%", marginTop:"2%",width: "20%", backgroundColor: 'darkcyan' ,color:"white" }}
-            >
-              Edit
-            </Button>
+            <Box sx={{ width: "20%",marginLeft:"0%"}}>
+              <EditActivity />
+            </Box>
+           
             <Button
              type="submit"
              variant="contained"
-             sx={{ "&:hover": { backgroundColor: "darkcyan", color: 'white', },marginLeft:"1%", marginTop:"2%",width: "20%", backgroundColor: 'darkcyan' ,color:"white" }}
+             onClick={deleteActivity}
+             sx={{ "&:hover": { backgroundColor: "darkcyan", color: 'white', },marginLeft:"1%", marginTop:"1%",width: "20%", backgroundColor: 'darkcyan' ,color:"white" }}
             >
               Delete
             </Button>

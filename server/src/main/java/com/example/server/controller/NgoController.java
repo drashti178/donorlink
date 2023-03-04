@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-@Secured("ngo")
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/ngo")

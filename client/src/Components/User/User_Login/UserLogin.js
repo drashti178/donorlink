@@ -65,7 +65,7 @@ const UserLogin = () => {
   {
     axios.post(`${base_url}/auth/user/login`,data).then(
       (response)=>{
-        navigate('/');
+        navigate('/user/home');
         console.log(response);
       },
       (error)=>{

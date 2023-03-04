@@ -64,12 +64,15 @@ const NgoLogin = () => {
     onLogin(inputs);
     console.log(inputs);
   };
+  
+
+
   const onLogin=(data)=>
   {
     axios.post(`${base_url}/auth/ngo/login`,data).then(
       (response)=>{
         
-        navigate('/');
+        navigate('/ngo/home');
         console.log(response);
       },
       (error)=>{

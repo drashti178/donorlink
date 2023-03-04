@@ -32,7 +32,7 @@ public class CustomerUserDetailService implements UserDetailsService
         Ngo ngo = ngoDao.findByNgoname(name);
         if(ngo==null)
         {
-            Donor donor = userDao.findByusername(name).orElseThrow(()->new UsernameNotFoundException("Username not found"));
+            Donor donor = userDao.findByusername(name);
             return new User(donor.getUsername(), donor.getPassword(), mapRolesToAuthority("user"));
         }
 

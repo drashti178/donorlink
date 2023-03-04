@@ -131,8 +131,6 @@ const UserSignup = () => {
                                 );
 
                             })}
-
-
                         </Stepper>
                     </Box>
                     {(pageno === 1) ? <First nextfun={next} changefun={onChangeData} inputs={inputs} onFileUpload={onProfileUpload} profile={profile} imageUrl={imageUrl} /> : <Second nextfun={next} prevfun={prev} submitfun={submit} changefun={onChangeData} inputs={inputs} />}

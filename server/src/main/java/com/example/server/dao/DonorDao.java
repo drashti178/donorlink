@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface DonorDao extends JpaRepository<Donor,Long> {
 
-    public Optional<Donor> findByusername(String username);
+    public Donor findByusername(String username);
     public Donor findByEmail(String email);
 
     public Boolean existsByusername(String username);

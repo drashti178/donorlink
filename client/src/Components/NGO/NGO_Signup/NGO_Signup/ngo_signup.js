@@ -15,17 +15,19 @@ import Third from "./third";
 import { Box } from "@mui/system";
 import axios from "axios";
 import base_url from "../../../../api/bootapi";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 
 
 const steps = ['Account Information', 'Contact Information', 'Review Information'];
+const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 
 
 const NgoSignup = () => {
   let [inputs, setInputs] = useState({
     ngoname: "",
-    email: "",
+    
     password: "",
+    email: "",
     tagline: "",
     founder: "",
     areaofwork: "",
@@ -80,22 +82,29 @@ const NgoSignup = () => {
     SetPageno(pageno - 1)
     SetActtivestep(activestep - 1);
   }
+  var formData = new FormData();
+  formData.append("data",JSON.stringify(inputs));
+
+ 
+  formData.append("profile",profile);
+  formData.append("certificate",certificate);
+  console.log(JSON.stringify(inputs));
+
+ 
   let submit = (e) => {
     console.log(inputs);
     console.log(profile);
     console.log(certificate);
-    postData(inputs,profile,certificate);
+    console.log(formData);
+    postData(formData);
     e.preventDefault();
   }
-  const headers = {
-    'Content-Type': 'multipart/form-data'
-    
-  }
+
+
+
   
-  const postData = (data,profile,certificate) => {
-    axios.post(`${base_url}/ngo/signup`, data,{
-      headers: headers
-    }).then(
+  const postData = (data) => {
+    axios.post(`${base_url}/auth/ngo/signup`, data).then(
       (response) => {
         console.log(response);
         console.log("success");
