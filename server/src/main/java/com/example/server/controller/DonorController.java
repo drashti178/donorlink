@@ -5,7 +5,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-@Secured("user")
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/user")
