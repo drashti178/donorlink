@@ -36,7 +36,9 @@ const NgoLogin = () => {
     isUser: false,
   });
 
-  const {user,setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+
+  
   const navigate = useNavigate();
  
   const handleChange = (e) => {
@@ -72,28 +74,24 @@ const NgoLogin = () => {
     await axios.post(`${base_url}/auth/ngo/login`,data).then(
       (response)=>{
         localStorage.setItem("AccessToken",response.data.accessToken);
-        const getUser = async () => {
-          const token = "Bearer " + localStorage.getItem("AccessToken");
-          // console.log(token);
-          await axios.get(`${base_url}/user/profile`, {
-            headers: {
-              'Authorization': token,
-            }
-          }).then(
-            (response) => {
-              console.log(response.data);
-              setUser(response.data);
-            },
-            (error) => {
-              console.log(error);
-            }
-          )
-        }
+        const token = "Bearer " + localStorage.getItem("AccessToken");
+        axios.get(`${base_url}/user/profile`, {
+          headers: {
+            'Authorization': token,
+          }
+        }).then(
+          (response) => {
+            console.log(response.data);
+            setUser(response.data);
+          },
+          (error) => {
+            console.log(error);
+          }
+        )
         setTimeout(() => {
           alert("Login Successful");
         }, 100);
-        getUser();
-        navigate('/');
+        navigate(-1);
       },
       (error)=>{
         console.log(error);
@@ -211,7 +209,7 @@ const NgoLogin = () => {
                   checked={!controls.isUser}
                   onClick={() => {
                     setTimeout(() => {
-                      navigate('/user/login');
+                      navigate('/user/login',{replace:true});
                     }, 100);
                     setControls({ ...controls, isUser: !controls.isUser });
                   }

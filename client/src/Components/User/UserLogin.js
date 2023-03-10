@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -35,7 +35,7 @@ const UserLogin = () => {
   });
 
   const navigate = useNavigate();
-  const {user,setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const handleChange = (e) => {
     setInputs((prevState) => ({
@@ -80,30 +80,26 @@ const UserLogin = () => {
     await axios.post(`${base_url}/auth/user/login`, data).then(
       (response) => {
         localStorage.setItem("AccessToken", response.data.accessToken);
-        //  window.location.href = "/";
-        const getUser = async () => {
-          const token = "Bearer " + localStorage.getItem("AccessToken");
-          // console.log(token);
-          await axios.get(`${base_url}/user/profile`, {
-            headers: {
-              'Authorization': token,
-            }
-          }).then(
-            (response) => {
-              console.log(response.data);
-              setUser(response.data);
-              console.log(user);
-            },
-            (error) => {
-              console.log(error);
-            }
-          )
-        }
+        const token = "Bearer " + localStorage.getItem("AccessToken");
+        // console.log(token);
+        axios.get(`${base_url}/user/profile`, {
+          headers: {
+            'Authorization': token,
+          }
+        }).then(
+          (response) => {
+            console.log(response.data);
+            setUser(response.data);
+          },
+          (error) => {
+            console.log(error);
+          }
+        )
         setTimeout(() => {
           alert("Login Successful");
         }, 100);
-        getUser();
-        navigate('/');
+        // console.log(navigate);
+        navigate(-1);
       },
       (error) => {
         console.log(error);
@@ -215,7 +211,7 @@ const UserLogin = () => {
                   checked={!inputs.isUser}
                   onClick={() => {
                     setTimeout(() => {
-                      navigate('/ngo/login');
+                      navigate('/ngo/login', { replace: true });
                     }, 100);
                     setInputs({ ...inputs, isUser: !inputs.isUser });
                   }

@@ -14,6 +14,7 @@ import NgoProfile from "./Components/NGO/Profile/profile";
 import NgoLogin from "./Components/NGO/Ngo_Login/NgoLogin";
 import UserLogin from "./Components/User/UserLogin";
 import { UserContext } from "./Context/UserContext";
+import ViewDonation from "./Components/User/ViewDonations";
 // import { UserContextProvider } from './Context/UserContext';
 
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
             <Route exact path='/user/profile' element={<ViewProfile />} />
             <Route exact path='/user/payment' element={<PaymentInfo />} />
             <Route exact path='/user/edit' element={<EditUser />} />
+            <Route exact path='/user/donation' element={<ViewDonation />} />
             <Route exact path='/ngo/signup' element={<NgoSignup />} />
             <Route exact path='/forgetpassword' element={<ForgetPassword />} />
             <Route exact path='/ngo/signup' element={<NgoSignup />} />

@@ -2,8 +2,10 @@ package com.example.server.controller;
 
 import com.example.server.dao.DonorDao;
 import com.example.server.dao.NgoDao;
+import com.example.server.models.Donation;
 import com.example.server.models.Donor;
 import com.example.server.models.Ngo;
+import com.example.server.services.DonationService;
 import com.example.server.services.DonorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;

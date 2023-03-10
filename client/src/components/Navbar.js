@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import base_url from '../api/bootapi';
 import { DispatchUserContext, UserContext } from '../Context/UserContext';
+import Logout from './Logout';
 
 
 
@@ -22,42 +23,56 @@ function NavBar(props) {
 
   const [anchorElNav, setAnchorElNav] = useState(0);
   const navigate = useNavigate();
+  const [login, setLogin] = useState(false);
 
-  let role = "user";
   const context = useContext(UserContext);
 
-  setTimeout(() => {
-    if (context.user) {
-      console.log(context);
-      role = context.user.role;
-    }
-    // console.log(context.user.role);
-    localStorage.setItem("role", role);
-  }, 100);
+  if (context.user == null && localStorage.getItem("AccessToken") != null) {
+    const token = "Bearer " + localStorage.getItem("AccessToken");
+    axios.get(`${base_url}/user/profile`, {
+      headers: {
+        'Authorization': token,
+      }
+    }).then(
+      (response) => {
+        console.log(response.data);
+        context.setUser(response.data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+  }
+
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (context.user) {
+        // console.log(context);
+        // role = context.user.role;
+        setLogin(true);
+        localStorage.setItem("role", context.user.role);
+      }
+    }, 100);
+  }, [context.user]);
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
   const NgoProfile = (event) => {
-    navigate('/user/edit');
+    navigate('/ngo/profile');
   };
   const UserProfile = (event) => {
     navigate('/user/profile');
   };
   const LoginPage = (event) => {
-    navigate('/ngo/login');
+    navigate('/user/login');
   };
   const LogoutNgo = (event) => {
-    localStorage.removeItem("role");
-    localStorage.removeItem("AccessToken");
-    // context = null;
-    // dispatchContext(null);
-    // context.setUser(null);
-    // context = useContext(UserContext);
-    navigate('/ngo/login');
+    Logout();
+    navigate('/user/login');
   };
-
-
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -67,9 +82,8 @@ function NavBar(props) {
 
   if (props.type === "home") {
     const pages = ['Activities', 'FundRaisers'];
-
     return (
-      <AppBar position="static" sx={{ backgroundColor: "darkcyan" }}>
+      <AppBar position="static" sx={{ backgroundColor: (context.user && context.user.role == 'ngo') ? "darkcyan" : "#9C7875" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -156,9 +170,17 @@ function NavBar(props) {
                 </Button>
               ))}
             </Box>
-            <Box sx={{ flexGrow: 0 }}>
-              <Button sx={{ color: "white" }} onClick={LoginPage}>Login</Button>
-            </Box>
+            {!login ?
+              <Box sx={{ flexGrow: 0 }}>
+                <Button sx={{ color: "white" }} onClick={LoginPage}>Login</Button>
+              </Box> :
+              <Box sx={{ flexGrow: 0 }}>
+                <Button sx={{ color: "white" }} onClick={LogoutNgo}>Logout</Button>
+                <IconButton onClick={(context.user && context.user.role === 'ngo') ? NgoProfile : UserProfile} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Box>}
+
 
 
           </Toolbar>
@@ -166,10 +188,11 @@ function NavBar(props) {
       </AppBar>
     );
   }
-  if (props.type === "ngohome") {
-    const pages = ['Activities', 'FundRaisers'];
+  else if (props.type === "userprofile") {
+    const pages = ['Home', 'My Donations'];
+
     return (
-      <AppBar position="static" sx={{ backgroundColor: "darkcyan" }}>
+      <AppBar position="static" sx={{ backgroundColor: (context.user && context.user.role == 'ngo') ? "darkcyan" : "#9C7875" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -183,7 +206,6 @@ function NavBar(props) {
                 display: { xs: 'none', md: 'flex' },
                 fontFamily: "'Aboreto', cursive;",
                 fontWeight: 700,
-                // letterSpacing: '.3rem',
                 color: 'inherit',
                 textDecoration: 'none',
               }}
@@ -257,21 +279,22 @@ function NavBar(props) {
                 </Button>
               ))}
             </Box>
-
-            <Box sx={{ flexGrow: 0 }}>
-              <Button sx={{ color: "white" }} onClick={LogoutNgo}>Logout</Button>
-              <IconButton onClick={NgoProfile} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Box>
+            {!login ?
+              <Box sx={{ flexGrow: 0 }}>
+                <Button sx={{ color: "white" }} onClick={LoginPage}>Login</Button>
+              </Box> :
+              <Box sx={{ flexGrow: 0 }}>
+                <Button sx={{ color: "white" }} onClick={LogoutNgo}>Logout</Button>
+                <IconButton onClick={(context.user && context.user.role === 'ngo') ? NgoProfile : UserProfile} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Box>}
           </Toolbar>
         </Container>
       </AppBar>
     );
-
   }
-  if (props.type === "ngoprofile") {
-
+  else if (props.type === "ngoprofile") {
     const clickMyactivities = (event) => {
       props.onDataReceived("Activities");
       console.log("1");
@@ -284,7 +307,9 @@ function NavBar(props) {
       props.onDataReceived("Requests");
       console.log("3");
     }
+
     const pages = [{ "page": "MyActivities", "event": clickMyactivities }, { "page": "Donation", "event": clickDonations }, { "page": "MyRequests", "event": clickMyRequest },];
+
     return (
       <AppBar position="static" sx={{ backgroundColor: "darkcyan" }}>
         <Container maxWidth="xl">
@@ -377,13 +402,15 @@ function NavBar(props) {
 
             <Box sx={{ flexGrow: 0 }}>
               <Button sx={{ color: "white" }} onClick={LogoutNgo}>Logout</Button>
-
+              <IconButton sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
             </Box>
           </Toolbar>
         </Container>
       </AppBar>
     );
-
   }
+
 }
 export default NavBar;

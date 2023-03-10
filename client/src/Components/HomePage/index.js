@@ -299,7 +299,7 @@ const Home = () => {
 
   return (
     <>
-      <NavBar type="ngohome" />
+      <NavBar type="home" />
       <div>
         <Button />
       </div>

@@ -39,18 +39,41 @@ const EditUser = () => {
     });
 
     // console.log(context.user);
-    setTimeout(() => {
-        if (context.user == null) {
+    useEffect(() => {
+        if (localStorage.getItem("AccessToken") == null) {
             setTimeout(() => {
                 alert('Log in First');
             }, 100);
             navigate('/user/login');
         }
         else {
-            context.user.password = "";
-            setInputs(context.user);
+            if (context.user == null) {
+                const token = "Bearer " + localStorage.getItem("AccessToken");
+                axios.get(`${base_url}/user/profile`, {
+                    headers: {
+                        'Authorization': token,
+                    }
+                }).then(
+                    (response) => {
+                        console.log(response.data);
+                        context.setUser(response.data);
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                )
+            }
+            else {
+                if (context.user.role == 'ngo') {
+                    navigate('/');
+                }
+                context.user.password = "";
+                console.log(context.user);
+                setInputs(context.user);
+            }
+
         }
-    }, 100);
+    }, [context.user]);
 
     // useEffect(() => {
     //     console.log(context);
