@@ -27,6 +27,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 
 @CrossOrigin("*")
@@ -165,8 +166,8 @@ public class NgoController {
 
 
 
-        Date d1 = new Date();
-        DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+//        Date d1 = new Date();
+//        DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
 
 
@@ -175,7 +176,10 @@ public class NgoController {
         System.out.println(fundraiser.getCause());
         System.out.println(fundraiser.getFr_name());
         System.out.println(fundraiser.getTarget());
-
+        Date date = new Date();
+        Date d = new Date(123, 02,18);
+        long duration = d.getTime() - date.getTime();
+        long days = TimeUnit.MILLISECONDS.toDays(duration)%365;
 
 
 //        if(file1.isEmpty())
@@ -195,7 +199,7 @@ public class NgoController {
         return new ResponseEntity<>("Fundraiser added successfully", HttpStatus.OK);
 
     }
-    
+
 
     @GetMapping("fundrisers")
     public List<Fundraiser> getFundraisers()
