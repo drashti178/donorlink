@@ -1,4 +1,4 @@
-import { React, useState, } from "react";
+import { React, useContext, useState, } from "react";
 import {
   Typography,
   Avatar,
@@ -21,9 +21,9 @@ import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import axios from "axios";
-
 import '../../style.css';
 import base_url from "../../../api/bootapi";
+import { UserContext } from "../../../Context/UserContext";
 
 const NgoLogin = () => {
   const [inputs, setInputs] = useState({
@@ -62,22 +62,44 @@ const NgoLogin = () => {
     e.preventDefault();
     
     onLogin(inputs);
-    console.log(inputs);
+   
   };
   
 
-
-  const onLogin=(data)=>
+  const {user,setUser } = useContext(UserContext);
+  const onLogin= async (data)=>
   {
-    axios.post(`${base_url}/auth/ngo/login`,data).then(
+    await axios.post(`${base_url}/auth/ngo/login`,data).then(
       (response)=>{
-        
+        localStorage.setItem("AccessToken",response.data.accessToken);
+        const getUser = async () => {
+          const token = "Bearer " + localStorage.getItem("AccessToken");
+          // console.log(token);
+          await axios.get(`${base_url}/ngo/profile`, {
+            headers: {
+              'Authorization': token,
+            }
+          }).then(
+            (response) => {
+              
+              setUser(response.data);
+              console.log(user)
+             
+              localStorage.setItem("role", response.data.role);
+            },
+            (error) => {
+              console.log(error);
+              navigate('/ngo/login');
+            }
+          )
+        }
+       
+        getUser();
         navigate('/ngo/home');
-        console.log(response);
       },
       (error)=>{
         console.log(error);
-        console.log("Error");
+        navigate('/ngo/login');
       }
     )
   }

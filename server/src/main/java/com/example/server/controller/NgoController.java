@@ -3,9 +3,12 @@ package com.example.server.controller;
 import com.example.server.dao.ActivityDao;
 import com.example.server.dao.NgoDao;
 import com.example.server.models.Activity;
+import com.example.server.models.Fundraiser;
 import com.example.server.models.Ngo;
 import com.example.server.services.ActivityService;
+import com.example.server.services.FundraiserService;
 import com.example.server.services.NgoService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,12 +39,18 @@ public class NgoController {
     @Autowired
     private NgoService ngoService;
     @Autowired
+    private FundraiserService fundraiserService;
+    @Autowired
     private ActivityDao activityDao;
 
     @Autowired
     private ActivityService activityService;
 
-    private String activitypath = "static/images/activity";
+
+
+    private String activitypath = "C:/Users/Drashti Patel/Documents/GitHub/donorlink/client/public/images/activity";
+
+    private String fundraiserpath = "C:/Users/Drashti Patel/Documents/GitHub/donorlink/client/public/images/fundraiser";
 
     @GetMapping("/")
     public String home()
@@ -45,8 +58,17 @@ public class NgoController {
         return "ngo page";
 
     }
+    @GetMapping("/profile")
+    public ResponseEntity<?> getUser(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Ngo ngo = ngoDao.findByNgoname(username);
 
-    @PostMapping("/addActivity")
+        if(ngo == null)
+            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(ngo,HttpStatus.OK);
+    }
+    @PostMapping("addActivity")
     public ResponseEntity<String> addActivity(@RequestParam("activityBody") String activityBody, @RequestParam("act_img") MultipartFile file1) throws IOException {
         String  ngoname = SecurityContextHolder.getContext().getAuthentication().getName();
         Ngo ngo = ngoDao.findByNgoname(ngoname);
@@ -71,7 +93,7 @@ public class NgoController {
 
             System.out.println("Image uploaded");
         }
-        this.activityService.addActivity(activity);
+        activityService.addActivity(activity);
         return new ResponseEntity<>("Activity added successfully", HttpStatus.OK);
     }
 
@@ -84,24 +106,36 @@ public class NgoController {
 
         return this.activityService.getActivities(ngo);
     }
-    @GetMapping("activity/{act_id}")
+    @GetMapping("/activity/{act_id}")
     public Optional<Activity> getActivity(@PathVariable Long act_id)
     {
+        System.out.println(act_id);
         return this.activityService.getActivity(act_id);
     }
 
 
-    @PutMapping("updateActivity/{act_id}")
-    public Activity updateActivity(@RequestBody Activity activity, @PathVariable Long act_id)
-    {
+    @PutMapping("/updateActivity/{act_id}")
+        public Activity updateActivity(@RequestParam("activityBody") String activityBody, @RequestParam("act_img") MultipartFile file1, @PathVariable Long act_id) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Activity activity = objectMapper.readValue(activityBody, Activity.class);
+        System.out.println("1243\n");
         Activity activity1 = activityDao.findById(act_id).get();
-        if(activity.getActivityname()!=null)
+        System.out.println("143\n");
+        if(!file1.isEmpty())
         {
-            activity1.setActivityname(activity.getActivityname());
+            String filename = this.ngoService.uploadImage(activitypath,file1);
+            System.out.println(filename);
+            activity1.setActivityImgName(filename);
+
         }
-        if(activity.getDescription()!=null){
-            activity1.setDescription(activity.getDescription());
+        else{
+            activity1.setActivityImgName(activity.getActivityImgName());
         }
+
+        activity1.setActivityname(activity.getActivityname());
+        activity1.setDescription(activity.getDescription());
+        activity1.setParticipation(activity.getParticipation());
+        System.out.println("333\n");
 
 
         return this.activityService.updateActivity(activity1);
@@ -118,5 +152,75 @@ public class NgoController {
             return new ResponseEntity<>("Error in deleting activity",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @PostMapping("addFundraiser")
+    public ResponseEntity<String> addFundraiser(@RequestParam("FrBody") String FR,@RequestParam("fr_img") MultipartFile file1) throws IOException {
+        String  ngoname = SecurityContextHolder.getContext().getAuthentication().getName();
+        Ngo ngo = ngoDao.findByNgoname(ngoname);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Fundraiser fundraiser = objectMapper.readValue(FR,Fundraiser.class);
+        fundraiser.setNgo(ngo);
+
+
+
+        Date d1 = new Date();
+        DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+
+
+
+        System.out.println(fundraiser.getAmount());
+        System.out.println(fundraiser.getStartdate());
+        System.out.println(fundraiser.getCause());
+        System.out.println(fundraiser.getFr_name());
+        System.out.println(fundraiser.getTarget());
+
+
+
+//        if(file1.isEmpty())
+//        {
+//            return new ResponseEntity<>("Provide Fundraiser Image", HttpStatus.BAD_REQUEST);
+//
+//        }
+//        else{
+//
+//            String filename = this.ngoService.uploadImage(fundraiserpath,file1);
+//
+//            System.out.println(filename);
+//            fundraiser.setFr_img(filename);
+//
+//        }
+//        fundraiserService.addFundraiser(fundraiser);
+        return new ResponseEntity<>("Fundraiser added successfully", HttpStatus.OK);
+
+    }
+    
+
+    @GetMapping("fundrisers")
+    public List<Fundraiser> getFundraisers()
+    {
+        String  ngoname = SecurityContextHolder.getContext().getAuthentication().getName();
+        Ngo ngo = ngoDao.findByNgoname(ngoname);
+
+
+        return this.fundraiserService.getFundraisers(ngo);
+    }
+    @GetMapping("/fundraiser/{fr_id}")
+    public Fundraiser getFundraiser(@PathVariable Long fr_id)
+    {
+        System.out.println(fr_id);
+        return this.fundraiserService.getFundraiser(fr_id);
+    }
+    @DeleteMapping("deleteFundraiser/{id}")
+    public ResponseEntity<String > deleteFundraiser(@PathVariable Long id) {
+        try {
+            this.fundraiserService.deleteFundraiser(id);
+            return new ResponseEntity<>("fundraiser deleted successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error in deleting fundraiser", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 }

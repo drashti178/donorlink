@@ -32,15 +32,14 @@ import java.io.IOException;
 
 public class AuthController {
     private AuthenticationManager authenticationManager;
-    private PasswordEncoder passwordEncoder;
+
     private TokenGenerator tokenGenerator;
 
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager,
-                         PasswordEncoder passwordEncoder, TokenGenerator tokenGenerator) {
+    public AuthController(AuthenticationManager authenticationManager, TokenGenerator tokenGenerator) {
 
         this.authenticationManager = authenticationManager;
-        this.passwordEncoder = passwordEncoder;
+
         this.tokenGenerator = tokenGenerator;
     }
     @Autowired
@@ -52,14 +51,12 @@ public class AuthController {
     @Autowired
     private DonorService donorService;
 
-    private String userprofilepath = "static/images/userprofileImgs";
-    private String ngoprofilepath = "static/images/ngoprofileImgs";
-    private String certipath = "static/images/certiImgs";
-    private String activitypath = "static/images/activity";
-    @GetMapping("home")
-    public String home(){
-        return "Welcome to Donorlinker";
-    }
+    private String userprofilepath = "C:/Users/Drashti Patel/Documents/GitHub/donorlink/client/public/images/userprofileImgs";
+
+    private String ngoprofilepath = "C:/Users/Drashti Patel/Documents/GitHub/donorlink/client/public/images/ngoprofileImgs";
+    private String certipath = "C:/Users/Drashti Patel/Documents/GitHub/donorlink/client/public/images/certiImgs";
+
+
 
     @PostMapping("ngo/signup")
     public ResponseEntity<String> addNgo(@RequestParam("data") String ngoBody, @RequestParam("profile") MultipartFile file1, @RequestParam("certificate") MultipartFile file2) throws IOException {
@@ -76,10 +73,8 @@ public class AuthController {
         }
         else{
             String filename = this.ngoService.uploadImage(ngoprofilepath,file1);
-            System.out.println("123\n");
             System.out.println(filename);
             ngo.setProfileImgName(filename);
-            System.out.println("Profile uploaded");
         }
         if(file2.isEmpty() )
         {
@@ -90,13 +85,11 @@ public class AuthController {
 
             String filename = this.ngoService.uploadImage(certipath,file2);
             System.out.println(filename);
-            System.out.println("456\n");
             ngo.setCertiImgName(filename);
-            System.out.println("Certi uploaded");
         }
 
-        ngo.setPassword(passwordEncoder.encode(ngo.getPassword()));
-        ngoDao.save(ngo);
+
+        ngoService.addNgo(ngo);
         return new ResponseEntity<>("Ngo registered successfully", HttpStatus.OK);
     }
     @PostMapping("/ngo/login")
@@ -106,15 +99,18 @@ public class AuthController {
         {
             logindto.setNgoname(ngoDao.findByEmail(logindto.getNgoname()).getNgoname());
         }
+        Ngo ngo = ngoDao.findByNgoname(logindto.getNgoname());
+        if(ngo!= null){
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(logindto.getNgoname(),logindto.getPassword())
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String token = tokenGenerator.generateToken(authentication);
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(logindto.getNgoname(),logindto.getPassword())
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = tokenGenerator.generateToken(authentication);
 
-
-        return new ResponseEntity<>(new AuthResponseDto(token),HttpStatus.OK);
+            return new ResponseEntity<>(new AuthResponseDto(token),HttpStatus.OK);
+        }
+       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     }
 
@@ -134,13 +130,11 @@ public class AuthController {
         }
         else{
             String filename = this.ngoService.uploadImage(userprofilepath,file1);
-            System.out.println("123\n");
             System.out.println(filename);
             donor.setProfileImgName(filename);
-            System.out.println("Profile uploaded");
+
         }
-        donor.setPassword(passwordEncoder.encode(donor.getPassword()));
-        donorDao.save(donor);
+        donorService.addUser(donor);
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
     }
     @PostMapping("/user/login")
@@ -150,15 +144,20 @@ public class AuthController {
         {
             logindto.setUsername(donorDao.findByEmail(logindto.getUsername()).getUsername());
         }
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(logindto.getUsername(),logindto.getPassword())
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = tokenGenerator.generateToken(authentication);
+        Donor donor = donorDao.findByusername(logindto.getUsername());
+        if(donor!= null) {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(logindto.getUsername(), logindto.getPassword())
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String token = tokenGenerator.generateToken(authentication);
 
-        return new ResponseEntity<>(new AuthResponseDto(token),HttpStatus.OK);
+            return new ResponseEntity<>(new AuthResponseDto(token), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     }
+
 
 
 

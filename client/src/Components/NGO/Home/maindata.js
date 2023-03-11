@@ -1,6 +1,7 @@
 import React from 'react'
-import Ngos from './ngos';
 import Colaborations from './colaborations';
+import Ngos from '../../HomePage/ngos';
+import Fundraisers from '../../HomePage/fundraisers';
 
 
 const Maindata = (props) => {
@@ -18,6 +19,15 @@ const Maindata = (props) => {
         return (
             <>
            <Colaborations />
+            </>
+            
+          )
+    }
+    if(props.load==="Fundraisers")
+    {
+        return (
+            <>
+            <Fundraisers></Fundraisers>
             </>
             
           )

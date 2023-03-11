@@ -3,6 +3,7 @@ package com.example.server.services;
 import com.example.server.dao.DonorDao;
 import com.example.server.models.Donor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Service
 public class DonorServiceImpl implements DonorService {
 
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private DonorDao userDao;
 
@@ -34,6 +36,7 @@ public class DonorServiceImpl implements DonorService {
 
     @Override
     public Donor addUser(Donor user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         try{
             userDao.save(user);
         }

@@ -1,15 +1,20 @@
-import React from 'react';
-import NavBar from '../../Navbar';
+import { React,useState} from 'react';
+import Navbar from './navbar';
+import Maindata from './maindata';
+
 
 
 const UserProfile = () => {
+  const [data, setData] = useState("Home");
+  const handleDataReceived = (childData) => {
+    setData(childData);
+  };
   
   
   return (
     <>
-    <NavBar type="userprofile"/>
-    
-    
+   <Navbar onDataReceived={handleDataReceived}/>
+    <Maindata load={data} />
     </>
    
   );

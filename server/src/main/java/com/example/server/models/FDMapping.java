@@ -6,7 +6,7 @@ public class FDMapping {
     private Long fd_id;
 
     @ManyToOne
-    private Donation.Fundraiser fr;
+    private Fundraiser fr;
     @ManyToOne
     private Donor donor;
 

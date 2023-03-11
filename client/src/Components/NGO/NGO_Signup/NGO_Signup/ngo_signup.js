@@ -19,13 +19,12 @@ import { json, useNavigate } from "react-router-dom";
 
 
 const steps = ['Account Information', 'Contact Information', 'Review Information'];
-const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
+
 
 
 const NgoSignup = () => {
   let [inputs, setInputs] = useState({
     ngoname: "",
-    
     password: "",
     email: "",
     tagline: "",

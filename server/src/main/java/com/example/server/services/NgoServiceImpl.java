@@ -5,6 +5,7 @@ import com.example.server.dao.NgoDao;
 import com.example.server.models.Activity;
 import com.example.server.models.Ngo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,10 +20,13 @@ import java.util.UUID;
 
 @Service
 public class NgoServiceImpl implements  NgoService{
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private NgoDao ngoDao;
     @Override
     public Ngo addNgo(Ngo ngo) {
+
+        ngo.setPassword(passwordEncoder.encode(ngo.getPassword()));
         try{
             ngoDao.save(ngo);
         }
@@ -46,7 +50,11 @@ public class NgoServiceImpl implements  NgoService{
         }
         return ngo;
     }
+    @Override
+    public List<Ngo> getNgos() {
 
+      return ngoDao.findAll();
+    }
     @Override
     public String uploadImage(String path, MultipartFile file) throws IOException {
         String name=file.getOriginalFilename();

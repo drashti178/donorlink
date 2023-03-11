@@ -1,18 +1,9 @@
 import React from 'react'
-import Activities from './activities'
-import Donations from './donations'
-import Requests from './requests'
+import Donations from './Donations/donations'
+import ManageProfile from './ManageProfile/manageprofile'
 
 const Datacomponent = (props) => {
-    if(props.load==="Activities")
-    {
-        return (
-            <>
-            <Activities></Activities>
-            </>
-            
-          )
-    }
+    
     if(props.load==="Donations")
     {
         return (
@@ -22,11 +13,11 @@ const Datacomponent = (props) => {
             
           )
     }
-    if(props.load==="Requests")
+    if(props.load==="ManageProfile")
     {
         return (
             <>
-            <Requests></Requests>
+            <ManageProfile />
             </>
             
           )

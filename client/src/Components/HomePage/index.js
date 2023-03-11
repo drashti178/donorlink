@@ -1,28 +1,28 @@
-import { React,useState} from 'react';
-import { Button } from '@mui/material';
-import NavBar from '../Navbar';
-import Carouseldiv from '../carousel';
+import React, { useContext, useState } from 'react';
+
 import Maindata from './maindata';
+import NavBar from '../Navbar';
+import HomeNavBar from './navbar';
+import Carouseldiv from './carousel';
+
 
 const Home = () => {
-  
-  let images = [
-    
-      'images/home1.jpg'
-    ,
-    
+ 
+  let images = [  
+    'images/home1.jpg',
     'images/home2.jpg'
-    
   ]
   const [data, setData] = useState("Ngos");
   const handleDataReceived = (childData) => {
     setData(childData);
   };
+
+  
   
   
   return (
     <>
-    <NavBar type="home" onDataReceived={handleDataReceived}/>
+     <HomeNavBar onDataReceived={handleDataReceived}></HomeNavBar>
    
     <div>
     <Carouseldiv images={images}/>
