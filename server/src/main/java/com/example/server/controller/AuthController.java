@@ -1,9 +1,11 @@
 package com.example.server.controller;
+import com.example.server.dao.DonationDao;
+import com.example.server.dao.FundraiserDao;
 import com.example.server.dao.NgoDao;
 import com.example.server.dao.DonorDao;
-import com.example.server.models.Donor;
-import com.example.server.models.Ngo;
+import com.example.server.models.*;
 import com.example.server.security.TokenGenerator;
+import com.example.server.services.FundraiserService;
 import com.example.server.services.NgoService;
 import com.example.server.dto.AuthResponseDto;
 import com.example.server.dto.NgoLoginDto;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Date;
 
 
 @CrossOrigin("*")
@@ -47,9 +50,13 @@ public class AuthController {
     @Autowired
     private DonorDao donorDao;
     @Autowired
+    private DonationDao donationDao;
+    @Autowired
     private NgoService ngoService;
     @Autowired
     private DonorService donorService;
+    @Autowired
+    private FundraiserService fundraiserService;
 
     private String userprofilepath = "C:/Users/Drashti Patel/Documents/GitHub/donorlink/client/public/images/userprofileImgs";
 
@@ -134,7 +141,7 @@ public class AuthController {
             donor.setProfileImgName(filename);
 
         }
-        donorService.addUser(donor);
+        donorService.addDonor(donor);
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
     }
     @PostMapping("/user/login")
@@ -159,6 +166,31 @@ public class AuthController {
     }
 
 
+    @PostMapping("/donation/update/{ngo_id}/{amount}")
+    public ResponseEntity<String> updateDonation(@PathVariable Long ngo_id, @PathVariable Long amount) {
+        Ngo ngo = ngoService.getNgo(ngo_id);
+
+        Date date = new Date();
+        ngo.setTotaldonation(amount);
+
+        Donation donation = new Donation(ngo, null, date, (amount > 2000) ? true : false, amount);
+        donationDao.save(donation);
+        return new ResponseEntity<>("Donation updated successfully", HttpStatus.OK);
+    }
+    @PostMapping("/fdonation/update/{fr_id}/{amount}")
+    public ResponseEntity<String> updateFDonation(@PathVariable Long fr_id, @PathVariable Long amount) {
+        Fundraiser fr=fundraiserService.getFundraiser(fr_id);
+
+        Date date = new Date();
+        Long current=fr.getAmount();
+        current = current+amount;
+        fr.setAmount(current);
+
+        FundraiserDonation donation=new FundraiserDonation(fr,null,date, amount);
+        fundraiserService.addDonation(donation);
+
+        return new ResponseEntity<>("Donation updated successfully", HttpStatus.OK);
+    }
 
 
 

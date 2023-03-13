@@ -12,4 +12,5 @@ public interface NgoService {
     public Ngo getNgo(Long id);
     public String uploadImage(String path, MultipartFile file) throws IOException;
     public List<Ngo> getNgos();
+    public List<Ngo> getNgosbywork(String work);
 }

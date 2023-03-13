@@ -11,8 +11,17 @@ const Categories = (props) => {
     props.onDataReceived("Enviroment");
    
   }
+  const clickOrphan = (event) =>
+  {
+    props.onDataReceived("Orphan");
+   
+  }
+  const clickWomenEmpowerment = (event) =>{
+    props.onDataReceived("WomenEmpowerment");
+   
+  }
  
-    const categories = [{"cr":"Study","event":clickStudy}, {"cr":"Enviroment","event":clickEnviroment}];
+    const categories = [{"cr":"Study","event":clickStudy}, {"cr":"Enviroment","event":clickEnviroment},{"cr":"Orphan","event":clickOrphan},{"cr":"WomenEmpowerment","event":clickWomenEmpowerment}];
   return (
     <>
     <div>Categories</div>

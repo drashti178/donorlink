@@ -40,7 +40,7 @@ const useStyles = makeStyles({
 
 
 const ProductCard = ({ product }) => {
-  const profilePath = "images/ngoprofileImgs/";
+  const profilePath = "/images/ngoprofileImgs/";
   const classes = useStyles();
   const { ngoId, ngoname, profileImgName } = product;
 
@@ -69,36 +69,58 @@ const ProductCard = ({ product }) => {
 const NgoList = (props) => {
   const [ngos,setNgos] = useState([]);
   useEffect(() => {   
-    getAllNgos();
-  },[]);
-
-  const getAllNgos=()=>
-  {
+    if(props.category==="All")
+    {
+      getAllNgos();
+    }
+    else{
+     
+      getNgosByCategory(props.category);
+    }
+  },[props.category]);
     
-     axios.get(`${base_url}/home/ngos`).then(
-      (response)=>{
-        setNgos(response.data);
-       
-       
-        
-      },
-      (error)=>{
-        console.log(error);
-        console.log("Error");
-      }
-    )
-  }
+    const getAllNgos=()=>
+    {
+      
+       axios.get(`${base_url}/home/ngos`).then(
+        (response)=>{
+          setNgos(response.data);
+        },
+        (error)=>{
+          console.log(error);
+          console.log("Error");
+        }
+      )
+    }
+  
+    const getNgosByCategory=(cat)=>
+    {
+     
+      
+       axios.post(`${base_url}/home/getngos`,`${cat}`).then(
+        (response)=>{
+          setNgos(response.data);
+        },
+        (error)=>{
+          console.log(error);
+          console.log("Error");
+        }
+      )
+    }
+  
   const classes = useStyles();
 
   
   return (
     <>
-    <div>{props.category}</div>
-    <div className={classes.list}>
+   <div className={classes.list}>
     {ngos.map((product) => (
       <ProductCard key={product.ngoId} product={product} />
     ))}
-    </div>
+    </div> 
+    
+  
+    
     </>
     
   )

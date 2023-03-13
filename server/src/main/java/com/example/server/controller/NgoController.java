@@ -164,38 +164,32 @@ public class NgoController {
         Fundraiser fundraiser = objectMapper.readValue(FR,Fundraiser.class);
         fundraiser.setNgo(ngo);
 
+        Date date = new Date();
+        fundraiser.setStartdate(date);
 
 
 //        Date d1 = new Date();
 //        DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
+//        Date d = new Date(123, 02,18);
+//        long duration = d.getTime() - date.getTime();
+//        long days = TimeUnit.MILLISECONDS.toDays(duration)%365;
 
 
-        System.out.println(fundraiser.getAmount());
-        System.out.println(fundraiser.getStartdate());
-        System.out.println(fundraiser.getCause());
-        System.out.println(fundraiser.getFr_name());
-        System.out.println(fundraiser.getTarget());
-        Date date = new Date();
-        Date d = new Date(123, 02,18);
-        long duration = d.getTime() - date.getTime();
-        long days = TimeUnit.MILLISECONDS.toDays(duration)%365;
+        if(file1.isEmpty())
+        {
+            return new ResponseEntity<>("Provide Fundraiser Image", HttpStatus.BAD_REQUEST);
 
+        }
+        else{
 
-//        if(file1.isEmpty())
-//        {
-//            return new ResponseEntity<>("Provide Fundraiser Image", HttpStatus.BAD_REQUEST);
-//
-//        }
-//        else{
-//
-//            String filename = this.ngoService.uploadImage(fundraiserpath,file1);
-//
-//            System.out.println(filename);
-//            fundraiser.setFr_img(filename);
-//
-//        }
-//        fundraiserService.addFundraiser(fundraiser);
+            String filename = this.ngoService.uploadImage(fundraiserpath,file1);
+
+            System.out.println(filename);
+            fundraiser.setFr_img(filename);
+
+        }
+        fundraiserService.addFundraiser(fundraiser);
         return new ResponseEntity<>("Fundraiser added successfully", HttpStatus.OK);
 
     }
@@ -225,6 +219,7 @@ public class NgoController {
             return new ResponseEntity<>("Error in deleting fundraiser", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
 
 }

@@ -22,6 +22,10 @@ import java.util.UUID;
 public class NgoServiceImpl implements  NgoService{
     private PasswordEncoder passwordEncoder;
     @Autowired
+    public NgoServiceImpl(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+    @Autowired
     private NgoDao ngoDao;
     @Override
     public Ngo addNgo(Ngo ngo) {
@@ -55,6 +59,13 @@ public class NgoServiceImpl implements  NgoService{
 
       return ngoDao.findAll();
     }
+
+    @Override
+    public List<Ngo> getNgosbywork(String work) {
+
+        return ngoDao.findByAreaofwork(work);
+    }
+
     @Override
     public String uploadImage(String path, MultipartFile file) throws IOException {
         String name=file.getOriginalFilename();

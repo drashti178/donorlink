@@ -5,6 +5,7 @@ import AddFundraiser from './Fundraiser/addFundraiser';
 import AddRequest from './Request/addRequest';
 import Button from "@mui/material/Button";
 import Data from './data';
+import './css/ButtonDiv.css'
 
 function ButtonDiv(props) {
   const clickFundraiser = (event) =>{

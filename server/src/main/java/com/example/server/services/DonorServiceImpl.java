@@ -19,13 +19,13 @@ public class DonorServiceImpl implements DonorService {
 
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private DonorDao userDao;
+    private DonorDao donorDao;
 
     @Override
-    public List<Donor> getUsers() {
+    public List<Donor> getDonors() {
         List<Donor> users;
         try{
-            users = (List<Donor>)userDao.findAll();
+            users = (List<Donor>)donorDao.findAll();
         }
         catch (Exception e)
         {
@@ -35,22 +35,22 @@ public class DonorServiceImpl implements DonorService {
     }
 
     @Override
-    public Donor addUser(Donor user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public Donor addDonor(Donor donor) {
+        donor.setPassword(passwordEncoder.encode(donor.getPassword()));
         try{
-            userDao.save(user);
+            donorDao.save(donor);
         }
         catch(Exception e){
             throw e;
         }
-        return user;
+        return donor;
     }
 
     @Override
-    public Donor getUser(Long id) {
+    public Donor getDonor(Long id) {
         Donor user = new Donor();
         try{
-            user = userDao.getReferenceById(id);
+            user = donorDao.getReferenceById(id);
         }
         catch (Exception e)
         {

@@ -10,7 +10,8 @@ import {
     TextField,
    
   } from "@mui/material";
-
+import base_url from '../../../../../api/bootapi';
+import axios from 'axios';
 
 
  
@@ -31,16 +32,40 @@ const AddFundraiser = () => {
           [e.target.name]: e.target.value,
         }));
       };
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log(inputs);
-        
-      };
-  
       let [fr_img, setFr_img] = useState(null);
       let onImageUpload = (event) => {
         setFr_img(event.target.files[0]);
     }
+      
+      var formData = new FormData();
+      formData.append("FrBody",JSON.stringify(inputs));
+      formData.append("fr_img",fr_img);
+      const handleSubmit =  (e) => {
+        e.preventDefault(); 
+        postData(formData);
+      };
+     
+     
+        const postData =  (formData) => {
+          const token = "Bearer " + localStorage.getItem("AccessToken");
+          console.log(token);
+         
+           axios.post(`${base_url}/ngo/addFundraiser`, formData,{
+            headers: {
+              'Authorization': token,
+            }
+          }).then(
+            (response) => {
+              console.log(response.data);
+              handleClose();
+            },
+            (error) => {
+              console.log(error);
+            }
+          )
+        }
+  
+     
    
     
     const handleClickOpen = () => {

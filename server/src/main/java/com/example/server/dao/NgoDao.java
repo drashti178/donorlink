@@ -3,6 +3,7 @@ package com.example.server.dao;
 import com.example.server.models.Ngo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface NgoDao extends JpaRepository<Ngo,Long> {
@@ -17,4 +18,6 @@ public interface NgoDao extends JpaRepository<Ngo,Long> {
     public Ngo findFirstByEmailOrderByNgoname(String email);
 
     public Ngo findByNgoname(String ngoname);
+
+    public List<Ngo> findByAreaofwork(String areaofwork);
 }

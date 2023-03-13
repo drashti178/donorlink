@@ -50,13 +50,13 @@ function HomeNavBar(props) {
     <AppBar position="static" style={{backgroundColor:"darkcyan"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon style={{ display: { xs: 'none', md: 'flex' }, mr: 1, color: 'white', }} />
+          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, color: 'white', }} />
           <Typography
             variant="h6"
             noWrap
             component="a"
             href="/"
-            style={{
+            sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
               fontFamily: "'Aboreto', cursive;",
@@ -75,7 +75,7 @@ function HomeNavBar(props) {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              color="white"
             >
               <MenuIcon />
             </IconButton>
@@ -98,13 +98,13 @@ function HomeNavBar(props) {
               }}
             >
               {pages.map((p) => (
-                  <MenuItem key={p.page} onClick={p.page}>
+                  <MenuItem key={p.page} onClick={p.event}>
                     <Typography textAlign="center" >{p.page}</Typography>
                   </MenuItem>
                 ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1,color: 'white' }} />
           <Typography
             variant="h5"
             noWrap
@@ -117,7 +117,7 @@ function HomeNavBar(props) {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: 'white',
               textDecoration: 'none',
             }}
           >
