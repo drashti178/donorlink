@@ -70,9 +70,7 @@ const ViewDonation = () => {
         )
     }
 
-    const [res,setRes] = useState("");
-
-    
+    // const [res,setRes] = useState("");
 
     return (
         <>
