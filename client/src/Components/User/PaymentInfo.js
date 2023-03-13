@@ -76,7 +76,7 @@ const PaymentInfo = () => {
 
 
     const initPayment = () => {
-        if (localStorage.getItem("AccessToken") == null && inputs.amount <= 10000) {
+        if (localStorage.getItem("AccessToken") == null && inputs.amount <= 2000) {
 
             const options = {
                 key: "rzp_test_ye5vdixvFR6hVR",
@@ -102,6 +102,7 @@ const PaymentInfo = () => {
                     }).then(
                         (response) => {
                             console.log(response);
+                            navigate('/user/donation');
                         },
                         (error) => {
                             console.log(error);
@@ -152,6 +153,7 @@ const PaymentInfo = () => {
                     }).then(
                         (response) => {
                             console.log(response);
+                            navigate('/user/donation');
                         },
                         (error) => {
                             console.log(error);

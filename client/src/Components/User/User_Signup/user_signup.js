@@ -133,7 +133,7 @@ const UserSignup = () => {
 
                                 return (
                                     <Step key={label} sx={{ color: "#9C7875" }}>
-                                        <StepLabel>{label}</StepLabel >
+                                        <StepLabel>{label}</StepLabel>
                                     </Step>
 
                                 );

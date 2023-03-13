@@ -9,7 +9,7 @@ const DonationTable = (props) => {
     useEffect(() => {
 
     })
-
+    const [claim,setClaim] = useState("");
     const addClaim = (donationId, index) => {
 
         const token = "Bearer " + localStorage.getItem("AccessToken");
@@ -20,6 +20,7 @@ const DonationTable = (props) => {
         }).then(
             (response) => {
                 console.log(index, response);
+                setClaim("hello");
             },
             (error) => {
                 console.log(error);
@@ -36,8 +37,8 @@ const DonationTable = (props) => {
                 'Authorization': token,
             }
         }).then(
-            (response) => {
-                console.log(response);
+            (response) => { 
+                // console.log(response);
                 // if(res == "")
                     setRes(response.data);
             },

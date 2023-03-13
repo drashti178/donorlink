@@ -11,11 +11,12 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import base_url from '../api/bootapi';
 import { DispatchUserContext, UserContext } from '../Context/UserContext';
 import Logout from './Logout';
+import { Tab, Tabs } from '@mui/material';
 
 
 
@@ -74,16 +75,18 @@ function NavBar(props) {
     navigate('/user/login');
   };
 
+  
+
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-
+  const [value, setValue] = useState(props.value);
 
   if (props.type === "home") {
     const pages = ['Activities', 'FundRaisers'];
     return (
-      <AppBar position="static" sx={{ backgroundColor: (context.user && context.user.role == 'ngo') ? "darkcyan" : "#9C7875" }}>
+      <AppBar position="static" sx={{ backgroundColor: (context.user && context.user.role == 'ngo') ? "darkcyan" : "#075456" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -213,7 +216,7 @@ function NavBar(props) {
               Donor Link
             </Typography>
 
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            {/* <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -248,8 +251,8 @@ function NavBar(props) {
                   </MenuItem>
                 ))}
               </Menu>
-            </Box>
-            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+            </Box> */}
+            {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
             <Typography
               variant="h5"
               noWrap
@@ -267,9 +270,9 @@ function NavBar(props) {
               }}
             >
               Donor Link
-            </Typography>
+            </Typography> */}
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {pages.map((page) => (
+              {/* {pages.map((page) => (
                 <Button
                   key={page}
                   onClick={handleCloseNavMenu}
@@ -277,7 +280,15 @@ function NavBar(props) {
                 >
                   {page}
                 </Button>
-              ))}
+              ))} */}
+              
+              <Tabs textColor='white' sx={{ mx: 'auto' }} value={value} onChange={(e, value) => setValue(value)}>
+                <Tab label="Home" component={Link} to="/" />
+                <Tab label="Profile" component={Link} to="/user/profile" />
+                <Tab label="My Donations" component={Link} to="/user/donation" />
+                {/* <Tab label="Food Menu" component={Link} to="/viewMenu" /> */}
+                {/* {role === "admin" && <Tab label="Admin Pannel" component={Link} to="/adminPannel" />} */}
+              </Tabs>
             </Box>
             {!login ?
               <Box sx={{ flexGrow: 0 }}>
