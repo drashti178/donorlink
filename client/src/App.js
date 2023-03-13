@@ -4,7 +4,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import ForgetPassword from "./Components/ForgetPassword";
 import UserSignup from "./Components/User/User_Signup/user_signup";
 import Home from "./Components/HomePage/index";
-import NgoSignup from "./Components/NGO/NGO_Signup/NGO_Signup/ngo_signup";
+import NgoSignup from "./Components/NGO/NGO_Signup/ngo_signup";
 import ViewProfile from "./Components/User/ViewProfile";
 import EditUser from "./Components/User/EditUser";
 import PaymentInfo from "./Components/User/PaymentInfo";

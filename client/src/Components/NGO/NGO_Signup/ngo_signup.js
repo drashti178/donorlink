@@ -14,7 +14,7 @@ import Second from "./second";
 import Third from "./third";
 import { Box } from "@mui/system";
 import axios from "axios";
-import base_url from "../../../../api/bootapi";
+import base_url from "../../../api/bootapi";
 import { json, useNavigate } from "react-router-dom";
 
 
