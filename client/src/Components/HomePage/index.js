@@ -29,7 +29,7 @@ const Home = () => {
     </div>
     <Maindata load={data} />
     </>
-   
+
   );
 };
 

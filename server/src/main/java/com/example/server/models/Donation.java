@@ -15,6 +15,7 @@ public class Donation {
 
     @ManyToOne
     private Ngo ngo;
+
     @ManyToOne
     private Donor donor;
     private Date date;

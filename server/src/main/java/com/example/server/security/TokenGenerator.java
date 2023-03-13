@@ -1,3 +1,4 @@
+
 package com.example.server.security;
 
 import io.jsonwebtoken.Claims;
@@ -11,11 +12,10 @@ import java.util.Date;
 
 @Component
 public class TokenGenerator {
-    public String generateToken(Authentication authentication)
-    {
+    public String generateToken(Authentication authentication) {
         String username = authentication.getName();
         Date currentDate = new Date();
-        Date expiryDate = new Date(currentDate.getTime()+ SecurityConstants.jwtExpiration);
+        Date expiryDate = new Date(currentDate.getTime() + SecurityConstants.jwtExpiration);
 
         String token = Jwts.builder().setSubject(username)
                 .setIssuedAt(currentDate)
@@ -24,8 +24,8 @@ public class TokenGenerator {
                 .compact();
         return token;
     }
-    public String getUserFromJwt(String token)
-    {
+
+    public String getUserFromJwt(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(SecurityConstants.jwtSecret)
                 .parseClaimsJws(token)
@@ -34,14 +34,11 @@ public class TokenGenerator {
         return claims.getSubject();
     }
 
-    public boolean validateToken(String  token)
-    {
-        try{
+    public boolean validateToken(String token) {
+        try {
             Jwts.parser().setSigningKey(SecurityConstants.jwtSecret).parseClaimsJws(token);
             return true;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new AuthenticationCredentialsNotFoundException("Jwt was expired or incorrect");
         }
     }

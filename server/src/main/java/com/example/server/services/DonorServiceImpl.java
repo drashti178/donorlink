@@ -3,7 +3,6 @@ package com.example.server.services;
 import com.example.server.dao.DonorDao;
 import com.example.server.models.Donor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,26 +16,24 @@ import java.util.UUID;
 @Service
 public class DonorServiceImpl implements DonorService {
 
-    private PasswordEncoder passwordEncoder;
     @Autowired
     private DonorDao donorDao;
 
     @Override
     public List<Donor> getDonors() {
-        List<Donor> users;
+        List<Donor> donors;
         try{
-            users = (List<Donor>)donorDao.findAll();
+            donors = (List<Donor>)donorDao.findAll();
         }
         catch (Exception e)
         {
             throw e;
         }
-        return users;
+        return donors;
     }
 
     @Override
     public Donor addDonor(Donor donor) {
-        donor.setPassword(passwordEncoder.encode(donor.getPassword()));
         try{
             donorDao.save(donor);
         }
@@ -48,15 +45,15 @@ public class DonorServiceImpl implements DonorService {
 
     @Override
     public Donor getDonor(Long id) {
-        Donor user = new Donor();
+        Donor donor = new Donor();
         try{
-            user = donorDao.getReferenceById(id);
+            donor = donorDao.getReferenceById(id);
         }
         catch (Exception e)
         {
             throw e;
         }
-        return user;
+        return donor;
     }
     @Override
     public String uploadImage(String path, MultipartFile file) throws IOException {
