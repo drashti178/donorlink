@@ -57,7 +57,10 @@ function NavBar(props) {
     }, 100);
   }, [context.user]);
 
-
+  
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
