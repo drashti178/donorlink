@@ -31,5 +31,3 @@ const NgoCard = () => {
     </Card>
   );
 }
-
-export default NgoCard;

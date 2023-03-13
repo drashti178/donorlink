@@ -1,5 +1,8 @@
 package com.example.server.models;
 
+
+import com.example.server.models.Donor;
+import com.example.server.models.Ngo;
 import jakarta.persistence.*;
 
 import java.util.Date;

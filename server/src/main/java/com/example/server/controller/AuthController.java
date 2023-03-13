@@ -1,18 +1,18 @@
 package com.example.server.controller;
 import com.example.server.dao.DonationDao;
+import com.example.server.dao.FundraiserDao;
 import com.example.server.dao.NgoDao;
 import com.example.server.dao.DonorDao;
-import com.example.server.models.Donation;
-import com.example.server.models.Donor;
-import com.example.server.models.Ngo;
+import com.example.server.models.*;
 import com.example.server.security.TokenGenerator;
+import com.example.server.services.FundraiserService;
 import com.example.server.services.NgoService;
 import com.example.server.dto.AuthResponseDto;
 import com.example.server.dto.NgoLoginDto;
 import com.example.server.services.DonorService;
-import com.example.server.dto.DonorLoginDto;
+import com.example.server.dto.UserLoginDto;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.catalina.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,20 +32,19 @@ import java.util.Date;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/auth")
+
 public class AuthController {
     private AuthenticationManager authenticationManager;
-    private PasswordEncoder passwordEncoder;
+
     private TokenGenerator tokenGenerator;
 
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager,
-                         PasswordEncoder passwordEncoder, TokenGenerator tokenGenerator) {
+    public AuthController(AuthenticationManager authenticationManager, TokenGenerator tokenGenerator) {
 
         this.authenticationManager = authenticationManager;
-        this.passwordEncoder = passwordEncoder;
+
         this.tokenGenerator = tokenGenerator;
     }
-
     @Autowired
     private NgoDao ngoDao;
     @Autowired
@@ -56,17 +55,17 @@ public class AuthController {
     private NgoService ngoService;
     @Autowired
     private DonorService donorService;
+    @Autowired
+    private FundraiserService fundraiserService;
 
-    private String userprofilepath = "static/images/userprofileImgs";
-    private String ngoprofilepath = "static/images/ngoprofileImgs";
-    private String certipath = "static/images/certiImgs";
-    private String activitypath = "static/images/activity";
-    @GetMapping("home")
-    public String home(){
-        return "Welcome to Donorlinker";
-    }
+    private String userprofilepath = "C:/Users/Drashti Patel/Documents/GitHub/donorlink/client/public/images/userprofileImgs";
 
-    @PostMapping("/ngo/signup")
+    private String ngoprofilepath = "C:/Users/Drashti Patel/Documents/GitHub/donorlink/client/public/images/ngoprofileImgs";
+    private String certipath = "C:/Users/Drashti Patel/Documents/GitHub/donorlink/client/public/images/certiImgs";
+
+
+
+    @PostMapping("ngo/signup")
     public ResponseEntity<String> addNgo(@RequestParam("data") String ngoBody, @RequestParam("profile") MultipartFile file1, @RequestParam("certificate") MultipartFile file2) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         Ngo ngo= objectMapper.readValue(ngoBody,Ngo.class);
@@ -81,10 +80,8 @@ public class AuthController {
         }
         else{
             String filename = this.ngoService.uploadImage(ngoprofilepath,file1);
-            System.out.println("123\n");
             System.out.println(filename);
             ngo.setProfileImgName(filename);
-            System.out.println("Profile uploaded");
         }
         if(file2.isEmpty() )
         {
@@ -95,35 +92,37 @@ public class AuthController {
 
             String filename = this.ngoService.uploadImage(certipath,file2);
             System.out.println(filename);
-            System.out.println("456\n");
             ngo.setCertiImgName(filename);
-            System.out.println("Certi uploaded");
         }
 
-        ngo.setPassword(passwordEncoder.encode(ngo.getPassword()));
-        ngoDao.save(ngo);
+
+        ngoService.addNgo(ngo);
         return new ResponseEntity<>("Ngo registered successfully", HttpStatus.OK);
     }
     @PostMapping("/ngo/login")
     public ResponseEntity<AuthResponseDto> ngoLogin(@RequestBody NgoLoginDto logindto)
     {
-        if(ngoDao.existsByEmail(logindto.getEmail()))
+        if(ngoDao.existsByEmail(logindto.getNgoname()))
         {
-            logindto.setNgoname(ngoDao.findByEmail(logindto.getEmail()).getNgoname());
+            logindto.setNgoname(ngoDao.findByEmail(logindto.getNgoname()).getNgoname());
         }
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(logindto.getNgoname(),logindto.getPassword())
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = tokenGenerator.generateToken(authentication);
+        Ngo ngo = ngoDao.findByNgoname(logindto.getNgoname());
+        if(ngo!= null){
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(logindto.getNgoname(),logindto.getPassword())
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String token = tokenGenerator.generateToken(authentication);
 
 
-        return new ResponseEntity<>(new AuthResponseDto(token),HttpStatus.OK);
+            return new ResponseEntity<>(new AuthResponseDto(token),HttpStatus.OK);
+        }
+       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     }
 
     @PostMapping("/user/signup")
-    public ResponseEntity<String> addUser(@RequestParam("data") String donorBody, @RequestParam("profile") MultipartFile file1) throws IOException {
+    public ResponseEntity<String> addUser(@RequestParam("donorBody") String donorBody, @RequestParam("profile") MultipartFile file1) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         Donor donor= objectMapper.readValue(donorBody, Donor.class);
 
@@ -134,34 +133,38 @@ public class AuthController {
         if(file1.isEmpty())
         {
             return new ResponseEntity<>("Provide profile Image", HttpStatus.BAD_REQUEST);
+
         }
         else{
-            String filename = this.donorService.uploadImage(userprofilepath,file1);
-            System.out.println("123\n");
+            String filename = this.ngoService.uploadImage(userprofilepath,file1);
             System.out.println(filename);
             donor.setProfileImgName(filename);
-            System.out.println("Profile uploaded");
+
         }
-        donor.setPassword(passwordEncoder.encode(donor.getPassword()));
-        donorDao.save(donor);
+        donorService.addDonor(donor);
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
     }
     @PostMapping("/user/login")
-    public ResponseEntity<AuthResponseDto> userLogin(@RequestBody DonorLoginDto logindto)
+    public ResponseEntity<AuthResponseDto> userLogin(@RequestBody UserLoginDto logindto)
     {
-//        if(donorDao.existsByusername(logindto.getUsername()))
-//        {
-//            logindto.setEmail(donorDao.findByusername(logindto.getUsername()).getUsername());
-//        }
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(logindto.getUsername(),logindto.getPassword())
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = tokenGenerator.generateToken(authentication);
+        if(donorDao.existsByEmail(logindto.getUsername()))
+        {
+            logindto.setUsername(donorDao.findByEmail(logindto.getUsername()).getUsername());
+        }
+        Donor donor = donorDao.findByusername(logindto.getUsername());
+        if(donor!= null) {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(logindto.getUsername(), logindto.getPassword())
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String token = tokenGenerator.generateToken(authentication);
 
-        return new ResponseEntity<>(new AuthResponseDto(token),HttpStatus.OK);
+            return new ResponseEntity<>(new AuthResponseDto(token), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     }
+
 
     @PostMapping("/donation/update/{ngo_id}/{amount}")
     public ResponseEntity<String> updateDonation(@PathVariable Long ngo_id, @PathVariable Long amount) {
@@ -174,5 +177,24 @@ public class AuthController {
         donationDao.save(donation);
         return new ResponseEntity<>("Donation updated successfully", HttpStatus.OK);
     }
+    @PostMapping("/fdonation/update/{fr_id}/{amount}")
+    public ResponseEntity<String> updateFDonation(@PathVariable Long fr_id, @PathVariable Long amount) {
+        Fundraiser fr=fundraiserService.getFundraiser(fr_id);
+
+        Date date = new Date();
+        Long current=fr.getAmount();
+        current = current+amount;
+        fr.setAmount(current);
+
+        FundraiserDonation donation=new FundraiserDonation(fr,null,date, amount);
+        fundraiserService.addDonation(donation);
+
+        return new ResponseEntity<>("Donation updated successfully", HttpStatus.OK);
+    }
+
+
+
+
+
 
 }

@@ -2,7 +2,6 @@ import { React, useMemo, useState } from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 import ForgetPassword from "./Components/ForgetPassword";
-
 import UserSignup from "./Components/User/User_Signup/user_signup";
 import Home from "./Components/HomePage/index";
 import NgoSignup from "./Components/NGO/NGO_Signup/NGO_Signup/ngo_signup";
@@ -18,9 +17,7 @@ import ViewDonation from "./Components/User/ViewDonations";
 // import { UserContextProvider } from './Context/UserContext';
 
 const App = () => {
-
   const [user,setUser] = useState(null);
-
   const value = useMemo(() => ({user,setUser}), [user,setUser]);
 
   return (

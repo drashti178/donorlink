@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .permitAll()
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/user/role")
+                .requestMatchers("/home/**")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
