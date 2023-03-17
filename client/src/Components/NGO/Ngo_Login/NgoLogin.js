@@ -21,7 +21,6 @@ import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import axios from "axios";
-import '../../style.css';
 import base_url from "../../../api/bootapi";
 import { UserContext } from "../../../Context/UserContext";
 
@@ -212,7 +211,7 @@ const NgoLogin = () => {
                   checked={!controls.isUser}
                   onClick={() => {
                     setTimeout(() => {
-                      navigate('/user/login');
+                      navigate('/user/login', { replace: true });
                     }, 100);
                     setControls({ ...controls, isUser: !controls.isUser });
                   }

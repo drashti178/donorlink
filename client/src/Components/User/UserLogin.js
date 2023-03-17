@@ -64,21 +64,6 @@ const UserLogin = () => {
     onLogin(inputs)
   };
 
-  // const setRole = () => {
-  //   // const token = localStorage.getItem("accessToken");
-
-  //   axios.get(`${base_url}/authUser/profile`, { headers: { "Authorization": `Bearer ${token}` } }).then(
-  //     (response) => {
-  //       console.log(response);
-  //       console.log("success");
-  //       setRole(response.role);
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //       console.log("Failure");
-  //     }
-  //   )
-  // }  
 
   const [open, setOpen] = useState(false);
   const [severity,setSeverity] = useState("error");
@@ -102,7 +87,6 @@ const UserLogin = () => {
       (response) => {
         localStorage.setItem("AccessToken", response.data.accessToken);
         const token = "Bearer " + localStorage.getItem("AccessToken");
-        // console.log(token);
         axios.get(`${base_url}/user/profile`, {
           headers: {
             'Authorization': token,
@@ -120,6 +104,7 @@ const UserLogin = () => {
           setSeverity("success");
           setMsg('Login Successful');
         }, 100);
+
         // console.log(navigate);
         navigate(-1);
       },

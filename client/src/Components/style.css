@@ -1,0 +1,40 @@
+.gridUserStyle::before {
+    /* background: url('images/bg_img.jpg') no-repeat center center/cover; */
+    content: "";
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.9;
+    overflow-y: auto;
+}
+
+.ProfileStyle::before {
+    /* background: url('images/bg_img.jpg') repeat-y center center/cover; */
+    /* background-color: darkcyan; */
+    content: "";
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 131%;
+    z-index: -1;
+    opacity: 0.9;
+    /* overflow-y: auto; */
+}
+
+.gridNgoStyle::before {
+    /* background: url('images/bg_img.jpg') no-repeat center center/cover; */
+    /* background-color: darkcyan; */
+    content: "";
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    /* opacity: 0.9; */
+    overflow-y: auto;
+}

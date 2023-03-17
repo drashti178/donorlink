@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import base_url from '../../api/bootapi';
 import { UserContext } from '../../Context/UserContext';
 import NavBar from '../Navbar';
-import DatePicker from "react-datepicker";
-import { Button, Tooltip, Typography } from '@mui/material';
+import { Button,  Typography } from '@mui/material';
 import DonationTable from './DonationTable';
 
 const ViewDonation = () => {
@@ -60,9 +59,9 @@ const ViewDonation = () => {
             }
         }).then(
             (response) => {
-                // console.log(response.data);
+              
                 setInputs(response.data);
-                // console.log(inputs);
+               
             },
             (error) => {
                 console.log(error);

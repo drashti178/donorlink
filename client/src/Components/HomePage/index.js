@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 
 import Maindata from './maindata';
-import NavBar from '../Navbar';
 import HomeNavBar from './navbar';
 import Carouseldiv from './carousel';
+import NavBar from '../Navbar';
 
 
 const Home = () => {
@@ -23,10 +23,10 @@ const Home = () => {
   return (
     <>
      <HomeNavBar onDataReceived={handleDataReceived}></HomeNavBar>
-   
-    <div>
+    {/* <NavBar type="home" onDataReceived={handleDataReceived} /> */}
+    {/* <div>
     <Carouseldiv images={images}/>
-    </div>
+    </div> */}
     <Maindata load={data} />
     </>
 

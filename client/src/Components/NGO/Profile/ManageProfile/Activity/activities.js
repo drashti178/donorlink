@@ -1,9 +1,10 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect, useContext } from 'react';
 import axios from "axios";
 import base_url from '../../../../../api/bootapi';
 import Activity from './activity';
 import { Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { ActivityContext } from '../../../../../Context/UserContext';
 
 
 
@@ -11,9 +12,11 @@ import { useNavigate } from 'react-router-dom';
 
 const Activities = () => {
   const [activities,setActivities] = useState([]);
+  const { isAdded,setIsAdded } = useContext(ActivityContext);
+
   useEffect(() => {   
     getAllActivities();
-  },[]);
+  },[isAdded]);
   const navigate = useNavigate();
   const getAllActivities= ()=>
   {

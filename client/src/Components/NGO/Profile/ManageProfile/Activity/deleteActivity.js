@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -9,8 +9,10 @@ import {
     Grid,
 } from "@mui/material";
 import base_url from '../../../../../api/bootapi';
+import { ActivityContext } from '../../../../../Context/UserContext';
 
 const DeleteActivity = (props) => {
+   const context = useContext(ActivityContext);
     const [open, setOpen] = useState(false);
     const handleSubmit =  (e) => {
         e.preventDefault();
@@ -24,7 +26,7 @@ const DeleteActivity = (props) => {
     };
   
     const handleClose = () => {
-     
+      context.setIsAdded(!context.isAdded);
       setOpen(false);
     };
     const deleteActivity = (id) =>{

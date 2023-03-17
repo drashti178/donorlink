@@ -26,7 +26,7 @@ const Navbar = (props) => {
     const LogoutNgo = (event) => {
       localStorage.removeItem("role");
       localStorage.removeItem("AccessToken");
-      navigate('/ngo/login');
+      navigate('/ngo/login',{replace:true});
     };
     const handleCloseNavMenu = () => {
       setAnchorElNav(null);

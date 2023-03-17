@@ -1,4 +1,4 @@
-import {React,useState} from 'react';
+import {React,useContext,useState} from 'react';
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -12,12 +12,14 @@ import {
   } from "@mui/material";
 import base_url from '../../../../../api/bootapi';
 import axios from 'axios';
+import { ActivityContext } from '../../../../../Context/UserContext';
 
 
 
  
 ;
 const AddActivity = () => {
+    const context = useContext(ActivityContext);
     const [open, setOpen] = useState(false);
     const [inputs, setInputs] = useState({
         activityname: "",
@@ -75,6 +77,7 @@ const AddActivity = () => {
     };
   
     const handleClose = () => {
+      context.setIsAdded(!context.isAdded);
       setInputs("");
       setOpen(false);
     };

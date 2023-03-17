@@ -20,6 +20,7 @@ function ButtonDiv(props) {
     props.onDataReceived("Request");
   
   }
+  
   return (
     <div className="button-div">
      <Box sx={{ width: "20%",marginLeft:"0%"}}><AddActivity/>

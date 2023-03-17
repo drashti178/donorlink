@@ -20,8 +20,8 @@ import { UserContext } from "../../Context/UserContext";
 import Logout from "../Logout";
 
 const PaymentInfo = () => {
-    const userid = 13;
-    const ngoId = 2;
+    
+   let ngoId=8;
 
     const context = useContext(UserContext);
     const navigate = useNavigate();
@@ -48,23 +48,33 @@ const PaymentInfo = () => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    // const handleShow = () => setShow(true);
+    
     useEffect(() => {
         if (context.user != null) {
-            if(context.user.role == 'ngo'){
-                navigate('/');
-            }
             setUser(context.user);
             setLogin(true);
         }
         else {
             setTimeout(() => {
                 if (localStorage.getItem("AccessToken") != null) {
-                    Logout();
-                    navigate('/user/login');
-                    // history.push('/user/login')
+                    const token = "Bearer " + localStorage.getItem("AccessToken");
+                axios.get(`${base_url}/user/profile`, {
+                    headers: {
+                        'Authorization': token,
+                    }
+                }).then(
+                    (response) => {
+                        console.log(response.data);
+                        context.setUser(response.data);
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                )
+                setLogin(true);
+                   
                 }
-                setLogin(false);
+                
             }, 100);
         }
         console.log(login);

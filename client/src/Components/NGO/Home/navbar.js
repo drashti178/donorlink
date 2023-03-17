@@ -21,7 +21,7 @@ const Navbar = (props) => {
       setAnchorElNav(event.currentTarget);
     };
     const NgoProfile = (event) => {
-      navigate('/ngo/profile');
+      navigate('/ngo/profile',{replace: true});
     };
     
     const LogoutNgo = (event) => {

@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import base_url from '../../../../../api/bootapi';
 import axios from "axios";
 import { Typography } from '@material-ui/core';
 import Fundraiser from './Fundraiser';
+import { ActivityContext } from '../../../../../Context/UserContext';
 
 const Fundraisers = () => {
+  const context = useContext(ActivityContext);
   const [fundraisers,setFundraisers] = useState([]);
   useEffect(() => {   
     getAllFundraisers();
-  },[]);
+  },[context.isAdded]);
   
   const getAllFundraisers= ()=>
   {

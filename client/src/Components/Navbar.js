@@ -49,8 +49,6 @@ function NavBar(props) {
   useEffect(() => {
     setTimeout(() => {
       if (context.user) {
-        // console.log(context);
-        // role = context.user.role;
         setLogin(true);
         localStorage.setItem("role", context.user.role);
       }
@@ -77,9 +75,6 @@ function NavBar(props) {
     Logout();
     navigate('/user/login');
   };
-
-  
-
 
   const LogoutUser = (event) => {
     localStorage.removeItem("role");

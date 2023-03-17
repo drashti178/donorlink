@@ -77,6 +77,16 @@ const Second = (props) => {
           </ListItemText>
         </ListItem>
       
+        {/* name: "",
+        username: "",
+        password: "",
+        email: "",
+        country: "",
+        contactno: "",
+        adharno: "",
+        profession: "",
+        type: "", */}
+      
       </List>
         <form >
           

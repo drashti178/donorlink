@@ -11,6 +11,10 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from "react-router-dom";
+import { UserContext } from '../../Context/UserContext';
+import base_url from '../../api/bootapi';
+import axios from 'axios';
+import { Avatar } from '@mui/material';
 
 
 
@@ -21,9 +25,49 @@ function HomeNavBar(props) {
   
   const [anchorElNav, setAnchorElNav] = useState(0);
   const navigate = useNavigate();
+  const UserProfile = (event) => {
+    navigate('/user/profile');
+  };
+  const LogoutUser = (event) => {
+    localStorage.removeItem("role");
+    localStorage.removeItem("AccessToken");
+    navigate('/user/login');
+  };  
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+  const [login, setLogin] = useState(false);
+
+  const context = useContext(UserContext);
+  
+  if (context.user == null && localStorage.getItem("AccessToken") != null) {
+    const token = "Bearer " + localStorage.getItem("AccessToken");
+    axios.get(`${base_url}/user/profile`, {
+      headers: {
+        'Authorization': token,
+      }
+    }).then(
+      (response) => {
+        console.log(response.data);
+        context.setUser(response.data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+  }
+
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (context.user) {
+        setLogin(true);
+        localStorage.setItem("role", context.user.role);
+      }
+    }, 100);
+  }, [context.user]);
+
+  
 
   const LoginPage = (event) => {
     navigate('/ngo/login');
@@ -47,7 +91,7 @@ function HomeNavBar(props) {
     console.log("home");
 
   return (
-    <AppBar position="static" style={{backgroundColor:"darkcyan"}}>
+    <AppBar position="static" style={{backgroundColor:"#075456"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, color: 'white', }} />
@@ -128,15 +172,23 @@ function HomeNavBar(props) {
               <Button
                 key={p.page}
                 onClick={p.event}
-                sx={{ my: 2, backgroundColor:"darkcyan", color: 'white', display: 'block' }}
+                sx={{ my: 2, backgroundColor:"#075456", color: 'white', display: 'block' }}
               >
                 {p.page}
               </Button>
             ))}
           </Box>
-          <Box sx={{ flexGrow: 0 }}>
-             <Button sx={{color:"white"}} onClick={LoginPage}>Login</Button>
-          </Box>
+          {!login ?
+              <Box sx={{ flexGrow: 0 }}>
+                <Button sx={{ color: "white" }} onClick={LoginPage}>Login</Button>
+              </Box> :
+              <Box sx={{ flexGrow: 0 }}>
+                <Button sx={{ color: "white" }} onClick={LogoutUser}>Logout</Button>
+                <IconButton onClick={UserProfile} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Box>}
+
 
          
         </Toolbar>
