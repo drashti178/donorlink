@@ -32,7 +32,7 @@ const PaymentInfo = () => {
         amount: 0,
         remarks: "",
     });
-    
+
     const [user, setUser] = useState({
         name: "",
         username: "",
@@ -51,20 +51,28 @@ const PaymentInfo = () => {
     // const handleShow = () => setShow(true);
     useEffect(() => {
         if (context.user != null) {
-            if(context.user.role == 'ngo'){
-                navigate('/');
-            }
             setUser(context.user);
             setLogin(true);
         }
         else {
             setTimeout(() => {
                 if (localStorage.getItem("AccessToken") != null) {
-                    Logout();
-                    navigate('/user/login');
-                    // history.push('/user/login')
+                    const token = "Bearer " + localStorage.getItem("AccessToken");
+                    axios.get(`${base_url}/user/profile`, {
+                        headers: {
+                            'Authorization': token,
+                        }
+                    }).then(
+                        (response) => {
+                            console.log(response.data);
+                            context.setUser(response.data);
+                        },
+                        (error) => {
+                            console.log(error);
+                        }
+                    )
+                    setLogin(true);
                 }
-                setLogin(false);
             }, 100);
         }
         console.log(login);
@@ -146,7 +154,7 @@ const PaymentInfo = () => {
                     "sms": true
                 },
                 handler: async () => {
-                    await axios.post(`${base_url}/donation/update/${ngoId}/${inputs.amount}`,{},{
+                    await axios.post(`${base_url}/donation/update/${ngoId}/${inputs.amount}`, {}, {
                         headers: {
                             'Authorization': token,
                         }
@@ -224,7 +232,6 @@ const PaymentInfo = () => {
     const isMatch = useMediaQuery(theme.breakpoints.down("md"));
     return (
         <>
-            <NavBar type="userprofile" />
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Donation Limit</Modal.Title>

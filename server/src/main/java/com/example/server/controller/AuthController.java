@@ -10,7 +10,7 @@ import com.example.server.services.NgoService;
 import com.example.server.dto.AuthResponseDto;
 import com.example.server.dto.NgoLoginDto;
 import com.example.server.services.DonorService;
-import com.example.server.dto.UserLoginDto;
+import com.example.server.dto.DonorLoginDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -145,7 +145,7 @@ public class AuthController {
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
     }
     @PostMapping("/user/login")
-    public ResponseEntity<AuthResponseDto> userLogin(@RequestBody UserLoginDto logindto)
+    public ResponseEntity<AuthResponseDto> userLogin(@RequestBody DonorLoginDto logindto)
     {
         if(donorDao.existsByEmail(logindto.getUsername()))
         {

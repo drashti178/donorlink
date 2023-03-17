@@ -66,14 +66,14 @@ const DonationTable = (props) => {
                         ((res == 'yes') ?
                             <Button
                                 variant="contained"
-                                sx={{ "&:hover": { backgroundColor: '#9C7875', color: 'white', }, marginTop: 1, width: "50%", backgroundColor: '#9C7875' }}
+                                sx={{ "&:hover": { backgroundColor: '#075456', color: 'white', }, marginTop: 1, width: "50%", backgroundColor: '#075456' }}
                             >
                                 Download Certificate
                             </Button> :
                             ((res == 'notPresent') ?
                                 <Button
                                     variant="contained"
-                                    sx={{ "&:hover": { backgroundColor: '#9C7875', color: 'white', }, marginTop: 1, width: "25%", backgroundColor: '#9C7875' }}
+                                    sx={{ "&:hover": { backgroundColor: '#075456', color: 'white', }, marginTop: 1, width: "25%", backgroundColor: '#075456' }}
                                     onClick={() => addClaim(props.i.d_id, props.index)}
                                 >
                                     Claim
@@ -83,7 +83,7 @@ const DonationTable = (props) => {
                                     <span>
                                         <Button
                                             variant="contained"
-                                            sx={{ "&:hover": { backgroundColor: '#9C7875', color: 'white', }, marginTop: 1, width: "25%", backgroundColor: '#9C7875' }}
+                                            sx={{ "&:hover": { backgroundColor: '#075456', color: 'white', }, marginTop: 1, width: "25%", backgroundColor: '#075456' }}
                                             disabled>
                                             Pending
                                         </Button>

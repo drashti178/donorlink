@@ -11,14 +11,14 @@ import Logout from "../Logout";
 import BootButton from 'react-bootstrap/Button';
 
 function MyVerticallyCenteredModal(props) {
-    
+
     const navigate = useNavigate();
 
     const deleteUser = async () => {
         const token = "Bearer " + localStorage.getItem("AccessToken");
-        await axios.delete(`${base_url}/user/delete`,{
-            headers:{
-                'Authorization' : token,
+        await axios.delete(`${base_url}/user/delete`, {
+            headers: {
+                'Authorization': token,
             }
         }).then(
             (response) => {
@@ -117,7 +117,6 @@ const ViewProfile = () => {
 
     return (
         <>
-            <NavBar type="userprofile" />
             <MyVerticallyCenteredModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}

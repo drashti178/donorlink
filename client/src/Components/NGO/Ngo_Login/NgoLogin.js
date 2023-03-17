@@ -119,7 +119,7 @@ const NgoLogin = () => {
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <Grid align="center" className="gridStyle">
+    <Grid align="center" className="gridUserStyle">
       <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
         <Grid align="center">
           <Avatar sx={{ width: 60, height: 60 }}>
@@ -212,7 +212,7 @@ const NgoLogin = () => {
                   checked={!controls.isUser}
                   onClick={() => {
                     setTimeout(() => {
-                      navigate('/user/login');
+                      navigate('/user/login', { replace: true });
                     }, 100);
                     setControls({ ...controls, isUser: !controls.isUser });
                   }

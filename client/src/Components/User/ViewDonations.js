@@ -14,7 +14,7 @@ const ViewDonation = () => {
     const context = useContext(UserContext);
 
     const [inputs, setInputs] = useState([]);
-
+    
     useEffect(() => {
         if (localStorage.getItem("AccessToken") == null) {
             setTimeout(() => {
@@ -74,7 +74,6 @@ const ViewDonation = () => {
 
     return (
         <>
-            <NavBar type="userprofile" />
             {
                 (inputs.length == 0) ? <Typography variant="h6" gutterBottom style={{marginTop:"3%",marginLeft:"1%"}}>You haven't donated in any Ngo yet!! <Button onClick={() => {navigate('/')}}>click here</Button> to make donation.</Typography> :
                 <Table bordered hover style={{ marginTop: "4%" }}>
