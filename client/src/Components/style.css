@@ -1,5 +1,6 @@
 .gridUserStyle::before {
-    /* background: url('images/bg_img.jpg') no-repeat center center/cover; */
+    background: url('/public/images/bgLogin.jpg') no-repeat center center/cover;
+    /* background-color: darkcyan; */
     content: "";
     position: absolute;
     top:0;
@@ -12,7 +13,7 @@
 }
 
 .ProfileStyle::before {
-    /* background: url('images/bg_img.jpg') repeat-y center center/cover; */
+    background: url('/public/images/bgLogin.jpg') repeat-y center center/cover;
     /* background-color: darkcyan; */
     content: "";
     position: absolute;
@@ -26,7 +27,7 @@
 }
 
 .gridNgoStyle::before {
-    /* background: url('images/bg_img.jpg') no-repeat center center/cover; */
+    /* background: url('/public/images/bgLogin.jpg') no-repeat center center/cover; */
     /* background-color: darkcyan; */
     content: "";
     position: absolute;

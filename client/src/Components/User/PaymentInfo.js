@@ -20,8 +20,8 @@ import { UserContext } from "../../Context/UserContext";
 import Logout from "../Logout";
 
 const PaymentInfo = () => {
-    
-   let ngoId=8;
+    const userid = 13;
+    const ngoId = 2;
 
     const context = useContext(UserContext);
     const navigate = useNavigate();
@@ -32,7 +32,7 @@ const PaymentInfo = () => {
         amount: 0,
         remarks: "",
     });
-    
+
     const [user, setUser] = useState({
         name: "",
         username: "",
@@ -48,7 +48,7 @@ const PaymentInfo = () => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    
+    // const handleShow = () => setShow(true);
     useEffect(() => {
         if (context.user != null) {
             setUser(context.user);
@@ -58,23 +58,21 @@ const PaymentInfo = () => {
             setTimeout(() => {
                 if (localStorage.getItem("AccessToken") != null) {
                     const token = "Bearer " + localStorage.getItem("AccessToken");
-                axios.get(`${base_url}/user/profile`, {
-                    headers: {
-                        'Authorization': token,
-                    }
-                }).then(
-                    (response) => {
-                        console.log(response.data);
-                        context.setUser(response.data);
-                    },
-                    (error) => {
-                        console.log(error);
-                    }
-                )
-                setLogin(true);
-                   
+                    axios.get(`${base_url}/user/profile`, {
+                        headers: {
+                            'Authorization': token,
+                        }
+                    }).then(
+                        (response) => {
+                            console.log(response.data);
+                            context.setUser(response.data);
+                        },
+                        (error) => {
+                            console.log(error);
+                        }
+                    )
+                    setLogin(true);
                 }
-                
             }, 100);
         }
         console.log(login);
@@ -156,7 +154,7 @@ const PaymentInfo = () => {
                     "sms": true
                 },
                 handler: async () => {
-                    await axios.post(`${base_url}/donation/update/${ngoId}/${inputs.amount}`,{},{
+                    await axios.post(`${base_url}/donation/update/${ngoId}/${inputs.amount}`, {}, {
                         headers: {
                             'Authorization': token,
                         }
@@ -234,7 +232,6 @@ const PaymentInfo = () => {
     const isMatch = useMediaQuery(theme.breakpoints.down("md"));
     return (
         <>
-            <NavBar type="userprofile" />
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Donation Limit</Modal.Title>

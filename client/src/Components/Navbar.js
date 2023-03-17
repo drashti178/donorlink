@@ -18,8 +18,6 @@ import { DispatchUserContext, UserContext } from '../Context/UserContext';
 import Logout from './Logout';
 import { Tab, Tabs } from '@mui/material';
 
-
-
 function NavBar(props) {
 
   const [anchorElNav, setAnchorElNav] = useState(0);
@@ -49,13 +47,15 @@ function NavBar(props) {
   useEffect(() => {
     setTimeout(() => {
       if (context.user) {
+        // console.log(context);
+        // role = context.user.role;
         setLogin(true);
         localStorage.setItem("role", context.user.role);
       }
     }, 100);
   }, [context.user]);
 
-  
+
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -66,7 +66,7 @@ function NavBar(props) {
     navigate('/ngo/profile');
   };
   const UserProfile = (event) => {
-    navigate('/user/profile');
+    navigate('/user');
   };
   const LoginPage = (event) => {
     navigate('/user/login');
@@ -75,6 +75,9 @@ function NavBar(props) {
     Logout();
     navigate('/user/login');
   };
+
+
+
 
   const LogoutUser = (event) => {
     localStorage.removeItem("role");
@@ -87,7 +90,7 @@ function NavBar(props) {
   if (props.type === "home") {
     const pages = ['Activities', 'FundRaisers'];
     return (
-      <AppBar position="static" sx={{ backgroundColor: (context.user && context.user.role == 'ngo') ? "darkcyan" : "#075456" }}>
+      <AppBar position="static" style={{ backgroundColor: "#075456" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -193,10 +196,19 @@ function NavBar(props) {
     );
   }
   else if (props.type === "userprofile") {
-    const pages = ['Home', 'My Donations'];
 
+    const clickMyProfile = (event) => {
+      props.onDataReceived("My Profile");
+      handleCloseNavMenu();
+    }
+    const clickMyDonations = (event) => {
+      props.onDataReceived("My Donations");
+      handleCloseNavMenu();
+    }
+
+    const pages = [{ "page": "My Profile", "event": clickMyProfile }, { "page": "My Donations", "event": clickMyDonations },];
     return (
-      <AppBar position="static" sx={{ backgroundColor: (context.user && context.user.role == 'ngo') ? "darkcyan" : "#9C7875" }}>
+      <AppBar position="static" style={{ backgroundColor: "#075456" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -217,7 +229,7 @@ function NavBar(props) {
               Donor Link
             </Typography>
 
-            {/* <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -246,14 +258,14 @@ function NavBar(props) {
                   display: { xs: 'block', md: 'none' },
                 }}
               >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                {pages.map((p) => (
+                  <MenuItem key={p.page} onClick={p.event}>
+                    <Typography textAlign="center">{p.page}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
-            </Box> */}
-            {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+            </Box>
+            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
             <Typography
               variant="h5"
               noWrap
@@ -271,25 +283,17 @@ function NavBar(props) {
               }}
             >
               Donor Link
-            </Typography> */}
+            </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {/* {pages.map((page) => (
+              {pages.map((p) => (
                 <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
+                  key={p.page}
+                  onClick={p.event}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >
-                  {page}
+                  {p.page}
                 </Button>
-              ))} */}
-              
-              <Tabs textColor='white' sx={{ mx: 'auto' }} value={value} onChange={(e, value) => setValue(value)}>
-                <Tab label="Home" component={Link} to="/" />
-                <Tab label="Profile" component={Link} to="/user/profile" />
-                <Tab label="My Donations" component={Link} to="/user/donation" />
-                {/* <Tab label="Food Menu" component={Link} to="/viewMenu" /> */}
-                {/* {role === "admin" && <Tab label="Admin Pannel" component={Link} to="/adminPannel" />} */}
-              </Tabs>
+              ))}
             </Box>
             {!login ?
               <Box sx={{ flexGrow: 0 }}>
