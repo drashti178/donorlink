@@ -80,7 +80,7 @@ const UserSignup = () => {
     }
 
     var formData = new FormData();
-    formData.append("data",JSON.stringify(inputs));
+    formData.append("donorBody",JSON.stringify(inputs));
     formData.append("profile",profile);
     
     // console.log(JSON.stringify(inputs));
