@@ -2,6 +2,11 @@ import { Box, Button } from '@mui/material';
 import React from 'react'
 
 const Categories = (props) => {
+  const clickAll = (event) =>
+  {
+    props.onDataReceived("All");
+   
+  }
   const clickStudy = (event) =>
   {
     props.onDataReceived("Study");
@@ -21,7 +26,7 @@ const Categories = (props) => {
    
   }
  
-    const categories = [{"cr":"Study","event":clickStudy}, {"cr":"Enviroment","event":clickEnviroment},{"cr":"Orphan","event":clickOrphan},{"cr":"WomenEmpowerment","event":clickWomenEmpowerment}];
+    const categories = [{"cr":"All","event":clickAll},{"cr":"Study","event":clickStudy}, {"cr":"Enviroment","event":clickEnviroment},{"cr":"Orphan","event":clickOrphan},{"cr":"WomenEmpowerment","event":clickWomenEmpowerment}];
   return (
     <>
     <div>Categories</div>

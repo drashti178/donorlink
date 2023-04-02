@@ -3,7 +3,6 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import UserSignup from "./Components/User/User_Signup/user_signup";
 import Home from "./Components/HomePage/index";
 import NgoSignup from "./Components/NGO/NGO_Signup/ngo_signup";
-import ViewProfile from "./Components/User/ViewProfile";
 import EditUser from "./Components/User/EditUser";
 import PaymentInfo from "./Components/User/PaymentInfo";
 import NgoHome from "./Components/NGO/Home/home";
@@ -11,9 +10,9 @@ import NgoProfile from "./Components/NGO/Profile/profile";
 import NgoLogin from "./Components/NGO/Ngo_Login/NgoLogin";
 import UserLogin from "./Components/User/UserLogin";
 import { UserContext } from "./Context/UserContext";
-import ViewDonation from "./Components/User/ViewDonations";
 import UserIndex from "./Components/User/UserIndex";
-// import { UserContextProvider } from './Context/UserContext';
+import NgoPage from "./Components/HomePage/NgoPage";
+
 
 const App = () => {
   const [user,setUser] = useState(null);
@@ -34,6 +33,7 @@ const App = () => {
             <Route exact path='/ngo/login' element={<NgoLogin />} />
             <Route exact path='/ngo/home' element={<NgoHome />} />
             <Route exact path='/ngo/profile' element={<NgoProfile />} />
+            <Route exact path='/ngopage' element={<NgoPage />} />
             <Route exact path='/' element={<Home />} />
           </Routes>
         </BrowserRouter>

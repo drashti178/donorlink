@@ -14,13 +14,12 @@ import Modal from 'react-bootstrap/Modal';
 import BootButton from 'react-bootstrap/Button';
 import axios from "axios";
 import base_url from "../../api/bootapi";
-import NavBar from "../Navbar";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
 import Logout from "../Logout";
 
 const PaymentInfo = () => {
-    const userid = 13;
+    
     const ngoId = 2;
 
     const context = useContext(UserContext);

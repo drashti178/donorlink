@@ -106,7 +106,7 @@ const UserLogin = () => {
         }, 100);
 
         // console.log(navigate);
-        navigate(-1);
+        navigate("/");
       },
       (error) => {
         // console.log(error);

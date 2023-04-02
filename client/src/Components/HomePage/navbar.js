@@ -1,4 +1,4 @@
-import { createContext, React, useContext, useEffect, useState } from 'react';
+import { React, useContext, useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -26,7 +26,7 @@ function HomeNavBar(props) {
   const [anchorElNav, setAnchorElNav] = useState(0);
   const navigate = useNavigate();
   const UserProfile = (event) => {
-    navigate('/user/profile');
+    navigate('/user');
   };
   const LogoutUser = (event) => {
     localStorage.removeItem("role");
@@ -100,7 +100,7 @@ function HomeNavBar(props) {
             noWrap
             component="a"
             href="/"
-            sx={{
+            style={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
               fontFamily: "'Aboreto', cursive;",

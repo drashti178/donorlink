@@ -12,8 +12,8 @@ const UserIndex = () => {
 
     return (
         <>
-            {/* <HomeNavBar onDataReceived={handleDataReceived}></HomeNavBar> */}
-            <NavBar type="userprofile" onDataReceived={handleDataReceived} />
+          
+            <NavBar onDataReceived={handleDataReceived} />
             <Maindata load={data} />
         </>
 

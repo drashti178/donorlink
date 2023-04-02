@@ -1,10 +1,8 @@
 import React, { useState,useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
 import axios from "axios";
 import base_url from '../../api/bootapi';
+import Ngocard from './NgoCard';
 
 
 
@@ -39,33 +37,6 @@ const useStyles = makeStyles({
 
 
 
-const ProductCard = ({ product }) => {
-  const profilePath = "/images/ngoprofileImgs/";
-  const classes = useStyles();
-  const { ngoId, ngoname, profileImgName } = product;
-
-  return (
-    <>
-    
-    <Card className={classes.root}>
-      <CardMedia
-        className={classes.media}
-        image={profilePath + profileImgName}
-        title={ngoname}
-        ><Typography gutterBottom variant="h6" sx={{display:"flex",
-        flexDirection: "row-reverse"}}>
-        {ngoname}
-      </Typography>
-      </CardMedia>
-      
-     
-    </Card>
-   
-    </>
-  );
-}
-
-
 const NgoList = (props) => {
   const [ngos,setNgos] = useState([]);
   useEffect(() => {   
@@ -97,7 +68,7 @@ const NgoList = (props) => {
     {
      
       
-       axios.post(`${base_url}/home/getngos`,`${cat}`).then(
+       axios.get(`${base_url}/home/getngoByCat/${cat}`).then(
         (response)=>{
           setNgos(response.data);
         },
@@ -115,7 +86,8 @@ const NgoList = (props) => {
     <>
    <div className={classes.list}>
     {ngos.map((product) => (
-      <ProductCard key={product.ngoId} product={product} />
+      <Ngocard key={product.ngoId} product={product}/>
+      
     ))}
     </div> 
     

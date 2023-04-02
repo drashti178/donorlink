@@ -43,10 +43,10 @@ public class NgoServiceImpl implements  NgoService{
     }
 
     @Override
-    public Ngo getNgo(Long id) {
+    public Ngo getNgo(long id) {
         Ngo ngo = new Ngo();
         try {
-            ngo = ngoDao.getReferenceById(id);
+            ngo = ngoDao.findById(id).get();
         }
         catch (Exception e)
         {

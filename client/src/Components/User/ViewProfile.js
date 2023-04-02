@@ -1,10 +1,9 @@
 import { Button, Grid } from "@mui/material";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import base_url from "../../api/bootapi";
 import { UserContext } from "../../Context/UserContext";
-import NavBar from "../Navbar";
 import './../style.css';
 import Modal from 'react-bootstrap/Modal';
 import Logout from "../Logout";
@@ -59,7 +58,7 @@ function MyVerticallyCenteredModal(props) {
 }
 
 const ViewProfile = () => {
-    const id = 0;
+   
     const context = useContext(UserContext);
     const [modalShow, setModalShow] = useState(false);
 
@@ -105,7 +104,7 @@ const ViewProfile = () => {
                 )
             }
             else {
-                if (context.user.role == 'ngo') {
+                if (context.user.role === 'ngo') {
                     navigate('/ngo/profile');
                 }
                 context.user.password = "";
@@ -113,7 +112,7 @@ const ViewProfile = () => {
                 setInputs(context.user);
             }
         }
-    }, [context.user]);
+    }, [context, context.user, navigate]);
 
     return (
         <>
@@ -124,11 +123,10 @@ const ViewProfile = () => {
             <div className="container d-flex align-items-center justify-content-center mt-5 ProfileStyle">
                 <div className="card mb-4 ml-5 box-shadow " style={{ width: "30rem", backgroundColor: "rgb(161 126 121 / 10%)" }}>
                     <div className="text-center">
-                        <img className="card-img-top rounded-circle mt-4" src="https://th.bing.com/th/id/OIP.6g046R8XK5hclI-YnpjDnwHaHa" alt="Card image cap" style={{ width: "200px", height: "200px" }} />
+                        <img className="card-img-top rounded-circle mt-4" src="https://th.bing.com/th/id/OIP.6g046R8XK5hclI-YnpjDnwHaHa" alt="Card cap" style={{ width: "200px", height: "200px" }} />
                     </div>
                     <div className="card-body " >
-                        <h5 className="card-title pl-4"></h5>
-                        <h6 className="card-subtitle mb-2 pl-4 text-muted"></h6>
+                        
                         <ul className="list-group list-group-flush">
                             <li className="list-group-item" style={{ backgroundColor: "#ffffff" }}><strong>Username :</strong> {inputs.username}</li>
                             <li className="list-group-item" style={{ backgroundColor: "rgb(161 126 121 / 15%)" }}><strong>Email :</strong> {inputs.email}</li>

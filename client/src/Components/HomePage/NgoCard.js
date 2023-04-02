@@ -5,28 +5,62 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import { useNavigate } from "react-router-dom";
 
-const NgoCard = () => {
+
+const useStyles = makeStyles({
+  
+root: {
+  
+  width:'340px',
+  marginTop:"2%",
+  marginLeft:"2%",
+  
+},
+media: {
+   
+ 
+  height: "240px",
+},
+
+
+});
+
+export default function Ngocard({ product }) {
   const navigate = useNavigate();
+  
+  const classes = useStyles();
+  const { ngoId, ngoname, profileImgName, tagline } = product;
+  const profilePath = "/images/ngoprofileImgs/";
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345 }} className={classes.root}>
       <CardMedia
-        sx={{ height: 140 }}
-        image="/static/images/cards/contemplative-reptile.jpg"
-        title="green iguana"
+        className={classes.media}
+        component="img"
+        alt="green iguana"
+        height="140"
+        image={profilePath + profileImgName}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          NGO
+        {ngoname}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+         {tagline}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick = {() => { navigate('/user/payment') }} >Donate</Button>
+        <Button size="small" onClick={() => {
+           localStorage.setItem("ngoId",ngoId);
+           console.log("clicked");
+                    setTimeout(() => {
+                      navigate('/ngopage');
+                    }, 100);
+                
+                  }
+                  }>Visit</Button>
+        <Button size="small">Like</Button>
       </CardActions>
     </Card>
   );
