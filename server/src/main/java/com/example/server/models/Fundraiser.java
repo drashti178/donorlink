@@ -9,6 +9,7 @@ public class Fundraiser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long fun_id;
+
     @ManyToOne
     @JoinColumn(name = "ngo_id")
     private Ngo ngo;

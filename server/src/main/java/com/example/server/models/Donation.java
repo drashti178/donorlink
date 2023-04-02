@@ -14,9 +14,11 @@ public class Donation {
     private Long d_id;
 
     @ManyToOne
+    @JoinColumn(name = "ngo_id")
     private Ngo ngo;
 
     @ManyToOne
+    @JoinColumn(name = "donor_id")
     private Donor donor;
     private Date date;
     private Boolean eligible;

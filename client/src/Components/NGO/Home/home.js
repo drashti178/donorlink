@@ -11,7 +11,7 @@ const NgoHome = () => {
   
   return (
     <>
-    <Navbar onDataReceived={handleDataReceived}/>
+    <Navbar onDataReeceived={handleDataReceived}/>
     <Maindata load={data} />
     
     

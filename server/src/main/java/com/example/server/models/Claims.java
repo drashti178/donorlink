@@ -10,6 +10,7 @@ public class Claims {
     private long claimId;
 
     @OneToOne
+    @JoinColumn(name = "donation_id")
     private Donation donation;
     private boolean isApproved = false;
     private String TaxDedCertiName;

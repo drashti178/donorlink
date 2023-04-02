@@ -11,9 +11,11 @@ public class FundraiserDonation {
     private Long fd_id;
 
     @ManyToOne
+    @JoinColumn(name = "fund_id")
     private Fundraiser fundraiser;
 
     @ManyToOne
+    @JoinColumn(name = "donor_id")
     private Donor donor;
     private Date date;
     private Long amount;

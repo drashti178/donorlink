@@ -69,10 +69,13 @@ function HomeNavBar(props) {
 
   
 
-  const LoginPage = (event) => {
-    navigate('/ngo/login');
+  const LoginPage = () => {
+    navigate('/user/login');
   };
 
+  
+
+  
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -86,7 +89,7 @@ function HomeNavBar(props) {
     props.onDataReceived("Fundraisers");
   
   }
- 
+
     const pages = [{"page":"Ngos","event":clickNgos}, {"page":"Fundraisers","event":clickFundraisers}];
     console.log("home");
 
@@ -180,16 +183,14 @@ function HomeNavBar(props) {
           </Box>
           {!login ?
               <Box sx={{ flexGrow: 0 }}>
-                <Button sx={{ color: "white" }} onClick={LoginPage}>Login</Button>
+                <Button sx={{ color: "white" }} onClick={() => LoginPage()}>Login</Button>
               </Box> :
               <Box sx={{ flexGrow: 0 }}>
-                <Button sx={{ color: "white" }} onClick={LogoutUser}>Logout</Button>
+                <Button sx={{ color: "white" }} onClick={() => LogoutUser()}>Logout</Button>
                 <IconButton onClick={UserProfile} sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                 </IconButton>
-              </Box>}
-
-
+            </Box>}
          
         </Toolbar>
       </Container>

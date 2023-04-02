@@ -64,6 +64,21 @@ const UserLogin = () => {
     onLogin(inputs)
   };
 
+  // const setRole = () => {
+  //   // const token = localStorage.getItem("accessToken");
+
+  //   axios.get(`${base_url}/authUser/profile`, { headers: { "Authorization": `Bearer ${token}` } }).then(
+  //     (response) => {
+  //       console.log(response);
+  //       console.log("success");
+  //       setRole(response.role);
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //       console.log("Failure");
+  //     }
+  //   )
+  // }  
 
   const [open, setOpen] = useState(false);
   const [severity,setSeverity] = useState("error");
@@ -82,36 +97,47 @@ const UserLogin = () => {
 
   const [msg, setMsg] = useState("");
 
-  const onLogin = async (data) => {
-    await axios.post(`${base_url}/auth/user/login`, data).then(
+  const onLogin = (data) => {
+    axios.post(`${base_url}/auth/user/login`, {
+      username:data.username,
+      password:data.password,
+    }).then(
       (response) => {
         localStorage.setItem("AccessToken", response.data.accessToken);
         const token = "Bearer " + localStorage.getItem("AccessToken");
+        // console.log(token);
         axios.get(`${base_url}/user/profile`, {
           headers: {
             'Authorization': token,
           }
         }).then(
-          (response) => {
-            console.log(response.data);
-            setUser(response.data);
+          (res) => {
+            console.log(res.data);
+            setUser(res.data);
           },
-          (error) => {
-            console.log(error);
+          (err) => {
+            console.log(err);
           }
         )
+      
+        setSeverity("success");
+        setMsg('Login Successful');
+    
         setTimeout(() => {
-          setSeverity("success");
-          setMsg('Login Successful');
-        }, 100);
+          navigate('/');
+        },1000)
 
-        // console.log(navigate);
-        navigate("/");
       },
       (error) => {
-        // console.log(error);
+        console.log(error);
         setSeverity("error");
-        setMsg(error.message);
+        if(error.response.status === 401){
+          setMsg("Invalid Password!!!");
+        }
+        else if(error.response.status === 400){
+          setMsg("Invalid Username or Email Address!!!");
+        }
+    
         handleClick();
       }
     )
@@ -129,8 +155,6 @@ const UserLogin = () => {
     margin: "16vh auto",
     width: 320,
   };
-
- 
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -165,7 +189,7 @@ const UserLogin = () => {
             <TextField
               name="username"
               varient="outlined"
-              label="Username"
+              label="Username/Email"
               value={inputs.username}
               style={{ marginTop: "25px" }}
               onChange={handleChange}
@@ -235,7 +259,7 @@ const UserLogin = () => {
                     checked={!inputs.isUser}
                     onClick={() => {
                       setTimeout(() => {
-                        navigate('/ngo/login', { replace: true });
+                        navigate('/ngo/login');
                       }, 100);
                       setInputs({ ...inputs, isUser: !inputs.isUser });
                     }
