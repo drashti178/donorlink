@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useContext } from "react";
+import React , { useState, useEffect, useContext } from "react";
 import {
     Grid,
     Paper,
@@ -7,6 +7,8 @@ import {
     Stepper,
     Step,
     StepLabel,
+    Stack,
+    Snackbar,
 } from "@mui/material";
 import First from "./first";
 import Second from "./second";
@@ -15,9 +17,38 @@ import axios from "axios";
 import base_url from "../../../api/bootapi";
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from "../../../Context/UserContext";
+import MuiAlert from '@mui/material/Alert';
+var passwordValidator = require('password-validator');
+var emailvalidator = require("email-validator");
+
 const steps = ['Account Information', 'Review Information'];
 
 const UserSignup = () => {
+    var schema = new passwordValidator();
+    schema
+        .is().min(8)                                    // Minimum length 8
+        .is().max(100)                                  // Maximum length 100
+        .has().uppercase()                              // Must have uppercase letters
+        .has().lowercase()                              // Must have lowercase letters
+        .has().digits(2)                                // Must have at least 2 digits
+        .has().not().spaces();
+
+    const [msg, setMsg] = useState("");
+
+    const [open, setOpen] = useState(false);
+    // const [severity,setSeverity] = useState("error");
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     let [inputs, setInputs] = useState({
         name: "",
@@ -35,20 +66,6 @@ const UserSignup = () => {
     let [profile, setProfile] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
     const [activestep, SetActivestep] = useState(0);
-    //   const getAllUsers = () => {
-    //     axios.get(`${base_url}/users`).then(
-    //       (response) => {
-    //         console.log(response);
-
-    //       },
-    //       (error) => {
-    //         console.log(error);
-    //       }
-    //     )
-    //   }
-    //   useEffect(() => {
-    //     getAllUsers();
-    //   }, []);
 
     useEffect(() => {
         if (profile) {
@@ -70,9 +87,30 @@ const UserSignup = () => {
 
     let [pageno, SetPageno] = useState(1);
     let next = () => {
-
-        SetPageno(pageno + 1);
-        SetActivestep(activestep + 1);
+        if(!schema.validate(inputs.password)){
+            setMsg("Invalid Password!");
+            handleClick();
+        }
+        else if(!emailvalidator.validate(inputs.email)){
+            setMsg("Invalid Email Address!");
+            handleClick();
+        }
+        else if(inputs.adharno.trim().length != 12 || inputs.adharno.match(/^[0-9]+$/) == null){
+            setMsg("Invalid Adhar Number!");
+            handleClick();
+        }
+        else if(inputs.contactno.trim().length != 10 || inputs.contactno.match(/^[0-9]+$/) == null){
+            setMsg("Invalid Contact Number!");
+            handleClick();
+        }
+        else if(inputs.name.trim().length == 0 || !inputs.country || !inputs.profession || !inputs.type){
+            setMsg("All Field is Mandatory, Kindly Fill it then click on next.");
+            handleClick();
+        }
+        else{
+            SetPageno(pageno + 1);
+            SetActivestep(activestep + 1);
+        }
     }
     let prev = () => {
         SetPageno(pageno - 1)
@@ -99,7 +137,13 @@ const UserSignup = () => {
             },
             (error) => {
                 console.log(error);
-                console.log("Failure");
+                if(error.response.status === 401){
+                    setMsg("Invalid Profile Image");
+                }
+                else{
+                    setMsg(error.response.data);
+                }
+                handleClick();
             }
         )
     }
@@ -116,12 +160,23 @@ const UserSignup = () => {
         width: 500,
     };
     
+    const Alert = React.forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+
     
 
     const theme = useTheme();
     const isMatch = useMediaQuery(theme.breakpoints.down("md"));
     return (
         <>
+            <Stack spacing={2} sx={{ width: '100%' }}>
+                <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                        {msg}
+                    </Alert>
+                </Snackbar>
+            </Stack>
             <Grid align="center" className="gridStyle" >
                 <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
                     <Box>

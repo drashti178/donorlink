@@ -32,7 +32,6 @@ import java.util.Date;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/auth")
-
 public class AuthController {
     private AuthenticationManager authenticationManager;
 
@@ -58,10 +57,10 @@ public class AuthController {
     @Autowired
     private FundraiserService fundraiserService;
 
-    private String userprofilepath = "C:/Users/Drashti Patel/Documents/GitHub/donorlink/client/public/images/userprofileImgs";
+    private String userprofilepath = "C:/Users/Tilak/Documents/GitHub/donorlink/client/public/images/userprofileImgs";
 
-    private String ngoprofilepath = "C:/Users/Drashti Patel/Documents/GitHub/donorlink/client/public/images/ngoprofileImgs";
-    private String certipath = "C:/Users/Drashti Patel/Documents/GitHub/donorlink/client/public/images/certiImgs";
+    private String ngoprofilepath = "C:/Users/Tilak/Documents/GitHub/donorlink/client/public/images/ngoprofileImgs";
+    private String certipath = "C:/Users/Tilak/Documents/GitHub/donorlink/client/public/images/certiImgs";
 
 
 
@@ -71,7 +70,11 @@ public class AuthController {
         Ngo ngo= objectMapper.readValue(ngoBody,Ngo.class);
         if(ngoDao.existsByNgoname(ngo.getNgoname()))
         {
-            return new ResponseEntity<>("Ngoname exist ", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Ngoname already exist ", HttpStatus.BAD_REQUEST);
+        }
+        if(ngoDao.existsByEmail(ngo.getEmail()))
+        {
+            return new ResponseEntity<>("Email already exist", HttpStatus.BAD_REQUEST);
         }
         if(file1.isEmpty())
         {
@@ -83,13 +86,12 @@ public class AuthController {
             System.out.println(filename);
             ngo.setProfileImgName(filename);
         }
-        if(file2.isEmpty() )
+        if(ngo.isHas80G() && file2.isEmpty())
         {
             return new ResponseEntity<>("Provide certificate Image", HttpStatus.BAD_REQUEST);
 
         }
-        else{
-
+        else if(ngo.isHas80G()){
             String filename = this.ngoService.uploadImage(certipath,file2);
             System.out.println(filename);
             ngo.setCertiImgName(filename);
@@ -114,7 +116,6 @@ public class AuthController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String token = tokenGenerator.generateToken(authentication);
 
-
             return new ResponseEntity<>(new AuthResponseDto(token),HttpStatus.OK);
         }
        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -128,7 +129,11 @@ public class AuthController {
 
         if(donorDao.existsByusername(donor.getUsername()))
         {
-            return new ResponseEntity<>("Donorname already exist ", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Donorname already exist", HttpStatus.BAD_REQUEST);
+        }
+        if(donorDao.existsByEmail(donor.getEmail()))
+        {
+            return new ResponseEntity<>("Email already exist", HttpStatus.BAD_REQUEST);
         }
         if(file1.isEmpty())
         {

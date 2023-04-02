@@ -7,6 +7,7 @@ import com.example.server.models.Donor;
 import com.example.server.models.Ngo;
 import com.example.server.services.DonationService;
 import com.example.server.services.DonorService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -40,7 +41,7 @@ public class DonorController {
     @Autowired
     public Environment env;
 
-    private String userprofilepath = "static/images/userprofileImgs";
+    private String userprofilepath = "C:/Users/Tilak/Documents/GitHub/donorlink/client/public/images/userprofileImgs";
     private PasswordEncoder passwordEncoder;
 
 //    private DonorService donorService;
@@ -85,16 +86,33 @@ public class DonorController {
             String filename = this.donorService.uploadImage(userprofilepath,file1);
             System.out.println("123\n");
             System.out.println(filename);
-            donor1.setProfileImgName(filename);
+            donor.setProfileImgName(filename);
             System.out.println("Profile uploaded");
         }
-
-        if(donor1.getUsername() != donor.getUsername()){
+        System.out.println(donor1.getUsername());
+        System.out.println(donor.getUsername());
+        if(!(donor1.getUsername().equals(donor.getUsername()))){
             if(donorDao.existsByusername(donor.getUsername())){
                 return new ResponseEntity<>("Username already exist", HttpStatus.BAD_REQUEST);
             }
         }
-        donor.setPassword(passwordEncoder.encode(donor.getPassword()));
+        this.donorService.addDonor(donor);
+        return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
+    }
+
+    @PutMapping("/editInfoOnly")
+    public ResponseEntity<String> updateInfo(@RequestParam("data") String donorBody) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Donor donor= objectMapper.readValue(donorBody, Donor.class);
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Donor donor1 = donorDao.findByusername(username);
+
+        if(!(donor1.getUsername().equals(donor.getUsername()))){
+            if(donorDao.existsByusername(donor.getUsername())){
+                return new ResponseEntity<>("Username already exist", HttpStatus.BAD_REQUEST);
+            }
+        }
         this.donorService.addDonor(donor);
         return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
     }

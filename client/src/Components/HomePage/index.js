@@ -2,13 +2,13 @@ import React, { useContext, useState } from 'react';
 
 import Maindata from './maindata';
 // import NavBar from '../Navbar';
-// import HomeNavBar from './navbar';
+import HomeNavBar from './navbar';
 import Carouseldiv from './carousel';
-import NavBar from '../Navbar';
+// import NavBar from '../Navbar';
 
 const Home = () => {
- 
-  let images = [  
+
+  let images = [
     'images/home1.jpg',
     'images/home2.jpg'
   ]
@@ -17,17 +17,15 @@ const Home = () => {
     setData(childData);
   };
 
-  
-  
-  
+
   return (
     <>
-     {/* <HomeNavBar onDataReceived={handleDataReceived}></HomeNavBar> */}
-     <NavBar type="home" onDataReceived={handleDataReceived} />
-   
-    <div>
-    <Carouseldiv images={images}/>
-    </div>
+      <HomeNavBar onDataReceived={handleDataReceived}></HomeNavBar>
+      {/* <NavBar onDataReceived={handleDataReceived} /> */}
+
+      <div>
+        <Carouseldiv images={images} />
+      </div>
       <Maindata load={data} />
     </>
 

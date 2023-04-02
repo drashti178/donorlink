@@ -18,11 +18,11 @@ const FileInput = (props) => {
                 onChange={props.onFileUpload}
             />
             <label htmlFor="select-image" >
-                <Button  style={{ width: "20%" ,display:"flex",marginRight:"auto",marginTop:"-80px",flexWrap:"nowrap",
+                <Button  style={{ width: "20%" ,display:"flex",marginRight:"5000px",marginTop:"-80px",flexWrap:"nowrap",
             justifyContent:"flex-start"}} component="span">
                     <Avatar sx={{ bgcolor: "#9C7875", height: 130, width: 130 }}>
-                        {(props.imageUrl && props.profile) ? (
-                            <Avatar alt="" style={{ margin: "center center", height: 130, width: 130 }} src={props.imageUrl} />
+                        {props.imageUrl ? (
+                            <Avatar alt="" style={{ margin: "center center", height: 130, width: 130 }} src={props.imageUrl } />
                         ) : <PhotoCamera style={{ margin: "center center", height: 90, width: 90 }} />}
                     </Avatar>
                 </Button>

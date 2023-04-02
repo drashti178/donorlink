@@ -11,6 +11,11 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from "react-router-dom";
+import { UserContext } from '../../Context/UserContext';
+import { Avatar } from '@mui/material';
+import axios from 'axios';
+import base_url from '../../api/bootapi';
+import Logout from '../Logout';
 
 
 
@@ -21,14 +26,59 @@ function HomeNavBar(props) {
   
   const [anchorElNav, setAnchorElNav] = useState(0);
   const navigate = useNavigate();
+  
+  const [login, setLogin] = useState(false);
+
+  const context = useContext(UserContext);
+
+  if (context.user == null && localStorage.getItem("AccessToken") != null) {
+    const token = "Bearer " + localStorage.getItem("AccessToken");
+    axios.get(`${base_url}/user/profile`, {
+      headers: {
+        'Authorization': token,
+      }
+    }).then(
+      (response) => {
+        console.log(response.data);
+        context.setUser(response.data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+  }
+  
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (context.user) {
+        // console.log(context);
+        // role = context.user.role;
+        setLogin(true);
+        localStorage.setItem("role", context.user.role);
+      }
+    }, 100);
+  }, [context.user]);
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const LoginPage = (event) => {
-    navigate('/ngo/login');
+  const LoginPage = () => {
+    navigate('/user/login');
   };
 
+  const LogoutUser = () => {
+    context.setUser(null);
+    localStorage.removeItem("role");
+    localStorage.removeItem("AccessToken");
+    navigate('/user/login');
+  };
+
+  const UserProfile = () => {
+    navigate('/user');
+  };
+  
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -42,7 +92,7 @@ function HomeNavBar(props) {
     props.onDataReceived("Fundraisers");
   
   }
- 
+
     const pages = [{"page":"Ngos","event":clickNgos}, {"page":"Fundraisers","event":clickFundraisers}];
     console.log("home");
 
@@ -134,10 +184,16 @@ function HomeNavBar(props) {
               </Button>
             ))}
           </Box>
-          <Box sx={{ flexGrow: 0 }}>
-             <Button sx={{color:"white"}} onClick={LoginPage}>Login</Button>
-          </Box>
-
+          {!login ?
+              <Box sx={{ flexGrow: 0 }}>
+                <Button sx={{ color: "white" }} onClick={() => LoginPage()}>Login</Button>
+              </Box> :
+              <Box sx={{ flexGrow: 0 }}>
+                <Button sx={{ color: "white" }} onClick={() => LogoutUser()}>Logout</Button>
+                <IconButton onClick={UserProfile} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+            </Box>}
          
         </Toolbar>
       </Container>

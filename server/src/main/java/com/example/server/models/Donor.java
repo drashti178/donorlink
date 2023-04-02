@@ -2,6 +2,9 @@ package com.example.server.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Donor {
 
@@ -22,10 +25,21 @@ public class Donor {
     private String ProfileImgName;
     private String role = "user";
 
-//    @ManyToMany
-//    private Role role;
 
-    public Donor(String name, String username, String password, String email, String country, long contactno, long adharno, String profession, String type) {
+    @ManyToMany(cascade = {
+            CascadeType.ALL
+    })
+    @JoinTable(
+            name = "events_donors",
+            joinColumns = {
+                    @JoinColumn(name = "donor_id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "event_id")
+            }
+    )private List<Events> joinedEvents = new ArrayList<Events>();
+
+    public Donor(String name, String username, String password, String email, String country, long contactno, long adharno, String profession, String type, String profileImgName, List<Events> joinedEvents) {
         this.name = name;
         this.username = username;
         this.password = password;
@@ -36,6 +50,8 @@ public class Donor {
         this.profession = profession;
         this.type = type;
         this.totaldonation = 0;
+        this.ProfileImgName = profileImgName;
+        this.joinedEvents = joinedEvents;
     }
 
     public Donor() {

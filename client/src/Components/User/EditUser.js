@@ -25,7 +25,10 @@ const EditUser = () => {
 
     const navigate = useNavigate();
     const context = useContext(UserContext);
-
+    const imgPath = "/images/userprofileImgs/";
+    let [profile, setProfile] = useState(null);
+    const [imageUrl, setImageUrl] = useState(null);
+    const [activestep, SetActivestep] = useState(0);
     let [inputs, setInputs] = useState({
         name: "",
         username: "",
@@ -36,9 +39,19 @@ const EditUser = () => {
         adharno: "",
         profession: "",
         type: "",
+        profileImgName: "",
     });
 
+    // useEffect (() => {
+    //     if(context.user){
+    //         context.user.password = "";
+    //         setImageUrl(imgPath + context.user.profileImgName);
+    //         console.log(context.user);
+    //         setInputs(context.user);
+    //     }
+    // });
     // console.log(context.user);
+
     useEffect(() => {
         if (localStorage.getItem("AccessToken") == null) {
             setTimeout(() => {
@@ -64,10 +77,7 @@ const EditUser = () => {
                 )
             }
             else {
-                if (context.user.role == 'ngo') {
-                    navigate('/');
-                }
-                context.user.password = "";
+                setImageUrl(imgPath + context.user.profileImgName);
                 console.log(context.user);
                 setInputs(context.user);
             }
@@ -101,15 +111,10 @@ const EditUser = () => {
     //     setInputs(context.user);
     // }
 
-
-
-    let [profile, setProfile] = useState(null);
-    const [imageUrl, setImageUrl] = useState(null);
-    const [activestep, SetActivestep] = useState(0);
     const id = 5;
     useEffect(() => {
         if (profile) {
-            // console.log(profile);
+            console.log(profile);
             var binaryData = [];
             binaryData.push(profile);
             setImageUrl(window.URL.createObjectURL(new Blob(binaryData, { type: "application/zip" })));
@@ -138,7 +143,7 @@ const EditUser = () => {
         SetPageno(pageno - 1)
         SetActivestep(activestep - 1);
     }
-
+    // delete inputs.profileImgName;
     var formData = new FormData();
     formData.append("data", JSON.stringify(inputs));
     formData.append("profile", profile);
@@ -147,10 +152,31 @@ const EditUser = () => {
         e.preventDefault();
         // console.log(inputs);
         // console.log(profile);
-        postData(formData);
+        if (!profile) {
+            const token = "Bearer " + localStorage.getItem("AccessToken");
+            axios.put(`${base_url}/user/editInfoOnly`, inputs, {
+                headers: {
+                    'Authorization': token,
+                }
+            }).then(
+                (response) => {
+                    console.log(response);
+                    console.log("success");
+                    navigate('/user');
+                },
+                (error) => {
+                    console.log(error);
+                    console.log("Failure");
+                }
+            )
+        }
+        else {
+            postData(formData);
+        }
     }
 
     const postData = (data) => {
+        // delete data.profileImgName;
         console.log(data);
         const token = "Bearer " + localStorage.getItem("AccessToken");
         axios.put(`${base_url}/user/edit`, data, {
@@ -161,7 +187,7 @@ const EditUser = () => {
             (response) => {
                 console.log(response);
                 console.log("success");
-                navigate(`/user/profile`);
+                navigate('/user');
             },
             (error) => {
                 console.log(error);
@@ -206,7 +232,7 @@ const EditUser = () => {
                             })}
                         </Stepper>
                     </Box>
-                    {(pageno === 1) ? <First nextfun={next} changefun={onChangeData} inputs={inputs} onFileUpload={onProfileUpload} profile={profile} imageUrl={imageUrl} /> : <Second nextfun={next} prevfun={prev} submitfun={submit} changefun={onChangeData} inputs={inputs} />}
+                    {(pageno === 1) ? <First nextfun={next} fromEdit={true} changefun={onChangeData} inputs={inputs} onFileUpload={onProfileUpload} profile={profile} imageUrl={imageUrl} /> : <Second nextfun={next} prevfun={prev} submitfun={submit} changefun={onChangeData} inputs={inputs} imageUrl={imageUrl} />}
                 </Paper>
             </Grid>
         </>
