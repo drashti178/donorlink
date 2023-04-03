@@ -138,7 +138,7 @@ const UserSignup = () => {
             (error) => {
                 console.log(error);
                 if(error.response.status === 401){
-                    setMsg("Invalid Profile Image");
+                    setMsg("Provide Profile Image");
                 }
                 else{
                     setMsg(error.response.data);

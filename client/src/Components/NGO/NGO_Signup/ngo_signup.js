@@ -153,6 +153,7 @@ const NgoSignup = () => {
     SetPageno(pageno - 1)
     SetActtivestep(activestep - 1);
   }
+  
   var formData = new FormData();
   formData.append("data", JSON.stringify(inputs));
 
@@ -228,6 +229,7 @@ const NgoSignup = () => {
           </Alert>
         </Snackbar>
       </Stack>
+   
       <Grid align="center" className="gridStyle">
 
         <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>

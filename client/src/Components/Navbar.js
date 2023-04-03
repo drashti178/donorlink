@@ -11,12 +11,12 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import base_url from '../api/bootapi';
-import {  UserContext } from '../Context/UserContext';
-
-
+import { DispatchUserContext, UserContext } from '../Context/UserContext';
+import Logout from './Logout';
+import { Tab, Tabs } from '@mui/material';
 
 function NavBar(props) {
 
@@ -47,6 +47,8 @@ function NavBar(props) {
   useEffect(() => {
     setTimeout(() => {
       if (context.user) {
+        // console.log(context);
+        // role = context.user.role;
         setLogin(true);
         localStorage.setItem("role", context.user.role);
       }
@@ -60,24 +62,19 @@ function NavBar(props) {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  
-  const UserProfile = (event) => {
-    navigate('/user');
-  };
+
   const LoginPage = (event) => {
     navigate('/user/login');
   };
- 
-
-
-
 
   const LogoutUser = (event) => {
+    context.setUser(null);
     localStorage.removeItem("role");
     localStorage.removeItem("AccessToken");
     navigate('/user/login');
   };
 
+ if (props.type === "userprofile") {
 
     const clickMyProfile = (event) => {
       props.onDataReceived("My Profile");
@@ -183,7 +180,7 @@ function NavBar(props) {
               </Box> :
               <Box sx={{ flexGrow: 0 }}>
                 <Button sx={{ color: "white" }} onClick={LogoutUser}>Logout</Button>
-                <IconButton onClick={UserProfile} sx={{ p: 0 }}>
+                <IconButton onClick={clickMyProfile} sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                 </IconButton>
               </Box>}
@@ -191,6 +188,7 @@ function NavBar(props) {
         </Container>
       </AppBar>
     );
-  
+  }
 }
+
 export default NavBar;
