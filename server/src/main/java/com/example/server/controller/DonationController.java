@@ -70,23 +70,20 @@ public class DonationController {
     }
 
     @PostMapping("/fundraiser/{fr_id}/{amount}")
-    public ResponseEntity<String> updateFDonation(@PathVariable Long fr_id, @PathVariable Long amount) {
+    public ResponseEntity<String> updateFDonation(@PathVariable long fr_id, @PathVariable long amount) {
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Donor donor = donorDao.findByusername(username);
         Fundraiser fundraiser=fundraiserService.getFundraiser(fr_id);
 
         Date date = new Date();
-        Long current=fundraiser.getAmount();
+        long current=fundraiser.getAmount();
         current = current+amount;
         fundraiser.setAmount(current);
         if(current>fundraiser.getTarget())
         {
-            fundraiser.setEnddate(date);
-            Date d2=fundraiser.getStartdate();
-            long duration = d2.getTime() - date.getTime();
-            long days = TimeUnit.MILLISECONDS.toDays(duration)%365;
-            fundraiser.setDuration(days);
+            fundraiserService.stopFundraiser(fr_id);
+
         }
         fundraiserDao.save(fundraiser);
         donor.setTotaldonation(donor.getTotaldonation() + amount);

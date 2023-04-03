@@ -14,13 +14,13 @@ import Modal from 'react-bootstrap/Modal';
 import BootButton from 'react-bootstrap/Button';
 import axios from "axios";
 import base_url from "../../api/bootapi";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
-import Logout from "../Logout";
+
 
 const PaymentInfo = () => {
-    
-    const ngoId = 2;
+    const location=useLocation();
+    const ngoId = location.state;
 
     const context = useContext(UserContext);
     const navigate = useNavigate();
@@ -47,7 +47,7 @@ const PaymentInfo = () => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    // const handleShow = () => setShow(true);
+    
     useEffect(() => {
         if (context.user != null) {
             setUser(context.user);
@@ -109,7 +109,10 @@ const PaymentInfo = () => {
                     }).then(
                         (response) => {
                             console.log(response);
-                            navigate('/user/donation');
+                            
+                                navigate(-2);
+                            
+                            
                         },
                         (error) => {
                             console.log(error);
@@ -160,7 +163,7 @@ const PaymentInfo = () => {
                     }).then(
                         (response) => {
                             console.log(response);
-                            navigate('/user/donation');
+                            navigate('/user');
                         },
                         (error) => {
                             console.log(error);

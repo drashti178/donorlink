@@ -10,8 +10,8 @@ import java.util.List;
 public interface FundraiserService {
     public List<Fundraiser> getFundraisers(Ngo ngo);
     public Fundraiser addFundraiser(Fundraiser fundraiser);
-    public Fundraiser getFundraiser(Long id);
-    public void deleteFundraiser(Long id);
+    public Fundraiser getFundraiser(long id);
+    public void stopFundraiser(long id);
 
     public FundraiserDonation addDonation(FundraiserDonation donation);
     public List<FundraiserDonation> getDonationByFundraiser(Fundraiser fundraiser);

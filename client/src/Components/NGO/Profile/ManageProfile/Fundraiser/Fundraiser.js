@@ -5,6 +5,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { Box, Grid } from '@mui/material';
+import StopFundraiser from './stopFundraiser';
+import ViewFDonations from './viewFDonations';
 
 
 const useStyles = makeStyles({
@@ -72,12 +74,13 @@ const Fundraiser = ({product}) => {
               justifyContent="space-around"
               alignItems="center"
             >
-              <Box sx={{ width: "20%",marginLeft:"0%"}}>
-                {/* <EditActivity act_id={a_id}/> */}
-              </Box>
-              <Box sx={{ width: "20%",marginLeft:"0%"}}>
-                {/* <DeleteActivity act_id={a_id}/> */}
-              </Box>
+                {
+            (duration==null)?
+            <StopFundraiser fr_id={fun_id}/>:<ViewFDonations fr_id={fun_id} />
+             
+          }
+              
+              
              
              
               

@@ -167,24 +167,12 @@ public class NgoController {
         Date date = new Date();
         fundraiser.setStartdate(date);
 
-
-//        Date d1 = new Date();
-//        DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-
-//        Date d = new Date(123, 02,18);
-//        long duration = d.getTime() - date.getTime();
-//        long days = TimeUnit.MILLISECONDS.toDays(duration)%365;
-
-
         if(file1.isEmpty())
         {
             return new ResponseEntity<>("Provide Fundraiser Image", HttpStatus.BAD_REQUEST);
-
         }
         else{
-
             String filename = this.ngoService.uploadImage(fundraiserpath,file1);
-
             System.out.println(filename);
             fundraiser.setFr_img(filename);
 
@@ -210,10 +198,11 @@ public class NgoController {
         System.out.println(fr_id);
         return this.fundraiserService.getFundraiser(fr_id);
     }
-    @DeleteMapping("deleteFundraiser/{id}")
-    public ResponseEntity<String > deleteFundraiser(@PathVariable Long id) {
+    @GetMapping ("stopFundraiser/{id}")
+    public ResponseEntity<String > stopFundraiser(@PathVariable long id) {
+        System.out.println("in");
         try {
-            this.fundraiserService.deleteFundraiser(id);
+            this.fundraiserService.stopFundraiser(id);
             return new ResponseEntity<>("fundraiser deleted successfully", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error in deleting fundraiser", HttpStatus.INTERNAL_SERVER_ERROR);

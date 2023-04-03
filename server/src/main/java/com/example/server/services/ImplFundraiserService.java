@@ -9,7 +9,12 @@ import com.example.server.models.Ngo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 @Service
 public class ImplFundraiserService implements FundraiserService{
     @Autowired
@@ -28,16 +33,25 @@ public class ImplFundraiserService implements FundraiserService{
     }
 
     @Override
-    public Fundraiser getFundraiser(Long id) {
+    public Fundraiser getFundraiser(long id) {
         Fundraiser fr=fundraiserDao.getReferenceById(id);
 
         return fr;
     }
 
     @Override
-    public void deleteFundraiser(Long id) {
+    public void stopFundraiser(long id) {
         Fundraiser fr=fundraiserDao.getReferenceById(id);
-        fundraiserDao.delete(fr);
+        Date date = new Date();
+        fr.setEnddate(date);
+        Date d = fr.getStartdate();
+//        DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+//
+//        Date d = new Date(123, 02,18);
+        long duration = date.getTime() -d.getTime() ;
+        long days = TimeUnit.MILLISECONDS.toDays(duration)%365;
+        fr.setDuration(days);
+
 
     }
 

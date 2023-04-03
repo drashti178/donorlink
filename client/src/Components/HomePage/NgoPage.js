@@ -7,15 +7,23 @@ import FundraiserCard from './FundraiserCard';
 import { makeStyles } from '@material-ui/core/styles';
 import { UserContext } from '../../Context/UserContext';
 import { Box, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles({
   list:{
       display: "flex",
-  flexDirection:" row",
+  flexDirection:" column",
   flexWrap: "wrap",
   justifyContent: "space-evenly"
      
-  }
+  },
+  act:{
+    display: "flex",
+flexDirection:"row",
+flexWrap: "wrap",
+justifyContent: "space-evenly"
+   
+}
 })
 
 
@@ -49,6 +57,7 @@ const NgoPage = () => {
       }
     )
   }
+ const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -59,6 +68,10 @@ const NgoPage = () => {
       }
     }, 100);
   }, [context.user]);
+  const  DonateToNgo = () =>{
+    navigate("/user/payment",{state:id})
+
+  }
 
   const handleChange = (e, p) => {
     setPage(p);
@@ -103,17 +116,18 @@ const NgoPage = () => {
     <div>NgoPage</div>
     <div>Basic Profile</div>
     
-    <div>Activities
+    <div>
     {(!login || (login && localStorage.getItem("role")=== "user")) ?
               <Box sx={{ flexGrow: 0 }}>
-                <Button sx={{ my: 2, backgroundColor:"#075456", color: 'white', display: 'block' }} >Donate</Button>
+                <Button sx={{ my: 2, backgroundColor:"#075456", color: 'white', display: 'block' }} onClick={DonateToNgo}>Donate</Button>
               </Box> :
               <Box sx={{ flexGrow: 0 }}>
                 <Button sx={{ my: 2, backgroundColor:"#075456", color: 'white', display: 'block' }}>Collaborate</Button>
               </Box>} 
     <div className={classes.list}>
-    <Box p="5">
-      <Pagination
+    Activities
+    <Box p="5" className={classes.act}>
+      {/* <Pagination
         count={count}
         size="large"
         page={page}
@@ -121,7 +135,7 @@ const NgoPage = () => {
         
         shape="rounded"
         onChange={handleChange}
-      />
+      /> */}
       {activities.map((product) => (
       <ActivityCard key={product.a_id} activity={product}/>
       

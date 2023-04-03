@@ -5,7 +5,7 @@ import Maindata from './maindata';
 
 const UserIndex = () => {
 
-    const [data, setData] = useState("My Profile");
+    const [data, setData] = useState("My Donations");
     const handleDataReceived = (childData) => {
         setData(childData);
     };

@@ -19,11 +19,11 @@ public class Fundraiser {
     private Date enddate;
     private String fr_img;
 
-    private Long duration;
-    private Long amount;
-    private Long target;
+    private long duration;
+    private long amount;
+    private long target;
 
-    public Long getFun_id() {
+    public long getFun_id() {
         return fun_id;
     }
 
