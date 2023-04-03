@@ -73,7 +73,7 @@ const First = (props) => {
                     />
 
 
-                    <FormControl style={{ marginTop: "2%", width: "48%", marginRight: "2%" }} disabled={props.fromEdit} fullWidth required variant="outlined">
+                    {!props.fromEdit && <FormControl style={{ marginTop: "2%", width: "48%", marginRight: "2%" }} fullWidth required variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-password">
                             Password
                         </InputLabel>
@@ -97,7 +97,7 @@ const First = (props) => {
                             }
                             label="Password"
                         />
-                    </FormControl>
+                    </FormControl>}
                     <FormControl style={{ marginTop: "2%", width: "48%", marginRight: "2%" }} fullWidth required variant="outlined">
                         <InputLabel id="demo-simple-select-label">Country</InputLabel>
                         <Select

@@ -62,24 +62,13 @@ function NavBar(props) {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const NgoProfile = (event) => {
-    navigate('/ngo/profile');
-  };
-  const UserProfile = (event) => {
-    navigate('/user');
-  };
+
   const LoginPage = (event) => {
     navigate('/user/login');
   };
-  const LogoutNgo = (event) => {
-    Logout();
-    navigate('/user/login');
-  };
-
-
-
 
   const LogoutUser = (event) => {
+    context.setUser(null);
     localStorage.removeItem("role");
     localStorage.removeItem("AccessToken");
     navigate('/user/login');
@@ -190,8 +179,8 @@ function NavBar(props) {
                 <Button sx={{ color: "white" }} onClick={LoginPage}>Login</Button>
               </Box> :
               <Box sx={{ flexGrow: 0 }}>
-                <Button sx={{ color: "white" }} onClick={() => {Logout()}}>Logout</Button>
-                <IconButton onClick={(context.user && context.user.role === 'ngo') ? NgoProfile : UserProfile} sx={{ p: 0 }}>
+                <Button sx={{ color: "white" }} onClick={LogoutUser}>Logout</Button>
+                <IconButton onClick={clickMyProfile} sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                 </IconButton>
               </Box>}

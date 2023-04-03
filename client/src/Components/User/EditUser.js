@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useContext } from "react";
+import  React ,{ useState, useEffect, useContext } from "react";
 import {
     Grid,
     Paper,
@@ -7,6 +7,8 @@ import {
     Stepper,
     Step,
     StepLabel,
+    Stack,
+    Snackbar,
 } from "@mui/material";
 import First from "../User/User_Signup/first";
 import Second from "../User/User_Signup/second";
@@ -16,10 +18,41 @@ import base_url from "../../api/bootapi";
 import { useNavigate } from 'react-router-dom';
 import "../../Components/style.css";
 import { UserContext } from "../../Context/UserContext";
+import Modal from 'react-bootstrap/Modal';
+import BootButton from 'react-bootstrap/Button';
+import MuiAlert from '@mui/material/Alert';
 // import pics from "../../../../server/static/images/userprofileImgs";
 
 const steps = ['Account Information', 'Review Information'];
 
+function MyVerticallyCenteredModal(props) {
+
+    const navigate = useNavigate();
+
+    return (
+        <Modal
+            {...props}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+        >
+            <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                    ReLogin
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <p>
+                    You Have to login again inorder to generate new jwt TOKEN for new username.
+                </p>
+            </Modal.Body>
+            <Modal.Footer>
+                <BootButton onClick={props.onHide}>Close</BootButton>
+                <BootButton onClick={() => { navigate('/user/login') }}>ReLogin</BootButton>
+            </Modal.Footer>
+        </Modal>
+    );
+}
 
 const EditUser = () => {
 
@@ -29,6 +62,23 @@ const EditUser = () => {
     let [profile, setProfile] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
     const [activestep, SetActivestep] = useState(0);
+    const [modalShow, setModalShow] = useState(false);
+    const [msg, setMsg] = useState("");
+
+    const [open, setOpen] = useState(false);
+    // const [severity,setSeverity] = useState("error");
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
     let [inputs, setInputs] = useState({
         name: "",
         username: "",
@@ -153,6 +203,7 @@ const EditUser = () => {
         // console.log(inputs);
         // console.log(profile);
         if (!profile) {
+
             const token = "Bearer " + localStorage.getItem("AccessToken");
             axios.put(`${base_url}/user/editInfoOnly`, inputs, {
                 headers: {
@@ -162,11 +213,17 @@ const EditUser = () => {
                 (response) => {
                     console.log(response);
                     console.log("success");
-                    navigate('/user');
+                    if (inputs.username === context.user.username) {
+                        navigate('/user');
+                    }
+                    else {          
+                        setModalShow(true);
+                    }
                 },
                 (error) => {
                     console.log(error);
-                    console.log("Failure");
+                    setMsg(error.response.data);
+                    handleClick();
                 }
             )
         }
@@ -208,11 +265,26 @@ const EditUser = () => {
         padding: 20,
         width: 500,
     };
+    
+    const Alert = React.forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
 
     const theme = useTheme();
     const isMatch = useMediaQuery(theme.breakpoints.down("md"));
     return (
         <>
+            <MyVerticallyCenteredModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+            />
+             <Stack spacing={2} sx={{ width: '100%' }}>
+                <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                        {msg}
+                    </Alert>
+                </Snackbar>
+            </Stack>
             <Grid align="center" className="gridStyle" >
                 <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
                     <Box>

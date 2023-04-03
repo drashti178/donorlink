@@ -89,22 +89,17 @@ public class DonorController {
             donor.setProfileImgName(filename);
             System.out.println("Profile uploaded");
         }
-        System.out.println(donor1.getUsername());
-        System.out.println(donor.getUsername());
         if(!(donor1.getUsername().equals(donor.getUsername()))){
             if(donorDao.existsByusername(donor.getUsername())){
                 return new ResponseEntity<>("Username already exist", HttpStatus.BAD_REQUEST);
             }
         }
-        this.donorService.addDonor(donor);
+        this.donorDao.save(donor);
         return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
     }
 
     @PutMapping("/editInfoOnly")
-    public ResponseEntity<String> updateInfo(@RequestParam("data") String donorBody) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        Donor donor= objectMapper.readValue(donorBody, Donor.class);
-
+    public ResponseEntity<String> updateInfo(@RequestBody Donor donor) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Donor donor1 = donorDao.findByusername(username);
 
@@ -113,7 +108,7 @@ public class DonorController {
                 return new ResponseEntity<>("Username already exist", HttpStatus.BAD_REQUEST);
             }
         }
-        this.donorService.addDonor(donor);
+        this.donorDao.save(donor);
         return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
     }
 
