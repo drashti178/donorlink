@@ -8,7 +8,7 @@ import java.util.Date;
 public class Fundraiser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long fun_id;
+    private long fun_id;
 
     @ManyToOne
     @JoinColumn(name = "ngo_id")
@@ -27,7 +27,7 @@ public class Fundraiser {
         return fun_id;
     }
 
-    public void setFun_id(Long fun_id) {
+    public void setFun_id(long fun_id) {
         this.fun_id = fun_id;
     }
 
@@ -79,27 +79,27 @@ public class Fundraiser {
         this.fr_img = fr_img;
     }
 
-    public Long getDuration() {
+    public long getDuration() {
         return duration;
     }
 
-    public void setDuration(Long duration) {
+    public void setDuration(long duration) {
         this.duration = duration;
     }
 
-    public Long getAmount() {
+    public long getAmount() {
         return amount;
     }
 
-    public void setAmount(Long amount) {
+    public void setAmount(long amount) {
         this.amount = amount;
     }
 
-    public Long getTarget() {
+    public long getTarget() {
         return target;
     }
 
-    public void setTarget(Long target) {
+    public void setTarget(long target) {
         this.target = target;
     }
 }

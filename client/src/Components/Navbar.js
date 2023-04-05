@@ -74,7 +74,7 @@ function NavBar(props) {
     navigate('/user/login');
   };
 
- if (props.type === "userprofile") {
+//  if (props.type === "userprofile") {
 
     const clickMyProfile = (event) => {
       props.onDataReceived("My Profile");
@@ -188,7 +188,7 @@ function NavBar(props) {
         </Container>
       </AppBar>
     );
-  }
+  // }
 }
 
 export default NavBar;

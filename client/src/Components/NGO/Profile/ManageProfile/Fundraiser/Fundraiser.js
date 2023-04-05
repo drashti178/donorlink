@@ -37,7 +37,7 @@ const Fundraiser = ({product}) => {
     const imgPath = "/images/fundraiser/";
     const classes = useStyles();
     const { fun_id,fr_name, fr_img, duration
-        , amount,target,cause,ngo
+        , amount,target,cause,ngo,enddate
 
     } = product;
    console.log(amount);
@@ -59,7 +59,7 @@ const Fundraiser = ({product}) => {
             {cause}
           </Typography>
           {
-            (amount<target)?<Typography variant="h6" color="textSecondary" component="p">
+            (enddate===null)?<Typography variant="h6" color="textSecondary" component="p">
             Active  <br /> Amount : {amount}     Target : {target}
            </Typography>:<Typography variant="h6" color="textSecondary" component="p">
             Completed    <br /> Amount : {amount}  Duration:{duration}
@@ -75,10 +75,11 @@ const Fundraiser = ({product}) => {
               alignItems="center"
             >
                 {
-            (duration==null)?
-            <StopFundraiser fr_id={fun_id}/>:<ViewFDonations fr_id={fun_id} />
+            (enddate===null)?
+            <StopFundraiser fr_id={fun_id}/>:
+             <ViewFDonations fr_id={fun_id} />}
              
-          }
+        
               
               
              

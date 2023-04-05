@@ -41,7 +41,7 @@ public class DonorController {
     @Autowired
     public Environment env;
 
-    private String userprofilepath = "C:/Users/Tilak/Documents/GitHub/donorlink/client/public/images/userprofileImgs";
+    private String userprofilepath = "C:/Users/Drashti/Documents/GitHub/donorlink/client/public/images/userprofileImgs";
     private PasswordEncoder passwordEncoder;
 
 //    private DonorService donorService;
@@ -108,7 +108,7 @@ public class DonorController {
                 return new ResponseEntity<>("Username already exist", HttpStatus.BAD_REQUEST);
             }
         }
-        this.donorDao.save(donor);
+           this.donorDao.save(donor);
         return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
     }
 

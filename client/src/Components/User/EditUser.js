@@ -221,7 +221,7 @@ const EditUser = () => {
                     }
                 },
                 (error) => {
-                    console.log(error);
+                    console.log(error); 
                     setMsg(error.response.data);
                     handleClick();
                 }

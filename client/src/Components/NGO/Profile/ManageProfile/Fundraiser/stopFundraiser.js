@@ -18,6 +18,7 @@ const StopFundraiser = (props) => {
         e.preventDefault();
         stopFundraiser(props.fr_id);
         console.log(props);
+        handleClose();
     };
  
     const handleClickOpen = () => {
@@ -32,7 +33,7 @@ const StopFundraiser = (props) => {
     const stopFundraiser = (id) =>{
        
         const token = "Bearer " + localStorage.getItem("AccessToken");
-         axios.delete(`${base_url}/ngo/stopFundraiser/${id}`, {
+         axios.get(`${base_url}/ngo/stopFundraiser/${id}`, {
           headers: {
             'Authorization': token,
           }

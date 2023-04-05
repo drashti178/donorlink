@@ -41,7 +41,7 @@ public class ImplFundraiserService implements FundraiserService{
 
     @Override
     public void stopFundraiser(long id) {
-        Fundraiser fr=fundraiserDao.getReferenceById(id);
+        Fundraiser fr=fundraiserDao.findById(id).get();
         Date date = new Date();
         fr.setEnddate(date);
         Date d = fr.getStartdate();
@@ -51,6 +51,7 @@ public class ImplFundraiserService implements FundraiserService{
         long duration = date.getTime() -d.getTime() ;
         long days = TimeUnit.MILLISECONDS.toDays(duration)%365;
         fr.setDuration(days);
+        fundraiserDao.save(fr);
 
 
     }

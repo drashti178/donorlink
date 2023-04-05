@@ -193,12 +193,12 @@ public class NgoController {
         return this.fundraiserService.getFundraisers(ngo);
     }
     @GetMapping("/fundraiser/{fr_id}")
-    public Fundraiser getFundraiser(@PathVariable Long fr_id)
+    public Fundraiser getFundraiser(@PathVariable long fr_id)
     {
         System.out.println(fr_id);
         return this.fundraiserService.getFundraiser(fr_id);
     }
-    @GetMapping ("stopFundraiser/{id}")
+    @GetMapping ("/stopFundraiser/{id}")
     public ResponseEntity<String > stopFundraiser(@PathVariable long id) {
         System.out.println("in");
         try {
