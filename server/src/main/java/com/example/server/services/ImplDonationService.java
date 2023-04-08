@@ -4,6 +4,7 @@ import com.example.server.dao.DonationDao;
 import com.example.server.dao.FundraiserDonationDao;
 import com.example.server.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class ImplDonationService implements DonationService{
 
     @Override
     public List<Donation> getDonationByNgo(Ngo ngo) {
-        return donationDao.findByNgo(ngo);
+        return donationDao.findByNgoOrderByAmountDesc(ngo);
 
     }
 

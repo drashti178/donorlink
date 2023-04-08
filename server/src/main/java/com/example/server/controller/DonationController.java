@@ -69,6 +69,19 @@ public class DonationController {
         return new ResponseEntity<>(dlist,HttpStatus.OK);
     }
 
+    @GetMapping("/getAllByNgo")
+    public ResponseEntity<List<Donation>> getDonationByNgo() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Ngo ngo = ngoDao.findByNgoname(username);
+
+        List<Donation> dlist = donationService.getDonationByNgo(ngo);
+
+        if(dlist.isEmpty()){
+            return new ResponseEntity<>(null,HttpStatus.OK);
+        }
+        return new ResponseEntity<>(dlist,HttpStatus.OK);
+    }
+
     @PostMapping("/fundraiser/{fr_id}/{amount}")
     public ResponseEntity<String> updateFDonation(@PathVariable long fr_id, @PathVariable long amount) {
 

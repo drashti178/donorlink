@@ -21,7 +21,7 @@ import java.util.Optional;
 @RequestMapping("/claim")
 public class ClaimController {
 
-    private String taxdedcertipath = "static/pdfs/taxdedcertificates";
+    private String taxdedcertipath = "C:/Users/Tilak/Documents/GitHub/donorlink/client/public/pdfs/taxdedCertificates";
 
     @Autowired
     private DonationDao donationDao;
@@ -32,7 +32,7 @@ public class ClaimController {
     @Autowired
     private ClaimService claimService;
 
-    @PostMapping("/add/{donationId}")
+    @PostMapping("add/{donationId}")
     public ResponseEntity<String> addClaim(@PathVariable Long donationId){
         Donation donation = donationDao.findById(donationId).get();
         Claims claim = new Claims(donation);
@@ -44,7 +44,7 @@ public class ClaimController {
         return new ResponseEntity<>("Claimed Successfully",HttpStatus.OK);
     }
 
-    @PutMapping("/update/{claimId}")
+    @PutMapping("update/{claimId}")
     public ResponseEntity<String> updateClaim(@RequestParam("certificate") MultipartFile file1,@PathVariable Long claimId) throws IOException {
 
         Claims claim = claimDao.findById(claimId).get();
@@ -67,7 +67,7 @@ public class ClaimController {
 
     }
 
-    @GetMapping("/approvalStatus/{donationId}")
+    @GetMapping("approvalStatus/{donationId}")
     public ResponseEntity<String> getApproval(@PathVariable Long donationId) {
         Donation donation = donationDao.getById(donationId);
         Claims claim = claimService.findByDonation(donation);
@@ -76,5 +76,17 @@ public class ClaimController {
             return new ResponseEntity<>("notPresent", HttpStatus.OK);
         }
         return new ResponseEntity<>((claim.isApproved())?"yes":"no", HttpStatus.OK);
+    }
+
+    @GetMapping("getByDonation/{donationId}")
+    public ResponseEntity<Claims> getByDonation(@PathVariable Long donationId) {
+        Donation donation = donationDao.findById(donationId).get();
+        Claims claim = claimService.findByDonation(donation);
+
+        if(claim == null){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(claim, HttpStatus.OK);
+
     }
 }
