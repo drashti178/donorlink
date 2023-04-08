@@ -24,7 +24,7 @@ public class CustomerUserDetailService implements UserDetailsService
     @Autowired
     private NgoDao ngoDao;
     @Autowired
-    private DonorDao userDao;
+    private DonorDao donorDao;
 
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException
@@ -32,7 +32,7 @@ public class CustomerUserDetailService implements UserDetailsService
         Ngo ngo = ngoDao.findByNgoname(name);
         if(ngo==null)
         {
-            Donor donor = userDao.findByusername(name);
+            Donor donor = donorDao.findByusername(name);
             return new User(donor.getUsername(), donor.getPassword(), mapRolesToAuthority("user"));
         }
 

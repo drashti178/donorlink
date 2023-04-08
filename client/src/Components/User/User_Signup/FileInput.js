@@ -3,6 +3,7 @@ import {
     Avatar
 } from "@mui/material";
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import React from 'react';
 
 const FileInput = (props) => {
 

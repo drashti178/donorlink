@@ -1,11 +1,15 @@
 package com.example.server.controller;
 import com.example.server.models.Activity;
+import com.example.server.models.Donor;
 import com.example.server.models.Fundraiser;
 import com.example.server.models.Ngo;
 import com.example.server.services.ActivityService;
+import com.example.server.services.DonorService;
 import com.example.server.services.FundraiserService;
 import com.example.server.services.NgoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +24,10 @@ public class HomeController {
     private ActivityService activityService;
     @Autowired
     private FundraiserService fundraiserService;
+
+    @Autowired
+    private DonorService donorService;
+
     @GetMapping("ngos")
     public List<Ngo> getNgos()
     {
@@ -51,6 +59,16 @@ public class HomeController {
     {
         Ngo ngo = ngoService.getNgo(id);
         return this.fundraiserService.getFundraisers(ngo);
+    }
+
+    @GetMapping("getAllSortedByDonation")
+    public ResponseEntity<List<Donor>> getDonationSorted() {
+
+        List<Donor> dlist = donorService.findAllOrderByDonation();
+        if(dlist.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(dlist,HttpStatus.OK);
     }
 
 }

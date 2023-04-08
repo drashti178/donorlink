@@ -11,6 +11,8 @@ public interface DonorService {
 
     public Donor addDonor(Donor donor);
     public Donor getDonor(Long id);
+
+    List<Donor> findAllOrderByDonation();
     public String uploadImage(String path, MultipartFile file) throws IOException;
 
 }

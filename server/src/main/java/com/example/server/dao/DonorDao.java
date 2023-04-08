@@ -14,4 +14,6 @@ public interface DonorDao extends JpaRepository<Donor,Long> {
     public Boolean existsByusername(String username);
     public Boolean existsByEmail(String email);
 
+//    public List<Donor> findAllOrderByTotaldonation();
+
 }

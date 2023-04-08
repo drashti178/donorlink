@@ -12,5 +12,5 @@ public interface DonationDao extends JpaRepository<Donation,Long> {
 
     public List<Donation> findByDonor(Donor donor);
 
-    public Donation findFirstByNgoOrderByAmount(Ngo ngo);
+    public List<Donation> findByNgoOrderByAmountDesc(Ngo ngo);
 }

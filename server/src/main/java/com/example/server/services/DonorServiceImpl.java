@@ -3,6 +3,7 @@ package com.example.server.services;
 import com.example.server.dao.DonorDao;
 import com.example.server.models.Donor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -63,6 +64,12 @@ public class DonorServiceImpl implements DonorService {
         }
         return donor;
     }
+
+    @Override
+    public List<Donor> findAllOrderByDonation() {
+        return donorDao.findAll(Sort.by(Sort.Direction.DESC, "totaldonation"));
+    }
+
     @Override
     public String uploadImage(String path, MultipartFile file) throws IOException {
         String name=file.getOriginalFilename();

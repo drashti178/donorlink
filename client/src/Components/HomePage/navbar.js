@@ -1,4 +1,4 @@
-import { React, useContext, useEffect, useState } from 'react';
+import React ,{ useContext, useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,13 +16,8 @@ import base_url from '../../api/bootapi';
 import axios from 'axios';
 import { Avatar } from '@mui/material';
 
-
-
-
-
-
 function HomeNavBar(props) {
-  
+
   const [anchorElNav, setAnchorElNav] = useState(0);
   const navigate = useNavigate();
   const UserProfile = (event) => {
@@ -90,7 +85,7 @@ function HomeNavBar(props) {
   
   }
 
-    const pages = [{"page":"Ngos","event":clickNgos}, {"page":"Fundraisers","event":clickFundraisers}];
+  const pages = [{"page":"Ngos","event":clickNgos}, {"page":"Fundraisers","event":clickFundraisers}];
     console.log("home");
 
   return (
@@ -103,6 +98,9 @@ function HomeNavBar(props) {
             noWrap
             component="a"
             href="/"
+            sx={{
+              fontFamily: "'Aboreto', cursive;",
+            }}
             style={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -188,7 +186,7 @@ function HomeNavBar(props) {
               <Box sx={{ flexGrow: 0 }}>
                 <Button sx={{ color: "white" }} onClick={() => LogoutUser()}>Logout</Button>
                 <IconButton onClick={UserProfile} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="Remy Sharp" src={(context.user) && `/images/userprofileImgs/${context.user.profileImgName}`} />
                 </IconButton>
             </Box>}
          

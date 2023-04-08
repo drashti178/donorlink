@@ -1,4 +1,4 @@
-import { React, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import UserSignup from "./Components/User/User_Signup/user_signup";
 import Home from "./Components/HomePage/index";
