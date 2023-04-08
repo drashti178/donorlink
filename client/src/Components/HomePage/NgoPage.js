@@ -1,28 +1,71 @@
 import React, { useState,useEffect,useContext } from 'react'
 import axios from "axios";
 import base_url from '../../api/bootapi';
-import Pagination from '@mui/material/Pagination';
-import ActivityCard from './ActivityCard';
-import FundraiserCard from './FundraiserCard';
 import { makeStyles } from '@material-ui/core/styles';
 import { UserContext } from '../../Context/UserContext';
-import { Box, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Box, Button, Paper } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
+import { Grid, Tab, Typography } from '@material-ui/core';
+import List from './List';
+import ActivitiesList from './activitiesList';
+import ActivityCard from './ActivityCard';
+import FundraiserCard from './FundraiserCard';
+
 
 const useStyles = makeStyles({
-  list:{
+  fund:{
       display: "flex",
-  flexDirection:" column",
-  flexWrap: "wrap",
-  justifyContent: "space-evenly"
-     
+  flexDirection:"column",  
+  marginBottom:"4%"
   },
   act:{
     display: "flex",
 flexDirection:"row",
-flexWrap: "wrap",
-justifyContent: "space-evenly"
+flexWrap: "nowrap",
+
+overflowX:"auto",
+marginBlock:"8%"
    
+},
+root: {
+  flexGrow: 1,
+ 
+},
+paper: {
+  padding:0,
+  margin:0,
+  height:"100vh",
+  borderRadius:0,
+  borderBottom:"solid white 120px"
+  
+},
+image: {
+  alignContent:"center",
+  width: "40%",
+  marginInline:"5%",
+  marginBlock:"8%",
+  objectFit: "cover",
+  border:"solid white"
+},
+
+second:{
+  backgroundColor:"white",
+  display: "flex",
+  flexDirection:"column",
+  
+
+},
+
+img:{
+ 
+  objectFit: "cover",
+  width:"100%"
+
+},
+details:{
+  backgroundColor:"#075456",
+  width:"100%"
+
 }
 })
 
@@ -31,14 +74,13 @@ const NgoPage = () => {
   const classes = useStyles();
     const id = localStorage.getItem("ngoId");
     console.log(id);
-    const [ngo,setNgo] = useState();
+    const [ngo,setNgo] = useState([]);
     const [activities,setActivities] = useState([]);
     const [fundraisers,setFundraisers] = useState([]);
-    let [page, setPage] = useState(1);
-  const per_page = 3;
-  const count = Math.ceil(activities.length / per_page);
+  
   const context = useContext(UserContext);
   const [login, setLogin] = useState();
+
   if (context.user == null && localStorage.getItem("AccessToken") != null) {
     setLogin(true);
     const token = "Bearer " + localStorage.getItem("AccessToken");
@@ -73,10 +115,6 @@ const NgoPage = () => {
 
   }
 
-  const handleChange = (e, p) => {
-    setPage(p);
-    activities.jump(p);
-  };
     useEffect(() => {  
       axios.get(`${base_url}/home/getngoById/${id}`).then(
         (response)=>{
@@ -109,33 +147,66 @@ const NgoPage = () => {
         }
       )  
     },[]);
-    console.log(localStorage.getItem("role"));
-    console.log(login);
+   
   return (
     <>
-    <div>NgoPage</div>
-    <div>Basic Profile</div>
-    
-    <div>
+    <div className={classes.root}>
+      <Grid container xs={12} md={12}>
+        <Grid  xs={12} md={12} >
+          <Paper className={classes.paper} style={{backgroundColor:"#075456"}}>
+          <Typography variant="h3" style={{color:"white",textAlign:"center",borderBottom:"solid"}}>
+              {ngo.ngoname}
+            </Typography>
+            <div style={{display:"flex",flexDirection:'row'}}>
+            <img
+              src="/images/home1.jpg"
+              alt="Product"
+              className={classes.image}
+            />
+            <div style={{width:"50%"}}>
+           
     {(!login || (login && localStorage.getItem("role")=== "user")) ?
-              <Box sx={{ flexGrow: 0 }}>
-                <Button sx={{ my: 2, backgroundColor:"#075456", color: 'white', display: 'block' }} onClick={DonateToNgo}>Donate</Button>
+              <Box sx={{ flexGrow: 1 ,display:'flex',flexDirection:'row-reverse',mr:"5%"}}>
+                <Button sx={{ my: 2, backgroundColor:"white", color: '#075456', display: 'block',":hover":{backgroundColor:"white", color: '#075456'} }} onClick={DonateToNgo}>Donate</Button>
               </Box> :
-              <Box sx={{ flexGrow: 0 }}>
-                <Button sx={{ my: 2, backgroundColor:"#075456", color: 'white', display: 'block' }}>Collaborate</Button>
+              <Box sx={{ flexGrow: 1,display:'flex',flexDirection:'row-reverse' }}>
+                <Button sx={{ my: 2, backgroundColor:"white", color: '#075456', display: 'block' }}>Collaborate</Button>
               </Box>} 
-    <div className={classes.list}>
-    Activities
-    <Box p="5" className={classes.act}>
-      {/* <Pagination
-        count={count}
-        size="large"
-        page={page}
-        variant="outlined"y
-        
-        shape="rounded"
-        onChange={handleChange}
-      /> */}
+              
+            <Typography variant="h6" style={{color:"white",textAlign:"center",borderBottom:"solid",marginTop:"12%",fontSize:"2rem"}}>Tagline : {ngo.tagline}<br/>
+            </Typography>
+            <Typography variant="body1" style={{color:"white",textAlign:"left",borderBottom:"solid",fontSize:"1.5rem"}} gutterBottom>
+             Founder :{ngo.founder} <br /> Area of Work : {ngo.areaofwork}<br/>
+              </Typography>
+              <Typography variant="body1" style={{color:"white",textAlign:"left",borderBottom:"solid",fontSize:"1.5rem"}}>Website : <Link>{ngo.weblink}</Link>
+              <br />
+              Email : {ngo.email}<br />
+             
+              Contact No : {ngo.mobile}<br/>
+              </Typography>
+              <Typography variant="body1" style={{color:"white",textAlign:"left",fontSize:"1.5rem"}}>
+             Address : {ngo.address}<br />
+             Country : {ngo.country}<br/>
+            </Typography>
+            </div>
+            
+
+            </div>
+           
+          </Paper>
+        </Grid>
+       
+      </Grid>
+    </div>
+   
+    <div className={classes.second}>
+      <Typography variant="h5" style={{backgroundColor:"#075456",color:"white",textAlign:"center",borderBottom:"solid"}}>Activities
+              </Typography>
+         
+            
+   
+    <Box className={classes.act}>
+    
       {activities.map((product) => (
       <ActivityCard key={product.a_id} activity={product}/>
       
@@ -143,26 +214,27 @@ const NgoPage = () => {
     
 
     </Box>
-    {/* {activities.map((product) => (
-      <ActivityCard key={product.a_id} activity={product}/>
-      
-    ))}
-    </div> 
-      <Stack spacing={2}>
-      <Pagination count={10} shape="rounded" />
-      </Stack> */}
+   
+
+    
 
     </div>
-    </div>
-    <div>Fundraisers
-    <div className={classes.list}>
+    
+    <div className={classes.fund}>
+    <Typography variant="h5" style={{backgroundColor:"#075456",color:"white",textAlign:"center",borderBottom:"solid"}}>Fundraisers
+              </Typography>
+         
     {fundraisers.map((product) => (
       <FundraiserCard key={product.fun_id} fundraiser={product}/>
       
     ))}
-    </div> 
+  
     </div>
    
+    
+   
+   
+    
 
 
     </>

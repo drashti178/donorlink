@@ -21,7 +21,9 @@ media: {
  
   height: "240px",
 },
-
+content:{
+  backgroundColor:"#075456"
+}
 
 });
 
@@ -35,7 +37,7 @@ const ActivityCard = ({activity}) => {
     } = activity;
     const ImgPath = "/images/activity/";
     return (
-      <Card sx={{ maxWidth: 345 }} className={classes.root}>
+      <Card sx={{ minWidth: "300px" }} className={classes.root}>
         <CardMedia
           className={classes.media}
           component="img"
@@ -43,14 +45,15 @@ const ActivityCard = ({activity}) => {
           height="140"
           image={ImgPath + activityImgName}
         />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+        <CardContent  className={classes.content}>
+          <Typography variant="h5" component="div" style={{borderBottom:"solid white",color:"white"
+          }}>
           {activityname}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-           {description}
-           <Typography variant="body2" color="text.secondary">
-           {participation}
+          <Typography variant="body2" color="white">
+           Description : {description}
+           <Typography variant="body2" color="white">
+           Participation : {participation}
           </Typography>
           </Typography>
 

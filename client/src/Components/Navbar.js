@@ -90,23 +90,7 @@ function NavBar(props) {
       <AppBar position="static" style={{ backgroundColor: "#075456" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-            <Typography
-              variant="h6"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                mr: 2,
-                display: { xs: 'none', md: 'flex' },
-                fontFamily: "'Aboreto', cursive;",
-                fontWeight: 700,
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-            >
-              Donor Link
-            </Typography>
+          
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
@@ -144,26 +128,44 @@ function NavBar(props) {
                 ))}
               </Menu>
             </Box>
-            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href=""
-              sx={{
-                mr: 2,
-                display: { xs: 'flex', md: 'none' },
-                flexGrow: 1,
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-            >
-              Donor Link
+            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1,color: 'white' }} />
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href=""
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: "'Aboreto', 'cursive'",
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'white',
+              textDecoration: 'none',
+            }}
+          >
+            Donor Link
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, color: 'white',mt:2.5 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/"
+            style={{
+              marginTop:'1.5%',
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: "'Aboreto', 'cursive'",
+              fontWeight: 700,
+              color: 'white',
+              textDecoration: 'none',
+              "&:hover": { color: 'white', }, 
+            }}
+          >
+            Donor Link
+          </Typography>
               {pages.map((p) => (
                 <Button
                   key={p.page}

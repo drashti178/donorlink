@@ -6,12 +6,14 @@ import base_url from '../../api/bootapi';
 import { UserContext } from '../../Context/UserContext';
 import { Button,  Typography } from '@mui/material';
 import DonationTable from './DonationTable';
+import FDonationTable from './FDonationTable';
 
 const ViewDonation = () => {
     const navigate = useNavigate();
     const context = useContext(UserContext);
 
     const [inputs, setInputs] = useState([]);
+    const [fdonations, setFDonations] = useState([]);
     
     useEffect(() => {
         if (localStorage.getItem("AccessToken") == null) {
@@ -47,6 +49,7 @@ const ViewDonation = () => {
 
     useEffect(() => {
         fetchDonations();
+        fetchFDonations();
     }, []);
 
     const fetchDonations = () => {
@@ -67,26 +70,65 @@ const ViewDonation = () => {
             }
         )
     }
+    const fetchFDonations = () => {
+        const token = "Bearer " + localStorage.getItem("AccessToken");
+
+        axios.get(`${base_url}/donation/fundraiser/getAll`, {
+            headers: {
+                'Authorization': token,
+            }
+        }).then(
+            (response) => {
+                console.log(response.data);
+                setFDonations(response.data);
+               
+            },
+            (error) => {
+                console.log(error);
+            }
+        )
+    }
 
     // const [res,setRes] = useState("");
 
     return (
         <>
             {
-                (inputs.length == 0) ? <Typography variant="h6" gutterBottom style={{marginTop:"3%",marginLeft:"1%"}}>You haven't donated in any Ngo yet!! <Button onClick={() => {navigate('/')}}>click here</Button> to make donation.</Typography> :
+                (inputs.length === 0) ? <Typography variant="h6" gutterBottom style={{marginTop:"3%",marginLeft:"1%"}}>You haven't donated in any Ngo yet!! <Button onClick={() => {navigate('/')}}>click here</Button> to make donation.</Typography> :
                 <Table bordered hover style={{ marginTop: "4%" }}>
                     <thead>
                         <tr>
                             <th>Id</th>
                             <th>Amount</th>
                             <th>Date</th>
-                            <th>Ngo name</th>
+                            <th>Ngo Name</th>
                             <th>Claim Your Certificate (if applicable)</th>
                         </tr>
                     </thead>
                     <tbody>
                         {inputs.map((i, index) => (
                             <DonationTable i={i} index={index}/>
+                        ))}
+                    </tbody>
+                </Table>
+            }
+            {
+                (fdonations.length === 0) ? <Typography variant="h6" gutterBottom style={{marginTop:"3%",marginLeft:"1%"}}>You haven't donated in any Fundraiser yet!!</Typography> :
+                <Table bordered hover style={{ marginTop: "4%" }}>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Fundraiser Name</th>
+                            <th>Ngo Name</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {fdonations.map((i, index) => (
+                            
+                            <FDonationTable i={i} index={index}/>
                         ))}
                     </tbody>
                 </Table>

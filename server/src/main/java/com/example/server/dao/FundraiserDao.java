@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface FundraiserDao extends JpaRepository<Fundraiser,Long> {
     public List<Fundraiser> findByNgo(Ngo ngo);
+    public List<Fundraiser> findByStatus(String st);
 
 }

@@ -1,66 +1,85 @@
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useNavigate } from "react-router-dom";
+import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import { Box, Button } from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const useStyles = makeStyles({
-  
-root: {
-  
-  width:'340px',
-  marginTop:"2%",
-  marginLeft:"2%",
-  
-},
-media: {
-   
- 
-  height: "240px",
-},
-
-
-});
-
+    root: {
+      display: 'flex',
+      width: '60%',
+      height: '240px',
+      marginTop:"2%",
+      marginLeft:"20%",
+      borderRight:"2px solid #075456",
+      borderBottom:"2px solid #075456",
+      boxShadow:"3px 4px #888888"
+      
+    },
+    media: {
+      width: '40%',
+      height: '100%',
+    },
+    content: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      width:"60%",
+      backgroundColor:"#075456"
+    }
+  });
 const FundraiserCard = ({fundraiser}) => {
-    const navigate = useNavigate();
-   
+    const imgPath = "/images/fundraiser/";
     const classes = useStyles();
-    const {fr_name,target
-        , fr_img , cause, duration,amount
-
+    const { fun_id,fr_name, fr_img, duration
+        , amount,target,cause,ngo,enddate,status
 
     } = fundraiser;
-    const ImgPath = "/images/fundraiser/";
-    return (
-      <Card sx={{ maxWidth: 345 }} className={classes.root}>
+    const navigate = useNavigate();
+
+   const  DonateToFundraiser= () =>{
+    navigate("/fundraiser/payment",{state:fun_id})
+
+  }
+  return (
+   <>
+   <Card className={classes.root}>
         <CardMedia
           className={classes.media}
-          component="img"
-          alt="green iguana"
-          height="140"
-          image={ImgPath + fr_img}
+          image={imgPath + fr_img}
+         
         />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-          {fr_name}
+        <CardContent className={classes.content}>
+          <Typography gutterBottom variant="h5" component="h2">
+            Name  : {fr_name}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-           {cause}
-           <Typography variant="body2" color="text.secondary">
-           {duration}
-           {amount}
-           {target}
+          <Typography variant="body2" color="textSecondary" component="p">
+            {cause}
           </Typography>
-          </Typography>
-
+          {
+            (status==="active")?<Typography variant="h6" color="textSecondary" component="p">
+            Active  <br /> Amount : {amount}     Target : {target}
+           </Typography>:<Typography variant="h6" color="textSecondary" component="p">
+            Completed    <br /> Amount : {amount}  Duration:{duration}
+           </Typography>
+          }
+          <Box sx={{ flexGrow: 1 ,display:'flex',flexDirection:'row-reverse',mr:"5%"}}>
+                <Button sx={{ backgroundColor:"white", color: '#075456', display: 'block',":hover":{backgroundColor:"white", color: '#075456'} }} onClick={DonateToFundraiser}>Donate</Button>
+              </Box> 
+         
         </CardContent>
-       
       </Card>
-    );
+
+   </>
+  )
 }
 
 export default FundraiserCard
+
+  
+ 

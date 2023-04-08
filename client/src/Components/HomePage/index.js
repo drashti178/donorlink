@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Maindata from './maindata';
 import HomeNavBar from './navbar';
+import Footer from './footer';
 
 
 
@@ -15,6 +16,7 @@ const Home = () => {
     <>
     <HomeNavBar onDataReceived={handleDataReceived}></HomeNavBar>
     <Maindata load={data} />
+    <Footer />
     </>
 
   );

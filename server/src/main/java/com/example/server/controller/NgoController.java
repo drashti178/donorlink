@@ -1,11 +1,11 @@
 package com.example.server.controller;
 
 import com.example.server.dao.ActivityDao;
+import com.example.server.dao.FundraiserDao;
 import com.example.server.dao.NgoDao;
-import com.example.server.models.Activity;
-import com.example.server.models.Fundraiser;
-import com.example.server.models.Ngo;
+import com.example.server.models.*;
 import com.example.server.services.ActivityService;
+import com.example.server.services.DonationService;
 import com.example.server.services.FundraiserService;
 import com.example.server.services.NgoService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -38,9 +38,13 @@ public class NgoController {
     @Autowired
     private NgoDao ngoDao;
     @Autowired
+    private FundraiserDao fundraiserDao;
+    @Autowired
     private NgoService ngoService;
     @Autowired
     private FundraiserService fundraiserService;
+    @Autowired
+    private DonationService donationService;
     @Autowired
     private ActivityDao activityDao;
 
@@ -163,6 +167,7 @@ public class NgoController {
         ObjectMapper objectMapper = new ObjectMapper();
         Fundraiser fundraiser = objectMapper.readValue(FR,Fundraiser.class);
         fundraiser.setNgo(ngo);
+        fundraiser.setStatus("active");
 
         Date date = new Date();
         fundraiser.setStartdate(date);
@@ -200,15 +205,24 @@ public class NgoController {
     }
     @GetMapping ("/stopFundraiser/{id}")
     public ResponseEntity<String > stopFundraiser(@PathVariable long id) {
-        System.out.println("in");
+
         try {
             this.fundraiserService.stopFundraiser(id);
-            return new ResponseEntity<>("fundraiser deleted successfully", HttpStatus.OK);
+            return new ResponseEntity<>("fundraiser stopped successfully", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Error in deleting fundraiser", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Error in stopping fundraiser", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("fundraiser/donation/{fd_id}")
+    public ResponseEntity<List<FundraiserDonation>> getFundDonation(@PathVariable long fd_id) {
 
+        Fundraiser f=fundraiserDao.findById(fd_id).get();
+        List<FundraiserDonation> dlist = donationService.getFDonationByfundraiser(f);
+        if(dlist.isEmpty()){
+            return new ResponseEntity<>(null,HttpStatus.OK);
+        }
+        return new ResponseEntity<>(dlist,HttpStatus.OK);
+    }
 
 
 }

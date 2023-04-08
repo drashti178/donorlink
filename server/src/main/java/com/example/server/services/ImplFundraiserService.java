@@ -21,6 +21,13 @@ public class ImplFundraiserService implements FundraiserService{
     private FundraiserDao fundraiserDao;
     @Autowired
     private FundraiserDonationDao fundraiserDonationDao;
+
+
+    @Override
+    public List<Fundraiser> getFundraisersByStatus(String st) {
+        return fundraiserDao.findByStatus(st);
+    }
+
     @Override
     public List<Fundraiser> getFundraisers(Ngo ngo) {
         return fundraiserDao.findByNgo(ngo);
@@ -51,6 +58,7 @@ public class ImplFundraiserService implements FundraiserService{
         long duration = date.getTime() -d.getTime() ;
         long days = TimeUnit.MILLISECONDS.toDays(duration)%365;
         fr.setDuration(days);
+        fr.setStatus("over");
         fundraiserDao.save(fr);
 
 

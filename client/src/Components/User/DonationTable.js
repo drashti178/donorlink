@@ -63,14 +63,14 @@ const DonationTable = (props) => {
                 <td>{props.i.ngo.ngoname}</td>
                 <td>{
                     (props.i.eligible) ?
-                        ((res == 'yes') ?
+                        ((res === 'yes') ?
                             <Button
                                 variant="contained"
                                 sx={{ "&:hover": { backgroundColor: '#075456', color: 'white', }, marginTop: 1, width: "50%", backgroundColor: '#075456' }}
                             >
                                 Download Certificate
                             </Button> :
-                            ((res == 'notPresent') ?
+                            ((res === 'notPresent') ?
                                 <Button
                                     variant="contained"
                                     sx={{ "&:hover": { backgroundColor: '#075456', color: 'white', }, marginTop: 1, width: "25%", backgroundColor: '#075456' }}
