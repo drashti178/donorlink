@@ -73,7 +73,7 @@ const ViewFDonations = (props) => {
      
      <DialogContent>
      {
-                (fdonations.length === 0) ? <Typography variant="h6" gutterBottom style={{marginTop:"3%",marginLeft:"1%"}}>You haven't donated in any Fundraiser yet!!</Typography> :
+                (fdonations.length === 0) ? <Typography variant="h6" gutterBottom style={{marginTop:"3%",marginLeft:"1%"}}>You don't have any donations for this Fundraiser yet!!</Typography> :
                 <Table bordered hover style={{ marginTop: "4%" }}>
                     <thead>
                         <tr>

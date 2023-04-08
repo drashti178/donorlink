@@ -27,7 +27,7 @@ const StopFundraiser = (props) => {
     };
   
     const handleClose = () => {
-    //   context.setIsFAdded(!context.isFAdded);
+      context.setIsFAdded(!context.isFAdded);
       setOpen(false);
     };
     const stopFundraiser = (id) =>{
@@ -82,7 +82,7 @@ const StopFundraiser = (props) => {
         variant="contained"
         sx={{ "&:hover": { backgroundColor: "darkcyan", color: 'white' }, marginTop:"2%",width: "40%", backgroundColor: 'darkcyan',color:"white" }}
        >
-         Delete
+         Stop
        </Button>
        
        </Grid>
