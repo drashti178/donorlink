@@ -1,4 +1,4 @@
-import React, {useContext, useState, } from "react";
+import React, { useContext, useState, } from "react";
 import {
   Typography,
   Avatar,
@@ -32,7 +32,7 @@ const NgoLogin = () => {
   const [msg, setMsg] = useState("");
 
   const [open, setOpen] = useState(false);
-  const [severity,setSeverity] = useState("error");
+  const [severity, setSeverity] = useState("error");
 
   const handleClick = () => {
     setOpen(true);
@@ -86,44 +86,39 @@ const NgoLogin = () => {
 
 
   const { user, setUser } = useContext(UserContext);
-  const onLogin = async (data) => {
-    await axios.post(`${base_url}/auth/ngo/login`, data).then(
+  const onLogin = (data) => {
+    axios.post(`${base_url}/auth/ngo/login`, data).then(
       (response) => {
         localStorage.setItem("AccessToken", response.data.accessToken);
-        const getUser = async () => {
-          const token = "Bearer " + localStorage.getItem("AccessToken");
-          // console.log(token);
-          await axios.get(`${base_url}/ngo/profile`, {
-            headers: {
-              'Authorization': token,
-            }
-          }).then(
-            (response) => {
-
-              setUser(response.data);
-              console.log(user)
-              localStorage.setItem("role", response.data.role);
-            },
-            (error) => {
-              console.log(error);
-              navigate('/ngo/login');
-            }
-          )
-        }
-
-        getUser();
-        navigate('/ngo/home');
+        const token = "Bearer " + localStorage.getItem("AccessToken");
+        // console.log(token);
+        axios.get(`${base_url}/ngo/profile`, {
+          headers: {
+            'Authorization': token,
+          }
+        }).then(
+          (res) => {
+            console.log(res.data)
+            setUser(res.data);
+            localStorage.setItem("role", res.data.role);
+            navigate('/ngo/home');
+          },
+          (err) => {
+            console.log(err);
+            navigate('/ngo/login');
+          }
+        )
       },
       (error) => {
         console.log(error);
         setSeverity("error");
-        if(error.response.status === 401){
+        if (error.response.status === 401) {
           setMsg("Invalid Password!!!");
         }
-        else if(error.response.status === 400){
+        else if (error.response.status === 400) {
           setMsg("Invalid Username or Email Address!!!");
         }
-    
+
         handleClick();
       }
     )

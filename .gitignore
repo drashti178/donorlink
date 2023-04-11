@@ -5,3 +5,6 @@ server/src/main/resources/application.properties
 client/public/images/userprofileImgs/8e12fdcd-7f96-46cf-b729-d37e61cabe9c.jpg
 client/public/images/userprofileImgs/9e7fe245-a51f-43ed-b8e9-938be343eb82.jpg
 client/public/images/userprofileImgs/86c7ffb0-e75b-4db1-ae9d-1c0395dbc10a.jpg
+server/src/main/java/com/example/server/controller/AuthController.java
+client/public/images/ngoprofileImgs/2ec1cf1d-5695-4e27-9225-c17d0178e703.jpg
+client/public/images/certiImgs/2e0a958f-23cf-4bae-9c67-2849db662dbd.pdf

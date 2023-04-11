@@ -20,13 +20,27 @@ function HomeNavBar(props) {
 
   const [anchorElNav, setAnchorElNav] = useState(0);
   const navigate = useNavigate();
-  const UserProfile = (event) => {
-    navigate('/user');
+  const Profile = (event) => {
+    if(context.user.role === 'ngo'){
+      context.setUser(null);
+      navigate('/ngo/profile');
+    }
+    else{
+      navigate('/user');
+    }
   };
-  const LogoutUser = (event) => {
+  const Logout = (event) => {
     localStorage.removeItem("role");
     localStorage.removeItem("AccessToken");
-    navigate('/user/login');
+    if(context.user.role === 'user'){
+      context.setUser(null);
+      navigate('/user/login');
+    }
+    else{
+      context.setUser(null);
+      navigate('/ngo/login');
+    }
+   
   };  
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -85,18 +99,19 @@ function HomeNavBar(props) {
   
   }
 
+
   const pages = [{"page":"Ngos","event":clickNgos}, {"page":"Fundraisers","event":clickFundraisers}];
-    console.log("home");
+  console.log("home");
 
   return (
-    <AppBar position="static" style={{backgroundColor:"#075456"}}>
+    <AppBar position="static" style={{backgroundColor: (localStorage.getItem("role") === 'ngo') ? "darkcyan": "#075456" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, color: 'white', }} />
           <Typography
             variant="h6"
             noWrap
-            component="a"
+            component="a" 
             href="/"
             sx={{
               fontFamily: "'Aboreto', cursive;",
@@ -104,8 +119,8 @@ function HomeNavBar(props) {
             style={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: "'Aboreto', cursive;",
               fontWeight: 700,
+              marginRight:"1%",
               color: 'white',
               textDecoration: 'none',
             }}
@@ -184,9 +199,9 @@ function HomeNavBar(props) {
                 <Button sx={{ color: "white" }} onClick={() => LoginPage()}>Login</Button>
               </Box> :
               <Box sx={{ flexGrow: 0 }}>
-                <Button sx={{ color: "white" }} onClick={() => LogoutUser()}>Logout</Button>
-                <IconButton onClick={UserProfile} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src={(context.user) && `/images/userprofileImgs/${context.user.profileImgName}`} />
+                <Button sx={{ color: "white" }} onClick={() => Logout()}>Logout</Button>
+                <IconButton onClick={Profile} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src={(localStorage.getItem("role") === 'user') ? `/images/userprofileImgs/${context.user.profileImgName}` :  `/images/ngoprofileImgs/${context.user.profileImgName}`} />
                 </IconButton>
             </Box>}
          

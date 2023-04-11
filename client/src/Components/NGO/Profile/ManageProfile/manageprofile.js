@@ -2,7 +2,7 @@ import { React,useState} from 'react';
 import { Box } from '@mui/material';
 import AddActivity from './Activity/addActivity';
 import AddFundraiser from './Fundraiser/addFundraiser';
-import AddRequest from './Request/addRequest';
+import AddEvent from './Events/AddEvent';
 import Button from "@mui/material/Button";
 import Data from './data';
 import './css/ButtonDiv.css'
@@ -16,8 +16,8 @@ function ButtonDiv(props) {
     props.onDataReceived("Activity");
   
   }
-  const clickRequest = (event) =>{
-    props.onDataReceived("Request");
+  const clickEvent = (event) =>{
+    props.onDataReceived("Events");
   
   }
   
@@ -27,8 +27,8 @@ function ButtonDiv(props) {
      <Button onClick={clickActivity}>Show Activities</Button></Box>
      <Box sx={{ width: "20%",  marginLeft:"4%" }}><AddFundraiser/>
      <Button onClick={clickFundraiser}>Show Fundraisers</Button></Box>
-     <Box sx={{ width: "20%",   marginLeft:"4%"}}><AddRequest/>
-     <Button onClick={clickRequest}>Show Requests</Button></Box>
+     <Box sx={{ width: "20%",   marginLeft:"4%"}}><AddEvent/>
+     <Button onClick={clickEvent}>Show Events</Button></Box>
     </div>
   );
 }

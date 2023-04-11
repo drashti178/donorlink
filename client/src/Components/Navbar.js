@@ -181,7 +181,7 @@ function NavBar(props) {
               <Box sx={{ flexGrow: 0 }}>
                 <Button sx={{ color: "white" }} onClick={LogoutUser}>Logout</Button>
                 <IconButton onClick={clickMyProfile} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="Remy Sharp" src={(localStorage.getItem("role") === 'user') ? `/images/userprofileImgs/${context.user.profileImgName}` :  `/images/ngoprofileImgs/${context.user.profileImgName}`} />
                 </IconButton>
               </Box>}
           </Toolbar>
