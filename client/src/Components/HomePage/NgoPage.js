@@ -1,4 +1,4 @@
-import React, { useState,useEffect,useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from "axios";
 import base_url from '../../api/bootapi';
 import Pagination from '@mui/material/Pagination';
@@ -10,31 +10,31 @@ import { Box, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles({
-  list:{
-      display: "flex",
-  flexDirection:" column",
-  flexWrap: "wrap",
-  justifyContent: "space-evenly"
-     
-  },
-  act:{
+  list: {
     display: "flex",
-flexDirection:"row",
-flexWrap: "wrap",
-justifyContent: "space-evenly"
-   
-}
+    flexDirection: " column",
+    flexWrap: "wrap",
+    justifyContent: "space-evenly"
+
+  },
+  act: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-evenly"
+
+  }
 })
 
 
 const NgoPage = () => {
   const classes = useStyles();
-    const id = localStorage.getItem("ngoId");
-    console.log(id);
-    const [ngo,setNgo] = useState();
-    const [activities,setActivities] = useState([]);
-    const [fundraisers,setFundraisers] = useState([]);
-    let [page, setPage] = useState(1);
+  const id = localStorage.getItem("ngoId");
+  console.log(id);
+  const [ngo, setNgo] = useState();
+  const [activities, setActivities] = useState([]);
+  const [fundraisers, setFundraisers] = useState([]);
+  let [page, setPage] = useState(1);
   const per_page = 3;
   const count = Math.ceil(activities.length / per_page);
   const context = useContext(UserContext);
@@ -57,7 +57,7 @@ const NgoPage = () => {
       }
     )
   }
- const navigate = useNavigate();
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -68,8 +68,8 @@ const NgoPage = () => {
       }
     }, 100);
   }, [context.user]);
-  const  DonateToNgo = () =>{
-    navigate("/user/payment",{state:id})
+  const DonateToNgo = () => {
+    navigate("/user/payment", { state: id })
 
   }
 
@@ -77,57 +77,57 @@ const NgoPage = () => {
     setPage(p);
     activities.jump(p);
   };
-    useEffect(() => {  
-      axios.get(`${base_url}/home/getngoById/${id}`).then(
-        (response)=>{
-            console.log(response.data);
-          setNgo(response.data);
-        },
-        (error)=>{
-          console.log(error);
-          console.log("Error");
-        }
-      ) 
-      axios.get(`${base_url}/home/activities/${id}`).then(
-        (response)=>{
-            console.log(response.data);
-            setActivities(response.data);
-        },
-        (error)=>{
-          console.log(error);
-          console.log("Error");
-        }
-      )
-      axios.get(`${base_url}/home/fundrisers/${id}`).then(
-        (response)=>{
-            console.log(response.data);
-            setFundraisers(response.data);
-        },
-        (error)=>{
-          console.log(error);
-          console.log("Error");
-        }
-      )  
-    },[]);
-    console.log(localStorage.getItem("role"));
-    console.log(login);
+  useEffect(() => {
+    axios.get(`${base_url}/home/getngoById/${id}`).then(
+      (response) => {
+        console.log(response.data);
+        setNgo(response.data);
+      },
+      (error) => {
+        console.log(error);
+        console.log("Error");
+      }
+    )
+    axios.get(`${base_url}/home/activities/${id}`).then(
+      (response) => {
+        console.log(response.data);
+        setActivities(response.data);
+      },
+      (error) => {
+        console.log(error);
+        console.log("Error");
+      }
+    )
+    axios.get(`${base_url}/home/fundrisers/${id}`).then(
+      (response) => {
+        console.log(response.data);
+        setFundraisers(response.data);
+      },
+      (error) => {
+        console.log(error);
+        console.log("Error");
+      }
+    )
+  }, []);
+  console.log(localStorage.getItem("role"));
+  console.log(login);
   return (
     <>
-    <div>NgoPage</div>
-    <div>Basic Profile</div>
-    
-    <div>
-    {(!login || (login && localStorage.getItem("role")=== "user")) ?
-              <Box sx={{ flexGrow: 0 }}>
-                <Button sx={{ my: 2, backgroundColor:"#075456", color: 'white', display: 'block' }} onClick={DonateToNgo}>Donate</Button>
-              </Box> :
-              <Box sx={{ flexGrow: 0 }}>
-                <Button sx={{ my: 2, backgroundColor:"#075456", color: 'white', display: 'block' }}>Collaborate</Button>
-              </Box>} 
-    <div className={classes.list}>
-    Activities
-    <Box p="5" className={classes.act}>
-      {/* <Pagination
+      <div>NgoPage</div>
+      <div>Basic Profile</div>
+
+      <div>
+        {(!login || (login && localStorage.getItem("role") === "user")) ?
+          <Box sx={{ flexGrow: 0 }}>
+            <Button sx={{ my: 2, backgroundColor: "#075456", color: 'white', display: 'block' }} onClick={DonateToNgo}>Donate</Button>
+          </Box> :
+          <Box sx={{ flexGrow: 0 }}>
+            <Button sx={{ my: 2, backgroundColor: "#075456", color: 'white', display: 'block' }}>Collaborate</Button>
+          </Box>}
+        <div className={classes.list}>
+          Activities
+          <Box p="5" className={classes.act}>
+            {/* <Pagination
         count={count}
         size="large"
         page={page}
@@ -136,14 +136,14 @@ const NgoPage = () => {
         shape="rounded"
         onChange={handleChange}
       /> */}
-      {activities.map((product) => (
-      <ActivityCard key={product.a_id} activity={product}/>
-      
-    ))}
-    
+            {activities.map((product) => (
+              <ActivityCard key={product.a_id} activity={product} />
 
-    </Box>
-    {/* {activities.map((product) => (
+            ))}
+
+
+          </Box>
+          {/* {activities.map((product) => (
       <ActivityCard key={product.a_id} activity={product}/>
       
     ))}
@@ -152,23 +152,17 @@ const NgoPage = () => {
       <Pagination count={10} shape="rounded" />
       </Stack> */}
 
-    </div>
-    </div>
-    <div>Fundraisers
-    <div className={classes.list}>
-    {fundraisers.map((product) => (
-      <FundraiserCard key={product.fun_id} fundraiser={product}/>
-      
-    ))}
-    </div> 
-    </div>
-   
+        </div>
+      </div>
+      <div>Fundraisers
+        <div className={classes.list}>
+          {fundraisers.map((product) => (
+            <FundraiserCard key={product.fun_id} fundraiser={product} />
 
-
+          ))}
+        </div>
+      </div>
     </>
-    
- 
-
   )
 }
 

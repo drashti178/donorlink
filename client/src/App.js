@@ -12,6 +12,7 @@ import UserLogin from "./Components/User/UserLogin";
 import { UserContext } from "./Context/UserContext";
 import UserIndex from "./Components/User/UserIndex";
 import NgoPage from "./Components/HomePage/NgoPage";
+import { Forgetpassword } from "./Components/Forgetpassword";
 
 
 const App = () => {
@@ -35,6 +36,7 @@ const App = () => {
             <Route exact path='/ngo/profile' element={<NgoProfile />} />
             <Route exact path='/ngopage' element={<NgoPage />} />
             <Route exact path='/' element={<Home />} />
+            <Route exact path='/forgetPassword' element={<Forgetpassword />} />
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>

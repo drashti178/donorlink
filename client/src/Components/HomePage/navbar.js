@@ -62,6 +62,10 @@ function HomeNavBar(props) {
       },
       (error) => {
         console.log(error);
+        localStorage.removeItem("AccessToken");
+        localStorage.removeItem("role");
+        window.location.reload(true);
+      
       }
     )
   }
@@ -81,8 +85,6 @@ function HomeNavBar(props) {
   const LoginPage = () => {
     navigate('/user/login');
   };
-
-  
 
   
   const handleCloseNavMenu = () => {
@@ -188,7 +190,7 @@ function HomeNavBar(props) {
               <Button
                 key={p.page}
                 onClick={p.event}
-                sx={{ my: 2, backgroundColor:"#075456", color: 'white', display: 'block' }}
+                sx={{ my: 2, backgroundColor: (localStorage.getItem("role") === 'ngo') ? "darkcyan": "#075456", color:'white'  }}
               >
                 {p.page}
               </Button>

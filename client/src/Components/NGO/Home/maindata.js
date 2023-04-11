@@ -1,5 +1,5 @@
 import React from 'react'
-import Colaborations from './colaborations';
+import Collaborations from './collaborations';
 import Ngos from '../../HomePage/ngos';
 import Fundraisers from '../../HomePage/fundraisers';
 
@@ -14,11 +14,11 @@ const Maindata = (props) => {
             
           )
     }
-    if(props.load==="Colaborations")
+    if(props.load==="Collaborations")
     {
         return (
             <>
-           <Colaborations />
+           <Collaborations />
             </>
             
           )

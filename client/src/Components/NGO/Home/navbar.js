@@ -59,7 +59,7 @@ const Navbar = (props) => {
   }, [context.user]);
 
   const NgoProfile = (event) => {
-    navigate('/ngo/profile', { replace: true });
+    navigate('/ngo/profile');
   };
 
   const LogoutNgo = (event) => {
@@ -80,8 +80,8 @@ const Navbar = (props) => {
     props.onDataReceived("Ngos");
 
   }
-  const clickColaborations = (event) => {
-    props.onDataReceived("Colaborations");
+  const clickCollaborations = (event) => {
+    props.onDataReceived("Collaborations");
 
   }
   const clickFundraisers = (event) => {
@@ -89,7 +89,7 @@ const Navbar = (props) => {
 
   }
 
-  const pages = [{ "page": "Ngos", "event": clickNgos }, { "page": "Colaborations", "event": clickColaborations }, { "page": "Fundraisers", "event": clickFundraisers }];
+  const pages = [{ "page": "Ngos", "event": clickNgos }, { "page": "Collaborations", "event": clickCollaborations }, { "page": "Fundraisers", "event": clickFundraisers }];
 
   return (
     <AppBar position="static" style={{ backgroundColor: "darkcyan" }}>
@@ -184,7 +184,7 @@ const Navbar = (props) => {
           <Box sx={{ flexGrow: 0 }}>
             <Button sx={{ color: "white" }} onClick={LogoutNgo}>Logout</Button>
             <IconButton onClick={NgoProfile} sx={{ p: 0 }}>
-              {/* <Avatar alt="Remy Sharp" src={(localStorage.getItem("role") === 'user') ? `/images/userprofileImgs/${context.user.profileImgName}` : `/images/ngoprofileImgs/${context.user.profileImgName}`} /> */}
+              <Avatar alt="Remy Sharp" src={(localStorage.getItem("role") === 'ngo' && context.user) &&  `/images/ngoprofileImgs/${context.user.profileImgName}`} />
             </IconButton>
           </Box>
         </Toolbar>

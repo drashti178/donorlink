@@ -178,7 +178,7 @@ const Navbar = (props) => {
           <Box sx={{ flexGrow: 0 }}>
             <Button sx={{ color: "white" }} onClick={LogoutNgo}>Logout</Button>
             <IconButton onClick={NgoProfile} sx={{ p: 0 }}>
-              {/* <Avatar alt="Remy Sharp" src={(localStorage.getItem("role") === 'user') ? `/images/userprofileImgs/${context.user.profileImgName}` : `/images/ngoprofileImgs/${context.user.profileImgName}`} /> */}
+              <Avatar alt="Remy Sharp" src={(localStorage.getItem("role") === 'ngo' && context.user) &&  `/images/ngoprofileImgs/${context.user.profileImgName}`} />
             </IconButton>
           </Box>
         </Toolbar>
