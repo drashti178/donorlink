@@ -39,23 +39,24 @@ const Donors = () => {
                 path={'left'}
                 offsetHeight={-400}
             > */}
-                <div className="row justify-content-center" style={{ marginTop: "3%", marginBottom: "3%" }}>
-                    <div className="col-md-7 text-center">
-                        <h1 className={sty.titleFont}>Our Top Donors</h1>
-                        <p>Below is our donors, which have donated at various NGO using our site. You can also showcase your donation by helping to NGOs.</p>
-                    </div>
+            <div className="row justify-content-center" style={{ marginTop: "8%", marginBottom: "3%" }}>
+                <div className="col-md-7 text-center">
+                    <h1 className={sty.titleFont}>Our Top Donors</h1>
+                    <p>Below is our donors, which have donated at various NGO using our site. You can also showcase your donation by helping to NGOs.</p>
                 </div>
-                <Grid
-                    display="flex"
-                    spacing={2}
-                    style={{ backgroundColor: "#efefef", marginBottom: "2%", padding: "1%" }}
-                    justifyContent="center"
-                    container
-                >
-                    {topdonors.map((donor, index) => (
-                        <>
+            </div>
+            <Grid
+                display="flex"
+                spacing={2}
+                style={{ backgroundColor: "#efefef", marginBottom: "2%", padding: "1%" }}
+                justifyContent="center"
+                container
+            >
+                {topdonors.map((donor, index) => (
+                    <>
+                        {(index <= 5 && donor.totaldonation > 0) &&
                             <Grid item>
-                                <Card sx={{ width: 345 }}>
+                                <Card sx={{ width: 300 }}>
                                     <CardActionArea>
                                         <CardMedia
                                             component="img"
@@ -73,11 +74,11 @@ const Donors = () => {
                                         </CardContent>
                                     </CardActionArea>
                                 </Card>
-                            </Grid>
-                        </>
-                    ))
-                    }
-                </Grid>
+                            </Grid>}
+                    </>
+                ))
+                }
+            </Grid>
             {/* </ScrollAnimate> */}
         </>
     )

@@ -57,10 +57,10 @@ public class AuthController {
     @Autowired
     private FundraiserService fundraiserService;
 
-    private String userprofilepath = "C:/Users/Drashti/Documents/GitHub/donorlink/client/public/images/userprofileImgs";
+    private String userprofilepath = "C:/Users/Tilak/Documents/GitHub/donorlink/client/public/images/userprofileImgs";
 
-    private String ngoprofilepath = "C:/Users/Drashti/Documents/GitHub/donorlink/client/public/images/ngoprofileImgs";
-    private String certipath = "C:/Users/Drashti/Documents/GitHub/donorlink/client/public/images/certiImgs";
+    private String ngoprofilepath = "C:/Users/Tilak/Documents/GitHub/donorlink/client/public/images/ngoprofileImgs";
+    private String certipath = "C:/Users/Tilak/Documents/GitHub/donorlink/client/public/images/certiImgs";
 
 
 

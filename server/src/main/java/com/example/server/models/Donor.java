@@ -1,5 +1,6 @@
 package com.example.server.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -160,4 +161,35 @@ public class Donor {
     public void setRole(String role) {
         this.role = role;
     }
+
+    @JsonIgnore
+    @ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="joinedEvents")
+    public List<Events> getJoinedEvents() {
+        return joinedEvents;
+    }
+
+
+    public void setJoinedEvents(List<Events> joinedEvents) {
+        this.joinedEvents = joinedEvents;
+    }
+
+//    @Override
+//    public String toString() {
+//        return "Donor{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", username='" + username + '\'' +
+//                ", password='" + password + '\'' +
+//                ", email='" + email + '\'' +
+//                ", country='" + country + '\'' +
+//                ", contactno=" + contactno +
+//                ", adharno=" + adharno +
+//                ", profession='" + profession + '\'' +
+//                ", type='" + type + '\'' +
+//                ", totaldonation=" + totaldonation +
+//                ", ProfileImgName='" + ProfileImgName + '\'' +
+//                ", role='" + role + '\'' +
+//                ", joinedEvents=" + joinedEvents +
+//                '}';
+//    }
 }

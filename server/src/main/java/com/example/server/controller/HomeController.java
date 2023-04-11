@@ -1,12 +1,6 @@
 package com.example.server.controller;
-import com.example.server.models.Activity;
-import com.example.server.models.Donor;
-import com.example.server.models.Fundraiser;
-import com.example.server.models.Ngo;
-import com.example.server.services.ActivityService;
-import com.example.server.services.DonorService;
-import com.example.server.services.FundraiserService;
-import com.example.server.services.NgoService;
+import com.example.server.models.*;
+import com.example.server.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +21,9 @@ public class HomeController {
 
     @Autowired
     private DonorService donorService;
+
+    @Autowired
+    private EventsService eventsService;
 
     @GetMapping("ngos")
     public List<Ngo> getNgos()
@@ -75,6 +72,13 @@ public class HomeController {
             return new ResponseEntity<>(null, HttpStatus.OK);
         }
         return new ResponseEntity<>(dlist,HttpStatus.OK);
+    }
+
+    @GetMapping("getAllEvents")
+    public ResponseEntity<List<Events>> getAllEvents(){
+
+        List<Events>eventsList = eventsService.findAll();
+        return new ResponseEntity<>(eventsList,HttpStatus.OK);
     }
 
 }

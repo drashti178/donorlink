@@ -1,7 +1,7 @@
 import React from 'react'
 import Activities from './Activity/activities'
 import Fundraisers from './Fundraiser/fundraisers'
-import Requests from './Request/requests'
+import Events from './Events/Events'
 
 
 const Data = (props) => {
@@ -24,11 +24,11 @@ const Data = (props) => {
             
           )
     }
-    if(props.load==="Request")
+    if(props.load==="Events")
     {
         return (
             <>
-            <Requests />
+            <Events />
             </>
             
           )
@@ -36,4 +36,4 @@ const Data = (props) => {
  
 }
 
-export default Data
+export default Data;

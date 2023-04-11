@@ -1,5 +1,6 @@
 package com.example.server.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -57,9 +58,11 @@ public class Events {
         this.ngo = ngo;
     }
 
+
     public List<Donor> getDonors() {
         return donors;
     }
+
 
     public void setDonors(List<Donor> donors) {
         this.donors = donors;
@@ -112,4 +115,19 @@ public class Events {
     public void setRequirement(String requirement) {
         this.requirement = requirement;
     }
+
+//    @Override
+//    public String toString() {
+//        return "Events{" +
+//                "event_id=" + event_id +
+//                ", ngo=" + ngo +
+//                ", donors=" + donors +
+//                ", eventname='" + eventname + '\'' +
+//                ", date=" + date +
+//                ", venue='" + venue + '\'' +
+//                ", cause='" + cause + '\'' +
+//                ", purpose='" + purpose + '\'' +
+//                ", requirement='" + requirement + '\'' +
+//                '}';
+//    }
 }

@@ -25,13 +25,27 @@ function HomeNavBar(props) {
   
   const [anchorElNav, setAnchorElNav] = useState(0);
   const navigate = useNavigate();
-  const UserProfile = (event) => {
-    navigate('/user');
+  const Profile = (event) => {
+    if(context.user.role === 'ngo'){
+      context.setUser(null);
+      navigate('/ngo/profile');
+    }
+    else{
+      navigate('/user');
+    }
   };
-  const LogoutUser = (event) => {
+  const Logout = (event) => {
     localStorage.removeItem("role");
     localStorage.removeItem("AccessToken");
-    navigate('/user/login');
+    if(context.user.role === 'user'){
+      context.setUser(null);
+      navigate('/user/login');
+    }
+    else{
+      context.setUser(null);
+      navigate('/ngo/login');
+    }
+   
   };  
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -90,11 +104,12 @@ function HomeNavBar(props) {
   
   }
 
-    const pages = [{"page":"Ngos","event":clickNgos}, {"page":"Fundraisers","event":clickFundraisers}];
-    console.log("home");
+
+  const pages = [{"page":"Ngos","event":clickNgos}, {"page":"Fundraisers","event":clickFundraisers}];
+  console.log("home");
 
   return (
-    <AppBar position="static" style={{backgroundColor:"#075456"}}>
+    <AppBar position="static" style={{backgroundColor: (localStorage.getItem("role") === 'ngo') ? "darkcyan": "#075456" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           

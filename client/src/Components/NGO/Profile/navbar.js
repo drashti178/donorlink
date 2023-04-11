@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useContext, useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,26 +11,66 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from "react-router-dom";
-
-
+import { UserContext } from '../../../Context/UserContext';
+import { Avatar } from '@mui/material';
+import axios from 'axios';
+import base_url from '../../../api/bootapi';
 
 
 const Navbar = (props) => {
   const [anchorElNav, setAnchorElNav] = useState(0);
   const navigate = useNavigate();
-
+  const [login, setLogin] = useState(false);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
 
+  const context = useContext(UserContext);
+
+
+  if (context.user == null && localStorage.getItem("AccessToken") != null) {
+    const token = "Bearer " + localStorage.getItem("AccessToken");
+    axios.get(`${base_url}/ngo/profile`, {
+      headers: {
+        'Authorization': token,
+      }
+    }).then(
+      (response) => {
+        console.log(response.data);
+        context.setUser(response.data);
+        console.log(context.user);
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (context.user) {
+        // console.log(context);
+        // role = context.user.role;
+        setLogin(true);
+        localStorage.setItem("role", context.user.role);
+      }
+    }, 100);
+  }, [context.user]);
+
   const LogoutNgo = (event) => {
     localStorage.removeItem("role");
     localStorage.removeItem("AccessToken");
-    navigate('/ngo/login', { replace: true });
+    context.setUser(null);
+    navigate('/ngo/login');
   };
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
+
+  const NgoProfile = () => {
+    navigate('/ngo/profile');
+  }
 
   const clickDonations = (event) => {
     props.onDataReceived("Donations");
@@ -60,7 +100,7 @@ const Navbar = (props) => {
               mr: 2,
               display: { xs: 'none', md: 'flex' },
               fontWeight: 700,
-              marginRight:"1%",
+              marginRight: "1%",
               color: 'white',
               textDecoration: 'none',
             }}
@@ -137,7 +177,9 @@ const Navbar = (props) => {
 
           <Box sx={{ flexGrow: 0 }}>
             <Button sx={{ color: "white" }} onClick={LogoutNgo}>Logout</Button>
-
+            <IconButton onClick={NgoProfile} sx={{ p: 0 }}>
+              {/* <Avatar alt="Remy Sharp" src={(localStorage.getItem("role") === 'user') ? `/images/userprofileImgs/${context.user.profileImgName}` : `/images/ngoprofileImgs/${context.user.profileImgName}`} /> */}
+            </IconButton>
           </Box>
         </Toolbar>
       </Container>
