@@ -31,7 +31,7 @@ const DonationTable = (props) => {
 
     const [res,setRes] = useState("");
 
-    const isApproved = (donationId, index) => {
+    const isApproved = (donationId) => {
         const token = "Bearer " + localStorage.getItem("AccessToken");
         axios.get(`${base_url}/claim/approvalStatus/${donationId}`, {
             headers: {
@@ -41,22 +41,42 @@ const DonationTable = (props) => {
             (response) => { 
                 // console.log(response);
                 // if(res == "")
-                    setRes(response.data);
+                setRes(response.data);
             },
             (error) => {
                 console.log(error);
             }
         );
     }
-    
+    useEffect(() => {   
+        isApproved(props.i.d_id);
+    },[]);
     const changeFormat = (date) => {
         const d = new Date(date);
         return (d.toUTCString()).split("GMT");
     }
+    const DownloadCerti = (donationId) => {
+        const token = "Bearer " + localStorage.getItem("AccessToken");
+        // console.log(token);
+        axios.get(`${base_url}/user/download/${donationId}`, {
+            headers: {
+                'Authorization': token,
+            }
+        }).then(
+            (response) => {
+                console.log(response.data);
+                
+            },
+            (error) => {
+                console.log(error);
+                
+            }
+        )
+    }
     // let res ="";
     return (
         <>
-            {isApproved(props.i.d_id,props.index)}
+            
             <tr>
                 <td>{props.i.d_id}</td>
                 <td>{props.i.amount}</td>
@@ -68,6 +88,8 @@ const DonationTable = (props) => {
                             <Button
                                 variant="contained"
                                 sx={{ "&:hover": { backgroundColor: '#075456', color: 'white', }, marginTop: 1, width: "50%", backgroundColor: '#075456' }}
+                               
+                                onClick={() => DownloadCerti(props.i.d_id)}
                             >
                                 Download Certificate
                             </Button> :
