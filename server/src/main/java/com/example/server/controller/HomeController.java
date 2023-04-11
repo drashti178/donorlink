@@ -57,6 +57,12 @@ public class HomeController {
         Ngo ngo = ngoService.getNgo(id);
         return this.fundraiserService.getFundraisers(ngo);
     }
+    @GetMapping("activefundraisers")
+    public List<Fundraiser> getActiveFundraisers()
+    {
+        return this.fundraiserService.getFundraisersByStatus("active");
+    }
+
 
     @GetMapping("getAllSortedByDonation")
     public ResponseEntity<List<Donor>> getDonationSorted() {

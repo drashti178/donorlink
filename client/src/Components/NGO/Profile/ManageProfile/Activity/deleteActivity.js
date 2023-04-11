@@ -30,7 +30,7 @@ const DeleteActivity = (props) => {
       setOpen(false);
     };
     const deleteActivity = (id) =>{
-        console.log("activity deleted");
+       
         const token = "Bearer " + localStorage.getItem("AccessToken");
          axios.delete(`${base_url}/ngo/deleteActivity/${id}`, {
           headers: {

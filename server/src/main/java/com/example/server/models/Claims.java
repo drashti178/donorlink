@@ -41,8 +41,8 @@ public class Claims {
         return isApproved;
     }
 
-    public void setApproved(boolean approved) {
-        isApproved = approved;
+    public void setApproved(boolean b) {
+        isApproved = b;
     }
 
     public String getTaxDedCertiName() {

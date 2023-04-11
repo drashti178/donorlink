@@ -37,7 +37,7 @@ const Fundraisers = () => {
   return (
     <>
       {(fundraisers.length===0)?<Typography variant="h6" gutterBottom style={{marginTop:"3%",marginLeft:"20%"}}>You haven't added any Fundraiser yet.</Typography> : <div> {fundraisers.map((product) => (
-      <Fundraiser key={product.a_id} product={product} />
+      <Fundraiser key={product.fun_id} product={product} />
     ))}</div>
     }
    

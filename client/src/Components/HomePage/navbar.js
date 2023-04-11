@@ -1,4 +1,4 @@
-import React ,{ useContext, useEffect, useState } from 'react';
+import { React, useContext, useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,8 +16,13 @@ import base_url from '../../api/bootapi';
 import axios from 'axios';
 import { Avatar } from '@mui/material';
 
-function HomeNavBar(props) {
 
+
+
+
+
+function HomeNavBar(props) {
+  
   const [anchorElNav, setAnchorElNav] = useState(0);
   const navigate = useNavigate();
   const Profile = (event) => {
@@ -109,26 +114,7 @@ function HomeNavBar(props) {
     <AppBar position="static" style={{backgroundColor: (localStorage.getItem("role") === 'ngo') ? "darkcyan": "#075456" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, color: 'white', }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a" 
-            href="/"
-            sx={{
-              fontFamily: "'Aboreto', cursive;",
-            }}
-            style={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontWeight: 700,
-              marginRight:"1%",
-              color: 'white',
-              textDecoration: 'none',
-            }}
-          >
-            Donor Link
-          </Typography>
+          
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -176,7 +162,7 @@ function HomeNavBar(props) {
               mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
-              fontFamily: 'monospace',
+              fontFamily: "'Aboreto', 'cursive'",
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'white',
@@ -186,6 +172,24 @@ function HomeNavBar(props) {
             Donor Link
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, color: 'white',mt:2.5 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/"
+            style={{
+              marginTop:'1.5%',
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: "'Aboreto', 'cursive'",
+              fontWeight: 700,
+              color: 'white',
+              textDecoration: 'none',
+              "&:hover": { color: 'white', }, 
+            }}
+          >
+            Donor Link
+          </Typography>
             {pages.map((p) => (
               <Button
                 key={p.page}
@@ -201,9 +205,9 @@ function HomeNavBar(props) {
                 <Button sx={{ color: "white" }} onClick={() => LoginPage()}>Login</Button>
               </Box> :
               <Box sx={{ flexGrow: 0 }}>
-                <Button sx={{ color: "white" }} onClick={() => Logout()}>Logout</Button>
-                <IconButton onClick={Profile} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src={(localStorage.getItem("role") === 'user') ? `/images/userprofileImgs/${context.user.profileImgName}` :  `/images/ngoprofileImgs/${context.user.profileImgName}`} />
+                <Button sx={{ color: "white" }} onClick={() => LogoutUser()}>Logout</Button>
+                <IconButton onClick={UserProfile} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                 </IconButton>
             </Box>}
          

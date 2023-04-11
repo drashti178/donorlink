@@ -105,5 +105,16 @@ public class DonationController {
         fundraiserService.addDonation(donation);
         return new ResponseEntity<>("Donation updated successfully", HttpStatus.OK);
     }
+    @GetMapping("fundraiser/getAll")
+    public ResponseEntity<List<FundraiserDonation>> getFDonation() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Donor donor = donorDao.findByusername(username);
+
+        List<FundraiserDonation> dlist = donationService.getFDonationByUser(donor);
+        if(dlist.isEmpty()){
+            return new ResponseEntity<>(null,HttpStatus.OK);
+        }
+        return new ResponseEntity<>(dlist,HttpStatus.OK);
+    }
 
 }

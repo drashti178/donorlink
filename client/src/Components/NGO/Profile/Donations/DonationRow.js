@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from '@mui/material/styles';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
@@ -33,7 +33,10 @@ const DonationRow = (props) => {
         const d = new Date(date);
         return (d.toUTCString()).split("GMT");
     }
-
+    
+    useEffect(() => {   
+        CheckForCerti(props.donation.d_id);
+    },[]);
     const CheckForCerti = (donationId) => {
         const token = "Bearer " + localStorage.getItem("AccessToken");
         // console.log(token);
@@ -43,40 +46,57 @@ const DonationRow = (props) => {
             }
         }).then(
             (response) => {
-                console.log(response);
-                if (response.data.approved)
+                console.log(response.data);
+                if(response.data==="not claimed")
+                    setRes("No Request");
+                else if (response.data.approved)
                     setRes("Approved");
                 else
                     setRes("Approve");
             },
             (error) => {
                 console.log(error);
-                if (error.response.status == 400)
-                    setRes("No Request");
+                
             }
         )
     }
-
+    const issueCerti = (donationId) => {
+        const token = "Bearer " + localStorage.getItem("AccessToken");
+        // console.log(token);
+        axios.get(`${base_url}/claim/issuecerti/${donationId}`, {
+            headers: {
+                'Authorization': token,
+            }
+        }).then(
+            (response) => {
+                console.log(response.data);
+                
+            },
+            (error) => {
+                console.log(error);
+                
+            }
+        )
+    }
     const onApproval = () => {
         // console.log("hello");
+        issueCerti(props.donation.d_id);
         setRes('Approved');
     }
 
     return (
         <>
-            {CheckForCerti(props.donation.d_id)}
-            <StyledTableRow key={props.donation.d_id}>
-                <StyledTableCell component="th" scope="row">
-                    {props.donation.d_id}
-                </StyledTableCell>
-                <StyledTableCell align="center">{(props.donation.donor) ? props.donation.donor.name : "Anonymous"}</StyledTableCell>
+            
+            <StyledTableRow key={props.donation.donor.name}>
+                <StyledTableCell component="th" scope="row">{props.donation.d_id}</StyledTableCell>
+                <StyledTableCell align="center">{props.donation.donor.name}</StyledTableCell>
                 <StyledTableCell align="center">{props.donation.amount}</StyledTableCell>
                 <StyledTableCell align="center">{changeFormat((props.donation.date).split('.')[0])}</StyledTableCell>
                 <StyledTableCell align="center">{(res === 'Approve') ? <Button
                     variant="contained"
                     onClick={onApproval}
                     sx={{ "&:hover": { backgroundColor: '#075456', color: 'white', }, width: "50%", backgroundColor: '#075456' }}
-                    disabled={(res === 'Approve' ? false : true)}
+                    
                 >
                     Approve
                 </Button> : ((res === 'No Request') ?

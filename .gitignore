@@ -5,6 +5,11 @@ server/src/main/resources/application.properties
 client/public/images/userprofileImgs/8e12fdcd-7f96-46cf-b729-d37e61cabe9c.jpg
 client/public/images/userprofileImgs/9e7fe245-a51f-43ed-b8e9-938be343eb82.jpg
 client/public/images/userprofileImgs/86c7ffb0-e75b-4db1-ae9d-1c0395dbc10a.jpg
-server/src/main/java/com/example/server/controller/AuthController.java
-client/public/images/ngoprofileImgs/2ec1cf1d-5695-4e27-9225-c17d0178e703.jpg
-client/public/images/certiImgs/2e0a958f-23cf-4bae-9c67-2849db662dbd.pdf
+client/public/images/certiImgs/c97cebc6-a4ca-45c3-8032-4632692a890d.pdf
+client/public/images/certiImgs/c97cebc6-a4ca-45c3-8032-4632692a890d.pdf
+client/public/images/certiImgs/c97cebc6-a4ca-45c3-8032-4632692a890d.pdf
+client/public/pdf/taxdedCertificates/b27253ec-c794-49b6-9192-efd5ea18b959.pdf
+client/public/pdf/taxdedCertificates/eedfdfe8-3cc3-47e3-ab30-049f0c72af22.pdf
+client/public/images/certiImgs/c97cebc6-a4ca-45c3-8032-4632692a890d.pdf
+client/public/images/certiImgs/c97cebc6-a4ca-45c3-8032-4632692a890d.pdf
+server/src/main/resources/application.properties

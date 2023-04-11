@@ -6,6 +6,7 @@ import base_url from '../../api/bootapi';
 import { UserContext } from '../../Context/UserContext';
 import { Backdrop, Button, CircularProgress, Typography } from '@mui/material';
 import DonationTable from './DonationTable';
+import FDonationTable from './FDonationTable';
 import React from 'react';
 
 const ViewDonation = () => {
@@ -58,6 +59,7 @@ const ViewDonation = () => {
             handleClose();
         },1000)
         fetchDonations();
+        fetchFDonations();
     }, []);
 
     const fetchDonations = () => {
@@ -77,6 +79,26 @@ const ViewDonation = () => {
             }
         )
     }
+    const fetchFDonations = () => {
+        const token = "Bearer " + localStorage.getItem("AccessToken");
+
+        axios.get(`${base_url}/donation/fundraiser/getAll`, {
+            headers: {
+                'Authorization': token,
+            }
+        }).then(
+            (response) => {
+                console.log(response.data);
+                setFDonations(response.data);
+               
+            },
+            (error) => {
+                console.log(error);
+            }
+        )
+    }
+
+    // const [res,setRes] = useState("");
 
     return (
         <>

@@ -22,6 +22,7 @@ public class Fundraiser {
     private long duration;
     private long amount;
     private long target;
+    private String status;
 
     public long getFun_id() {
         return fun_id;
@@ -101,5 +102,13 @@ public class Fundraiser {
 
     public void setTarget(long target) {
         this.target = target;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

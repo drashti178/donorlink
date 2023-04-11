@@ -42,26 +42,29 @@ export default function Ngocard({ product }) {
         height="140"
         image={profilePath + profileImgName}
       />
-      <CardContent>
+      <div style={{ display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+      <CardContent sx={{padding:"6px"}}>
         <Typography gutterBottom variant="h5" component="div">
         {ngoname}
         </Typography>
         <Typography variant="body2" color="text.secondary">
          {tagline}
         </Typography>
+        
       </CardContent>
-      <CardActions>
-        <Button size="small" onClick={() => {
+      <CardActions >
+        <Button sx={{backgroundColor:"#075456",color:"white","&:hover": { backgroundColor: "darkcyan", color: 'white', },flexGrow:1}} onClick={() => {
            localStorage.setItem("ngoId",ngoId);
            console.log("clicked");
                     setTimeout(() => {
                       navigate('/ngopage');
-                    }, 100);
-                
-                  }
-                  }>Visit</Button>
-        <Button size="small">Like</Button>
+                    }, 100);}}>
+        View</Button>
+       
       </CardActions>
+      </div>
+      
+      
     </Card>
   );
 }
