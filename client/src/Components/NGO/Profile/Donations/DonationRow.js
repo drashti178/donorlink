@@ -87,9 +87,9 @@ const DonationRow = (props) => {
     return (
         <>
             
-            <StyledTableRow key={props.donation.donor.name}>
+            <StyledTableRow key={props.donation.d_id}>
                 <StyledTableCell component="th" scope="row">{props.donation.d_id}</StyledTableCell>
-                <StyledTableCell align="center">{props.donation.donor.name}</StyledTableCell>
+                <StyledTableCell align="center">{(props.donation.donor)?props.donation.donor.name:"Anonymous"}</StyledTableCell>
                 <StyledTableCell align="center">{props.donation.amount}</StyledTableCell>
                 <StyledTableCell align="center">{changeFormat((props.donation.date).split('.')[0])}</StyledTableCell>
                 <StyledTableCell align="center">{(res === 'Approve') ? <Button
@@ -119,8 +119,10 @@ const DonationRow = (props) => {
 
                             Certificate Issued
 
-                        </Button>  </span>
-                    </Tooltip>)}</StyledTableCell>
+                        </Button>  
+                        </span>
+                    </Tooltip>)}
+                    </StyledTableCell>
             </StyledTableRow>
         </>
     )

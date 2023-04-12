@@ -54,10 +54,10 @@ export default function Ngocard({ product }) {
       </CardContent>
       <CardActions >
         <Button sx={{backgroundColor:"#075456",color:"white","&:hover": { backgroundColor: "darkcyan", color: 'white', },flexGrow:1}} onClick={() => {
-           localStorage.setItem("ngoId",ngoId);
+          //  localStorage.setItem("ngoId",ngoId);
            console.log("clicked");
                     setTimeout(() => {
-                      navigate('/ngopage');
+                      navigate('/ngopage',{state:ngoId});
                     }, 100);}}>
         View</Button>
        

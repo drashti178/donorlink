@@ -4,7 +4,7 @@ import base_url from '../../api/bootapi';
 import { makeStyles } from '@material-ui/core/styles';
 import { UserContext } from '../../Context/UserContext';
 import { Box, Button, Paper } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Grid, Tab, Typography } from '@material-ui/core';
 import List from './List';
 import ActivitiesList from './activitiesList';
@@ -72,7 +72,9 @@ details:{
 
 const NgoPage = () => {
   const classes = useStyles();
-    const id = localStorage.getItem("ngoId");
+  const location=useLocation();
+    const id = location.state;
+    // const id = localStorage.getItem("ngoId");
     console.log(id);
     const [ngo,setNgo] = useState([]);
     const [activities,setActivities] = useState([]);

@@ -161,10 +161,10 @@ const Events = () => {
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <Tooltip title={event.donors.filter(e => e.id === context.user.id).length > 0 ? "You have already applied for this event!!!" : "Click for Apply"}>
+                            <Tooltip title={(context.user && event.donors.filter(e => e.id === context.user.id).length > 0) ? "You have already applied for this event!!!" : "Click for Apply"}>
                                     <span style={{ width: "100%" }}>
                                         <Button variant="contained" sx={{ "&:hover": { backgroundColor: '#075456', color: 'white', }, width: "100%", backgroundColor: '#075456' }} onClick={() => onApply(event)}
-                                            disabled={(event.donors.length > 0 && event.donors.filter(e => e.id === context.user.id).length > 0)}
+                                            disabled={(context.user && event.donors.filter(e => e.id === context.user.id).length > 0)}
                                         >Apply for Volunteer</Button>
                                     </span>
                                 </Tooltip>
