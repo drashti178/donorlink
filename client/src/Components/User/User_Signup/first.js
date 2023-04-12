@@ -48,6 +48,7 @@ const First = (props) => {
                         value={props.inputs.name}
                         style={{ marginTop: "1%", width: "48%", marginRight: "2%" }}
                         onChange={props.changefun}
+                        disabled={props.fromEdit}
                         fullWidth
                         required
                     />

@@ -67,6 +67,10 @@ function HomeNavBar(props) {
       },
       (error) => {
         console.log(error);
+        localStorage.removeItem("AccessToken");
+        localStorage.removeItem("role");
+        window.location.reload(true);
+      
       }
     )
   }
@@ -86,8 +90,6 @@ function HomeNavBar(props) {
   const LoginPage = () => {
     navigate('/user/login');
   };
-
-  
 
   
   const handleCloseNavMenu = () => {
@@ -192,7 +194,7 @@ function HomeNavBar(props) {
               <Button
                 key={p.page}
                 onClick={p.event}
-                sx={{ my: 2,backgroundColor: (localStorage.getItem("role") === 'ngo') ? "darkcyan": "#075456", color: 'white',"&:hover": { backgroundColor: "#075456", color: 'white', },  display: 'block' }}
+                sx={{ my: 2, backgroundColor: (localStorage.getItem("role") === 'ngo') ? "darkcyan": "#075456", color:'white'  }}
               >
                 {p.page}
               </Button>
@@ -203,11 +205,12 @@ function HomeNavBar(props) {
                 <Button sx={{ color: "white" }} onClick={() => LoginPage()}>Login</Button>
               </Box> :
               <Box sx={{ flexGrow: 0 }}>
-                <Button sx={{ color: "white" }} onClick={() => Logout()}>Logout</Button>
-                <IconButton onClick={Profile} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src={(localStorage.getItem("role") === 'user') ? `/images/userprofileImgs/${context.user.profileImgName}` :  `/images/ngoprofileImgs/${context.user.profileImgName}`} />
+                <Button sx={{ color: "white" }} onClick={() => LogoutUser()}>Logout</Button>
+                <IconButton onClick={UserProfile} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                 </IconButton>
             </Box>}
+         
         </Toolbar>
       </Container>
     </AppBar>

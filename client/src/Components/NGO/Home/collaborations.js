@@ -130,7 +130,7 @@ const CollaborationCard = ({ product }) => {
   );
 }
 
-const Colaborations = () => {
+const Collaborations = () => {
     const classes = useStyles();
   return (
    <>
@@ -143,4 +143,4 @@ const Colaborations = () => {
   )
 }
 
-export default Colaborations;
+export default Collaborations;

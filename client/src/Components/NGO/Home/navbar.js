@@ -80,8 +80,8 @@ const Navbar = (props) => {
     props.onDataReceived("Ngos");
 
   }
-  const clickColaborations = (event) => {
-    props.onDataReceived("Colaborations");
+  const clickCollaborations = (event) => {
+    props.onDataReceived("Collaborations");
 
   }
   const clickFundraisers = (event) => {
@@ -89,7 +89,7 @@ const Navbar = (props) => {
 
   }
 
-  const pages = [{ "page": "Ngos", "event": clickNgos }, { "page": "Colaborations", "event": clickColaborations }, { "page": "Fundraisers", "event": clickFundraisers }];
+  const pages = [{ "page": "Ngos", "event": clickNgos }, { "page": "Collaborations", "event": clickCollaborations }, { "page": "Fundraisers", "event": clickFundraisers }];
 
   return (
     <AppBar position="static" style={{ backgroundColor: "darkcyan" }}>

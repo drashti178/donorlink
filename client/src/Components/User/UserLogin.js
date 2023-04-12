@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Typography,
   Avatar,
@@ -63,22 +63,10 @@ const UserLogin = () => {
     e.preventDefault();
     onLogin(inputs)
   };
-
-  // const setRole = () => {
-  //   // const token = localStorage.getItem("accessToken");
-
-  //   axios.get(`${base_url}/authUser/profile`, { headers: { "Authorization": `Bearer ${token}` } }).then(
-  //     (response) => {
-  //       console.log(response);
-  //       console.log("success");
-  //       setRole(response.role);
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //       console.log("Failure");
-  //     }
-  //   )
-  // }  
+  
+  useEffect(() => {
+    localStorage.setItem("role","user");
+  },[]);
 
   const [open, setOpen] = useState(false);
   const [severity,setSeverity] = useState("error");

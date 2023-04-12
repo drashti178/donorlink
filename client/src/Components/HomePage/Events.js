@@ -161,7 +161,7 @@ const Events = () => {
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                            <Tooltip title={(context.user && event.donors.filter(e => e.id === context.user.id).length > 0) ? "You have already applied for this event!!!" : "Click for Apply"}>
+                                <Tooltip title={(context.user && event.donors.filter(e => e.id === context.user.id).length > 0) ? "You have already applied for this event!!!" : "Click for Apply"}>
                                     <span style={{ width: "100%" }}>
                                         <Button variant="contained" sx={{ "&:hover": { backgroundColor: '#075456', color: 'white', }, width: "100%", backgroundColor: '#075456' }} onClick={() => onApply(event)}
                                             disabled={(context.user && event.donors.filter(e => e.id === context.user.id).length > 0)}
@@ -216,10 +216,10 @@ const Events = () => {
                 </div>
                 <Grid
                     spacing={2}
-                     style={{ backgroundColor: "#efefef", marginBottom: "10%", padding: "1%" }}
+                     style={{ backgroundColor: "#efefef", marginBottom: "10%", paddingTop:"2%", paddingBottom:"2%"}}
                 >
                     <Carousel
-                        sx={{ height:"500px", textAlign:"center" }}
+                        style={{ marginRight:"auto",marginLeft:"auto", width:"100%" }}
                         showDots={true}
                         responsive={responsive}
                         infinite={true}
@@ -228,11 +228,10 @@ const Events = () => {
                         keyBoardControl={true}
                         // customTransition="all .5"
                         // transitionDuration={500}
-                        containerClass="carousel-container"
-                        deviceType="windows"
-                        dotListClass="custom-dot-list-style"
-                        itemClass="carousel-item-padding-10-px" 
-                        draggable={true}
+                        // containerClass="carousel-container"
+                        // dotListClass="custom-dot-list-style"
+                        // itemClass="carousel-item-padding-10-px" 
+                        // draggable={true}
                         centerMode={true}
                         arrows={true}
                         >

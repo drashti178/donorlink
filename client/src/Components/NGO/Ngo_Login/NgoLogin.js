@@ -1,4 +1,4 @@
-import React, { useContext, useState, } from "react";
+import React, { useContext, useEffect, useState, } from "react";
 import {
   Typography,
   Avatar,
@@ -83,6 +83,10 @@ const NgoLogin = () => {
     onLogin(inputs);
 
   };
+  
+  useEffect(() => {
+    localStorage.setItem("role","ngo");
+  },[]);
 
 
   const { user, setUser } = useContext(UserContext);

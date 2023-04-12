@@ -2,6 +2,8 @@ package com.example.server.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Ngo {
 
@@ -27,6 +29,9 @@ public class Ngo {
     private String CertiImgName;
     private String role="ngo";
 
+    @OneToMany
+    @JoinColumn(name = "col_req")
+    private List<Ngo> requests;
 
     public Ngo( String ngoname, String password, String email, String tagline, String founder, String areaofwork, String address, String country, String pincode, String mobile, String weblink,Boolean has80G) {
 

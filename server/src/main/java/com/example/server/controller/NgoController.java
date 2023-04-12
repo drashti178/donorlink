@@ -81,8 +81,6 @@ public class NgoController {
         ObjectMapper objectMapper = new ObjectMapper();
         Activity activity = objectMapper.readValue(activityBody, Activity.class);
 
-
-
         activity.setNgo(ngo);
         if(file1.isEmpty())
         {
