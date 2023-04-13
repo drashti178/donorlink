@@ -88,7 +88,7 @@ const DonationRow = (props) => {
     return (
         <>
             
-            <StyledTableRow key={props.donation.d_id}>
+           
             <StyledTableRow key={props.donation.d_id}>
                 <StyledTableCell component="th" scope="row">{props.donation.d_id}</StyledTableCell>
                 <StyledTableCell align="center">{(props.donation.donor)?props.donation.donor.name:"Anonymous"}</StyledTableCell>

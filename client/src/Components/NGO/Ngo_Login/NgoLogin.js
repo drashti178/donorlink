@@ -12,8 +12,6 @@ import {
   Switch,
   FormControlLabel,
   Stack,
-  Box,
-  Container,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -107,7 +105,7 @@ const NgoLogin = () => {
             console.log(res.data)
             setUser(res.data);
             localStorage.setItem("role", res.data.role);
-            navigate('/ngo/home');
+            navigate('/');
           },
           (err) => {
             console.log(err);

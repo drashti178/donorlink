@@ -38,7 +38,6 @@ const ViewDonation = () => {
                     }
                 }).then(
                     (response) => {
-                        // console.log(response.data);
                         context.setUser(response.data);
                     },
                     (error) => {
@@ -89,7 +88,7 @@ const ViewDonation = () => {
         }).then(
             (response) => {
                 console.log(response.data);
-                // setFDonations(response.data);
+                setFDonations(response.data);
                
             },
             (error) => {
@@ -98,19 +97,18 @@ const ViewDonation = () => {
         )
     }
 
-    // const [res,setRes] = useState("");
 
     return (
         <>
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={loading}
-            // onClick={handleClose}
+          
             >
                 <CircularProgress color="inherit" />
             </Backdrop>
             {!loading && (
-                (inputs.length == 0) ? <Typography variant="h6" gutterBottom style={{ marginTop: "3%", marginLeft: "1%" }}>You haven't donated in any Ngo yet!! <Button onClick={() => { navigate('/') }}>click here</Button> to make donation.</Typography> :
+                (inputs.length === 0) ? <Typography variant="h6" gutterBottom style={{ marginTop: "3%", marginLeft: "1%" }}>You haven't donated in any Ngo yet!! <Button onClick={() => { navigate('/') }}>click here</Button> to make donation.</Typography> :
                     <Table bordered hover style={{ marginTop: "4%" }}>
                         <thead>
                             <tr>
@@ -129,7 +127,7 @@ const ViewDonation = () => {
                     </Table>
             )}
             {!loading && (
-                (fdonations.length == 0) ? <Typography variant="h6" gutterBottom style={{ marginTop: "3%", marginLeft: "1%" }}>You haven't donated in any Ngo yet!! <Button onClick={() => { navigate('/') }}>click here</Button> to make donation.</Typography> :
+                (fdonations.length === 0) ? <Typography variant="h6" gutterBottom style={{ marginTop: "3%", marginLeft: "1%" }}>You haven't donated in any Fundraiser yet!! <Button onClick={() => { navigate('/') }}>click here</Button> to make donation.</Typography> :
                     <Table bordered hover style={{ marginTop: "4%" }}>
                         <thead>
                             <tr>

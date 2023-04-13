@@ -1,9 +1,6 @@
-import React, {useContext, useEffect,useState} from 'react';
+import React, {useState} from 'react';
 import Categories from './categories';
 import NgoList from './ngolist';
-import Donors from './Donors';
-import Events from './Events';
-import { UserContext } from '../../Context/UserContext';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box } from '@mui/material';
 
@@ -21,7 +18,6 @@ const useStyles = makeStyles({
 
 const Ngos = () => {
   const [cat, setCat] = useState("All");
-  const context = useContext(UserContext);
   const handleDataReceived = (childData) => {
     setCat(childData);
   };
@@ -37,11 +33,8 @@ const Ngos = () => {
             </div>
     <Categories onDataReceived={handleDataReceived}></Categories>
       <NgoList category= {cat}/>
-      <Box sx={{backgroundColor:"darkcyan",height:"4px",width:"60%",marginInline:"20%",marginBlock:"5%"}}></Box>
-      <Donors />
-      <Box sx={{backgroundColor:"darkcyan",height:"4px",width:"60%",marginInline:"20%",marginBlock:"5%"}}></Box>
-      { ((context.user && context.user.role === 'user') || context.user === null) &&  
-    <Events />}
+      <Box style={{backgroundColor:"darkcyan",height:"4px",width:"60%",marginInline:"20%",marginBlock:"5%"}}></Box>
+      
       
     </>
   )

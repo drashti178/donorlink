@@ -53,25 +53,26 @@ function HomeNavBar(props) {
 
   const context = useContext(UserContext);
   
-  if (context.user == null && localStorage.getItem("AccessToken") != null) {
-    const token = "Bearer " + localStorage.getItem("AccessToken");
-    axios.get(`${base_url}/user/profile`, {
-      headers: {
-        'Authorization': token,
-      }
-    }).then(
-      (response) => {
-        console.log(response.data);
-        context.setUser(response.data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
-  }
+  
 
 
   useEffect(() => {
+    if (context.user == null && localStorage.getItem("AccessToken") != null) {
+      const token = "Bearer " + localStorage.getItem("AccessToken");
+      axios.get(`${base_url}/user/profile`, {
+        headers: {
+          'Authorization': token,
+        }
+      }).then(
+        (response) => {
+          console.log(response.data);
+          context.setUser(response.data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+    }
     setTimeout(() => {
       if (context.user) {
         setLogin(true);
@@ -89,39 +90,35 @@ function HomeNavBar(props) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [context.user]);
 
-  
-
   const LoginPage = () => {
-    navigate('/user/login');
+      navigate('/user/login');   
   };
-
   
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-    const clickNgos = (event) =>
+  const clickNgos = (event) =>
   {
-    props.onDataReceived("Ngos");
-   
+    props.onDataReceived("Ngos");   
   }
   const clickFundraisers = (event) =>{
-    props.onDataReceived("Fundraisers");
-  
+    props.onDataReceived("Fundraisers");  
+  }
+  const clickCollaborations = (event) => {
+    props.onDataReceived("Collaborations");
   }
   const [navBackground, setNavBackground] = useState("transparent");
 
  
 
-  const pages = [{"page":"Ngos","event":clickNgos}, {"page":"Fundraisers","event":clickFundraisers}];
+  const pages = [{"page":"Ngos","event":clickNgos}, {"page":"Fundraisers","event":clickFundraisers},{ "page": "Collaborations", "event": clickCollaborations },];
   console.log("home");
 
   return (
     <AppBar position="fixed"  style={{ backgroundColor: navBackground, boxShadow: "none" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          
-
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -131,7 +128,8 @@ function HomeNavBar(props) {
               onClick={handleOpenNavMenu}
               color="white"
             >
-              <MenuIcon />
+              <MenuIcon style={{color
+              :"white"}} />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -214,7 +212,7 @@ function HomeNavBar(props) {
               <Box sx={{ flexGrow: 0 }}>
                 <Button sx={{ color: "white" }} onClick={() => Logout()}>Logout</Button>
                 <IconButton onClick={Profile} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={`/images/userprofileImgs/${context.user.profileImgName}`} />
+                <Avatar alt="Remy Sharp"  src={(localStorage.getItem("role") === 'user') ? `/images/userprofileImgs/${context.user.profileImgName}` :  `/images/ngoprofileImgs/${context.user.profileImgName}`} />
                 </IconButton>
             </Box>}
          

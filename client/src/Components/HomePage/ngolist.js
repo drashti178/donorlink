@@ -160,7 +160,7 @@ const NgoList = (props) => {
             
           />
             <div style={{ display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
-          <CardContent sx={{padding:"6px"}}>
+          <CardContent style={{padding:"6px"}}>
        
                            
                                 <Typography gutterBottom variant="h5" component="div">
@@ -189,13 +189,7 @@ const NgoList = (props) => {
         </Card>
       ))}
     </MultiCarousel>
-    {/* <Carousel data={ngos}/> */}
-   {/* <div className={classes.list}>
-    {ngos.map((product) => (
-      <Ngocard key={product.ngoId} product={product}/>
-      
-    ))}
-    </div>  */}
+  
     
   
     
@@ -203,42 +197,5 @@ const NgoList = (props) => {
     
   )
 }
-const data = [
-  {
-    id: 1,
-    title: "Card 1",
-    description: "This is the first card",
-    image: "https://picsum.photos/300/140?random=1",
-  },
-  {
-    id: 2,
-    title: "Card 2",
-    description: "This is the second card",
-    image: "https://picsum.photos/300/140?random=2",
-  },
-  {
-    id: 3,
-    title: "Card 3",
-    description: "This is the third card",
-    image: "https://picsum.photos/300/140?random=3",
-  },
-  {
-    id: 4,
-    title: "Card 4",
-    description: "This is the fourth card",
-    image: "https://picsum.photos/300/140?random=4",
-  },
-  {
-    id: 5,
-    title: "Card 5",
-    description: "This is the fifth card",
-    image: "https://picsum.photos/300/140?random=5",
-  },
-  {
-    id: 6,
-    title: "Card 6",
-    description: "This is the fifth card",
-    image: "https://picsum.photos/300/140?random=5",
-  },
-];
+
 export default NgoList;

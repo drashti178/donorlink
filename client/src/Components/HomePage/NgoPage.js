@@ -183,7 +183,7 @@ const NgoPage = () => {
   }, [id]);
 
   useEffect(() => {
-    if (localStorage.getItem("role") == "ngo") {
+    if (localStorage.getItem("role") === "ngo") {
       const token = "Bearer " + localStorage.getItem("AccessToken");
       axios.get(`${base_url}/ngo/findAllCollab`, {
         headers: {
@@ -191,9 +191,9 @@ const NgoPage = () => {
         }
       }).then(
         (res) => {
-          // console.log(res);
+          
           setLoading(false);
-          // console.log(res.data.filter(e => ((e.ngo1.ngoId === ngo.ngoId) && (e.ngo2.ngoId === context.user.ngoId) && (!e.approved))).length > 0);
+         
           if (res.data.filter(e => (e.ngo1.ngoId === ngo.ngoId) && (e.ngo2.ngoId === context.user.ngoId) && (e.approved)).length > 0) {
             setRequested(true);
             setButtonMsg("Collaborated Ngo");
@@ -310,9 +310,10 @@ const NgoPage = () => {
             </Grid>
           </Grid>
         </div>
+        <Box style={{backgroundColor:"darkcyan",height:"4px",width:"60%",marginInline:"20%",marginBlock:"1%"}}></Box>
 
         {activities.length > 0 && <div className={classes.second}>
-          <div className="row justify-content-center" style={{ marginTop: "8%", marginBottom: "3%" }}>
+          <div className="row justify-content-center" style={{ marginTop: "5%" }}>
             <div className="col-md-7 text-center">
               <h1 className={sty.titleFont}>Activities</h1>
               <p>Below are activities running by this NGO. Have a look on these and understand the work done by this NGO.</p>
@@ -326,9 +327,10 @@ const NgoPage = () => {
             ))}
           </Box>
         </div>}
+        <Box style={{backgroundColor:"darkcyan",height:"4px",width:"60%",marginInline:"20%",marginBlock:"1%"}}></Box>
 
         {fundraisers.length > 0 && <div className={classes.fund}>
-          <div className="row justify-content-center" style={{ marginTop: "8%", marginBottom: "3%" }}>
+          <div className="row justify-content-center" style={{ marginTop: "5%" }}>
             <div className="col-md-7 text-center">
               <h1 className={sty.titleFont}>Fundraisers</h1>
               <p>Below are funraisers started by this NGOs.</p>

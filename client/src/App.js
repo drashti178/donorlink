@@ -14,9 +14,7 @@ import UserIndex from "./Components/User/UserIndex";
 import NgoPage from "./Components/HomePage/NgoPage";
 import { Forgetpassword } from "./Components/Forgetpassword";
 import Fundraiserdonation from "./Components/HomePage/Fundraiserdonation";
-import Test from "./test";
-import Carousel from "./test";
-// import ProductCard from "./test";
+
 
 
 const App = () => {

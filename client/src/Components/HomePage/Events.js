@@ -143,9 +143,7 @@ const Events = () => {
                         component="img"
                         height="300"
                         sx={{ backgroundImage: `url(/images/ngoprofileImgs/${event.ngo.profileImgName})`, borderBottom: 0 }}
-                    // image={imgPath + event.ngo.profileImgName}
-                    // style={{display:"block" }}
-                    // alt="green iguana"
+                  
                     />
                     <CardContent>
                         <Card sx={{ minWidth: 289, marginTop: "-22%", boxShadow: "0", border: "none", position: "relative", marginRight: "3%", borderRadius: "0" }}>
@@ -215,14 +213,15 @@ const Events = () => {
                         </BootButton>
                     </Modal.Footer>
                 </Modal>
-
-            {events.length > -1 && <>
                 <div className="row justify-content-center" style={{ marginTop: "5%", marginBottom: "3%" }}>
                     <div className="col-md-7 text-center">
                         <h1 className={sty.titleFont}>Be a Volunteer</h1>
                         <p>Be a part of our family by volunteering in any event organized by our NGOs and take a pride of being servent.</p>
                     </div>
                 </div>
+                {(events.length === 0) && <Typography variant="h6" gutterBottom style={{ marginTop: "3%", marginLeft: "1%",textAlign:"center" }}>No Events found!! </Typography> }
+            {events.length > -1 && <>
+                
                 <Grid
                     spacing={2}
                      style={{ backgroundColor: "#efefef", marginBottom: "10%", paddingTop:"2%", paddingBottom:"2%"}}
@@ -235,12 +234,6 @@ const Events = () => {
                         autoPlay={true}
                         autoPlaySpeed={5000}
                         keyBoardControl={true}
-                        // customTransition="all .5"
-                        // transitionDuration={500}
-                        // containerClass="carousel-container"
-                        // dotListClass="custom-dot-list-style"
-                        // itemClass="carousel-item-padding-10-px" 
-                        // draggable={true}
                         centerMode={true}
                         arrows={true}
                         >

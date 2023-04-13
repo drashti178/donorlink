@@ -21,7 +21,7 @@ import { UserContext } from "../../Context/UserContext";
 import Modal from 'react-bootstrap/Modal';
 import BootButton from 'react-bootstrap/Button';
 import MuiAlert from '@mui/material/Alert';
-// import pics from "../../../../server/static/images/userprofileImgs";
+
 
 const steps = ['Account Information', 'Review Information'];
 
@@ -66,7 +66,7 @@ const EditUser = () => {
     const [msg, setMsg] = useState("");
 
     const [open, setOpen] = useState(false);
-    // const [severity,setSeverity] = useState("error");
+  
 
     const handleClick = () => {
         setOpen(true);
@@ -92,15 +92,7 @@ const EditUser = () => {
         profileImgName: "",
     });
 
-    // useEffect (() => {
-    //     if(context.user){
-    //         context.user.password = "";
-    //         setImageUrl(imgPath + context.user.profileImgName);
-    //         console.log(context.user);
-    //         setInputs(context.user);
-    //     }
-    // });
-    // console.log(context.user);
+ 
 
     useEffect(() => {
         if (localStorage.getItem("AccessToken") == null) {
@@ -135,33 +127,7 @@ const EditUser = () => {
         }
     }, [context.user]);
 
-    // useEffect(() => {
-    //     console.log(context);
-    //     if (context == null) {
-    //         setTimeout(() => {
-    //             alert('Log in First');
-    //         }, 100);
-    //         navigate('/user/login');
-    //     }
-    //     else {
-    //         context.password = "";
-    //         setInputs(context);
-    //     }
-
-    // }, []);
-    // console.log(context);
-    // if (context == null) {
-    //     setTimeout(() => {
-    //         alert('Log in First');
-    //     }, 100);
-    //     navigate('/user/login');
-    // }
-    // else{
-    //     context.user.password = "";
-    //     setInputs(context.user);
-    // }
-
-    const id = 5;
+    
     useEffect(() => {
         if (profile) {
             console.log(profile);
@@ -179,7 +145,7 @@ const EditUser = () => {
     let onChangeData = (event) => {
         let name = event.target.name;
         let value = event.target.value;
-        // console.log(name,value);
+       
         setInputs((values) => ({ ...values, [name]: value }));
     }
 
@@ -200,8 +166,7 @@ const EditUser = () => {
 
     let submit = (e) => {
         e.preventDefault();
-        // console.log(inputs);
-        // console.log(profile);
+       
         if (!profile) {
 
             const token = "Bearer " + localStorage.getItem("AccessToken");
@@ -233,7 +198,7 @@ const EditUser = () => {
     }
 
     const postData = (data) => {
-        // delete data.profileImgName;
+       
         console.log(data);
         const token = "Bearer " + localStorage.getItem("AccessToken");
         axios.put(`${base_url}/user/edit`, data, {

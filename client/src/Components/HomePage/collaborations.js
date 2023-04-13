@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { Backdrop, Button, CircularProgress, Grid } from '@mui/material';
+import { Backdrop, CircularProgress, Grid } from '@mui/material';
 import axios from 'axios';
 import base_url from '../../api/bootapi';
 
@@ -103,14 +102,15 @@ const Collaborations = () => {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      {loading === false && (
-        collabs.length === 0 ? <Typography variant="h6" gutterBottom style={{ marginTop: "3%", marginLeft: "1%" }}>No Collaboration found!! </Typography> : <>
-          <div className="row justify-content-center" style={{ marginTop: "4%", marginBottom: "3%" }}>
+      <div className="row justify-content-center" style={{ marginTop: "4%", marginBottom: "3%" }}>
             <div className="col-md-7 text-center">
               <h1 className={classes.titleFont}>Collaboration List</h1>
               <p>Below are that ngos' who has collaborated using our platform for various purposes.</p>
             </div>
           </div>
+      {loading === false && (
+        collabs.length === 0 ? <Typography variant="h6" gutterBottom style={{ marginTop: "3%", marginLeft: "1%" ,textAlign:"center"}}>No Collaboration found!! </Typography> : <>
+          
           <Grid
             display="flex"
             spacing={10}
