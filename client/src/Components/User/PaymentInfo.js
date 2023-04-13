@@ -44,6 +44,12 @@ const PaymentInfo = () => {
         type: "",
     })
 
+    useEffect(() => {
+        if(!location.state){
+            navigate('/');
+        }
+    },[]);
+
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -249,7 +255,7 @@ const PaymentInfo = () => {
 
                 </Modal.Footer>
             </Modal>
-            <Grid align="center" className="gridStyle"  >
+            <Grid align="center" className="gridUserStyle"  >
                 <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
                     <Grid align="center">
                         <Avatar sx={{ width: 80, height: 80, backgroundColor: "#94726c" }}>

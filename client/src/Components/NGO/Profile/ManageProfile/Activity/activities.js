@@ -1,4 +1,4 @@
-import React, { useState,useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from "axios";
 import base_url from '../../../../../api/bootapi';
 import Activity from './activity';
@@ -11,43 +11,45 @@ import { ActivityContext } from '../../../../../Context/UserContext';
 
 
 const Activities = () => {
-  const [activities,setActivities] = useState([]);
-  const { isAdded,setIsAdded } = useContext(ActivityContext);
-
-  useEffect(() => {   
+  const [activities, setActivities] = useState([]);
+  const { isAdded, setIsAdded } = useContext(ActivityContext);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
     getAllActivities();
-  },[isAdded]);
+  }, [isAdded]);
   const navigate = useNavigate();
-  const getAllActivities= ()=>
-  {
+  const getAllActivities = () => {
+    setLoading(true);
     console.log("getactivities");
     const token = "Bearer " + localStorage.getItem("AccessToken");
-     axios.get(`${base_url}/ngo/activities`,{
-            headers: {
-              'Authorization': token,
-            }
-          }).then(
-      (response)=>{
+    axios.get(`${base_url}/ngo/activities`, {
+      headers: {
+        'Authorization': token,
+      }
+    }).then(
+      (response) => {
         setActivities(response.data);
-       console.log(response.data);
-        
+        setLoading(false);
+        console.log(response.data);
+
       },
-      (error)=>{
+      (error) => {
         console.log(error);
         console.log("Error");
       }
     )
-    
+
   }
   return (
     <div>
-      {(activities.length===0)?<Typography variant="h6" gutterBottom style={{marginTop:"3%",marginLeft:"20%"}}>You haven't added any Activity yet.</Typography> : <div> {activities.map((product) => (
-      <Activity key={product.a_id} product={product} />
-    ))}</div>
-    }
-   
+      {!loading &&
+        (activities.length === 0) ? <Typography variant="h6" gutterBottom style={{ marginTop: "3%", marginLeft: "20%" }}>You haven't added any Activity yet.</Typography> : <div> {activities.map((product) => (
+          <Activity key={product.a_id} product={product} />
+        ))}</div>
+      }
+
     </div>
-    
+
   )
 }
 export default Activities;

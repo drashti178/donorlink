@@ -185,7 +185,7 @@ const UserSignup = () => {
                     </Alert>
                 </Snackbar>
             </Stack>
-            <Grid align="center" className="gridStyle" >
+            <Grid align="center" className="gridSignupStyle" >
                 <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
                     <Box>
                         <Stepper activeStep={activestep} style={{

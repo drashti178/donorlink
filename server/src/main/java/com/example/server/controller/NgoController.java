@@ -2,6 +2,7 @@ package com.example.server.controller;
 
 import com.example.server.dao.ActivityDao;
 import com.example.server.dao.FundraiserDao;
+import com.example.server.dao.CollaborationDao;
 import com.example.server.dao.NgoDao;
 import com.example.server.models.*;
 import com.example.server.services.ActivityService;
@@ -49,13 +50,16 @@ public class NgoController {
     private ActivityDao activityDao;
 
     @Autowired
+    private CollaborationDao collaborationDao;
+
+    @Autowired
     private ActivityService activityService;
 
 
 
-    private String activitypath = "C:/Users/Drashti Patel/Documents/GitHub/donorlink/client/public/images/activity";
+    private String activitypath = "C:/Users/Tilak/Documents/GitHub/donorlink/client/public/images/activity";
 
-    private String fundraiserpath = "C:/Users/Drashti Patel/Documents/GitHub/donorlink/client/public/images/fundraiser";
+    private String fundraiserpath = "C:/Users/Tilak/Documents/GitHub/donorlink/client/public/images/fundraiser";
 
     @GetMapping("/")
     public String home()
@@ -222,5 +226,44 @@ public class NgoController {
         return new ResponseEntity<>(dlist,HttpStatus.OK);
     }
 
+    @PutMapping("addRequest/{ngo_id}")
+    public ResponseEntity<String> addRequest(@PathVariable Long ngo_id){
+        String ngoname = SecurityContextHolder.getContext().getAuthentication().getName();
+        Ngo requestedNgo = ngoDao.findByNgoname(ngoname);
 
+        Ngo hostNgo = ngoDao.findById(ngo_id).get();
+
+        if(hostNgo == null)
+            return new ResponseEntity<>("Ngo not found!!",HttpStatus.BAD_REQUEST);
+
+        Collaborations collaborations = new Collaborations(hostNgo,requestedNgo,false);
+        collaborationDao.save(collaborations);
+
+        return new ResponseEntity<>("Collaboration request added successfully",HttpStatus.OK);
+
+    }
+
+    @PutMapping("approveRequest/{req_id}")
+    public ResponseEntity<String> approveRequest(@PathVariable Long req_id){
+        Collaborations collaborations = collaborationDao.findById(req_id).get();
+        collaborations.setApproved(true);
+        collaborationDao.save(collaborations);
+        return new ResponseEntity<>("Collaboration added successfully",HttpStatus.OK);
+    }
+
+    @PutMapping("declineRequest/{req_id}")
+    public ResponseEntity<String> declineRequest(@PathVariable Long req_id){
+        Collaborations collaborations = collaborationDao.findById(req_id).get();
+        collaborationDao.delete(collaborations);
+        return new ResponseEntity<>("Collaboration request denied successfully!!",HttpStatus.OK);
+    }
+
+    @GetMapping("/findAllCollab")
+    public ResponseEntity<List<Collaborations>> getCollabs(){
+
+        List<Collaborations> c = collaborationDao.findAll();
+//        System.out.print(c.size());
+        return new ResponseEntity<>(c,HttpStatus.OK);
+    }
+    
 }

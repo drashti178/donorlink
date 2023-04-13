@@ -35,8 +35,7 @@ function HomeNavBar(props) {
     }
   };
   const Logout = (event) => {
-    localStorage.removeItem("role");
-    localStorage.removeItem("AccessToken");
+    localStorage.clear();
     if(context.user.role === 'user'){
       context.setUser(null);
       navigate('/user/login');
@@ -67,10 +66,6 @@ function HomeNavBar(props) {
       },
       (error) => {
         console.log(error);
-        localStorage.removeItem("AccessToken");
-        localStorage.removeItem("role");
-        window.location.reload(true);
-      
       }
     )
   }
@@ -194,6 +189,7 @@ function HomeNavBar(props) {
               display: { xs: 'none', md: 'flex' },
               fontFamily: "'Aboreto', 'cursive'",
               fontWeight: 700,
+              marginRight:"1%",
               color: 'white',
               textDecoration: 'none',
               "&:hover": { color: 'white', }, 

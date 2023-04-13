@@ -1,4 +1,5 @@
 package com.example.server.controller;
+import com.example.server.dao.CollaborationDao;
 import com.example.server.models.*;
 import com.example.server.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class HomeController {
 
     @Autowired
     private EventsService eventsService;
+
+    @Autowired
+    private CollaborationDao collaborationDao;
 
     @GetMapping("ngos")
     public List<Ngo> getNgos()
@@ -79,6 +83,13 @@ public class HomeController {
 
         List<Events>eventsList = eventsService.findAll();
         return new ResponseEntity<>(eventsList,HttpStatus.OK);
+    }
+
+    @GetMapping("/findApprovedCollab")
+    public ResponseEntity<List<Collaborations>> getCollabs(){
+
+        List<Collaborations> c = collaborationDao.findAllByisApprovedTrue();
+        return new ResponseEntity<>(c,HttpStatus.OK);
     }
 
 }

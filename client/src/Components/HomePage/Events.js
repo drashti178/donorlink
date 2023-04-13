@@ -4,7 +4,7 @@ import axios from "axios";
 import { makeStyles } from '@material-ui/core/styles';
 import Carousel from "react-multi-carousel";
 import { Paper } from "@material-ui/core";
-import { Box, Button, CardActions, Checkbox, Grid, Snackbar, Stack, Tooltip, Typography } from "@mui/material";
+import { Backdrop, Box, Button, CardActions, Checkbox, CircularProgress, Grid, Snackbar, Stack, Tooltip, Typography } from "@mui/material";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -26,7 +26,7 @@ const Events = () => {
 
     const [topen, setTOpen] = useState(false);
     const [severity, setSeverity] = useState("error");
-
+    const [loading, setLoading] = useState(true);
     const handleToastClick = () => {
         setTOpen(true);
     };
@@ -59,6 +59,9 @@ const Events = () => {
             (response) => {
                 console.log(response);
                 setEvents(response.data);
+                setTimeout(() => {
+                    setLoading(false);
+                }, 1000);
             },
             (error) => {
                 console.log(error);
@@ -181,30 +184,37 @@ const Events = () => {
 
     return (
         <>
-            <Stack spacing={2} sx={{ width: '100%' }}>
-                <Snackbar open={topen} autoHideDuration={4000} onClose={handleToastClose}>
-                    <Alert onClose={handleToastClose} severity={severity} sx={{ width: '100%' }}>
-                        {msg}
-                    </Alert>
-                </Snackbar>
-            </Stack>
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Applying for volunteer</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Checkbox name="check" defaultChecked={false} onChange={() => setAccept(!accept)} />
-                    By Checking this  box you make sure that you will follow our ngo's rules and regulation during volunteering this event.
-                </Modal.Body>
-                <Modal.Footer>
-                    <BootButton variant="secondary" onClick={handleClose}>
-                        Close
-                    </BootButton>
-                    <BootButton variant="primary" onClick={() => onApply(evnt)} disabled={!accept}>
-                        Accept
-                    </BootButton>
-                </Modal.Footer>
-            </Modal>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={loading}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+            {!loading && <>
+                <Stack spacing={2} sx={{ width: '100%' }}>
+                    <Snackbar open={topen} autoHideDuration={4000} onClose={handleToastClose}>
+                        <Alert onClose={handleToastClose} severity={severity} sx={{ width: '100%' }}>
+                            {msg}
+                        </Alert>
+                    </Snackbar>
+                </Stack>
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Applying for volunteer</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Checkbox name="check" defaultChecked={false} onChange={() => setAccept(!accept)} />
+                        By Checking this  box you make sure that you will follow our ngo's rules and regulation during volunteering this event.
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <BootButton variant="secondary" onClick={handleClose}>
+                            Close
+                        </BootButton>
+                        <BootButton variant="primary" onClick={() => onApply(evnt)} disabled={!accept}>
+                            Accept
+                        </BootButton>
+                    </Modal.Footer>
+                </Modal>
 
             {events.length > -1 && <>
                 <div className="row justify-content-center" style={{ marginTop: "5%", marginBottom: "3%" }}>
@@ -236,17 +246,17 @@ const Events = () => {
                         >
 
 
-                        {events.map((event, index) => (
-                            <Grid item>
-                                <EventCard event={event} />
-                            </Grid>
-                        ))}
+                            {events.map((event, index) => (
+                                <Grid item>
+                                    <EventCard event={event} />
+                                </Grid>
+                            ))}
 
 
-                    </Carousel>
-                </Grid>
-            </>
-            }
+                        </Carousel>
+                    </Grid>
+                </>
+                }</>}
         </>
     )
 }

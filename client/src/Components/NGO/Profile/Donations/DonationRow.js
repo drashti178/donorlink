@@ -37,6 +37,7 @@ const DonationRow = (props) => {
     useEffect(() => {   
         CheckForCerti(props.donation.d_id);
     },[]);
+    
     const CheckForCerti = (donationId) => {
         const token = "Bearer " + localStorage.getItem("AccessToken");
         // console.log(token);
@@ -87,6 +88,7 @@ const DonationRow = (props) => {
     return (
         <>
             
+            <StyledTableRow key={props.donation.d_id}>
             <StyledTableRow key={props.donation.d_id}>
                 <StyledTableCell component="th" scope="row">{props.donation.d_id}</StyledTableCell>
                 <StyledTableCell align="center">{(props.donation.donor)?props.donation.donor.name:"Anonymous"}</StyledTableCell>

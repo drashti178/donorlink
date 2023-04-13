@@ -1,6 +1,9 @@
 package com.example.server.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import org.springframework.data.util.Pair;
 
 import java.util.List;
 
@@ -28,10 +31,6 @@ public class Ngo {
     private String ProfileImgName;
     private String CertiImgName;
     private String role="ngo";
-
-    @OneToMany
-    @JoinColumn(name = "col_req")
-    private List<Ngo> requests;
 
     public Ngo( String ngoname, String password, String email, String tagline, String founder, String areaofwork, String address, String country, String pincode, String mobile, String weblink,Boolean has80G) {
 
@@ -186,4 +185,5 @@ public class Ngo {
     public void setRole(String role) {
         this.role = role;
     }
+
 }

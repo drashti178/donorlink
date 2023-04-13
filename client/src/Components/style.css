@@ -12,6 +12,45 @@
     overflow-y: auto;
 }
 
+.gridSignupStyle::before{
+    background: url('/public/images/signupBack.jpg') repeat center center/cover;
+    /* background-color: darkcyan; */
+    content: "";
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 150%;
+    z-index: -1;
+    /* overflow-y: auto; */
+}
+
+.gridNgoSignupStyle::before{
+    background: url('/public/images/signupBack.jpg') repeat center center/cover;
+    /* background-color: darkcyan; */
+    content: "";
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 180%;
+    z-index: -1;
+    /* overflow-y: auto; */
+}
+
+.gridLoginNgoStyle::before{
+    background: url('/public/images/loginNgoBack.jpg') repeat center center/cover;
+    /* background-color: darkcyan; */
+    content: "";
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    /* overflow-y: auto; */
+}
+
 .ProfileStyle::before {
     background: url('/public/images/bgLogin.jpg') repeat-y center center/cover;
     /* background-color: darkcyan; */

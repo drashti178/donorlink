@@ -89,7 +89,7 @@ const ViewDonation = () => {
         }).then(
             (response) => {
                 console.log(response.data);
-                setFDonations(response.data);
+                // setFDonations(response.data);
                
             },
             (error) => {

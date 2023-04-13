@@ -16,14 +16,14 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import axios from 'axios';
 import { ActivityContext, EventContext, UserContext } from '../../../../../Context/UserContext';
-import { Grid } from '@mui/material';
+import { Backdrop, CircularProgress, Grid } from '@mui/material';
 import base_url from '../../../../../api/bootapi';
 
 const Events = () => {
 
   const [events, setEvents] = useState([]);
-  
-  const { isAdded,setIsAdded } = useContext(ActivityContext);
+  const [loading, setLoading] = useState(true);
+  const { isAdded, setIsAdded } = useContext(ActivityContext);
   const useStyles = makeStyles({
     titleFont: {
       fontFamily: 'Dosis, sans-serif;',
@@ -31,6 +31,7 @@ const Events = () => {
   });
   const context = useContext(UserContext);
   useEffect(() => {
+    setLoading(true);
     const token = "Bearer " + localStorage.getItem("AccessToken");
     console.log(context.user);
     axios.get(`${base_url}/event/getAllByNgo`, {
@@ -41,6 +42,7 @@ const Events = () => {
       (response) => {
         console.log(response);
         setEvents(response.data);
+        setLoading(false);
       },
       (error) => {
         console.log(error);
@@ -114,43 +116,50 @@ const Events = () => {
       </>
     );
   }
-
+  
 
   return (
-    <>{
-      (events.length == 0) ? <Typography variant="h6" gutterBottom style={{ marginTop: "3%", marginLeft: "19%" }}>Events not found!! </Typography> : <>
+    <>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      {!loading && 
 
-        <div className="row justify-content-center" style={{  marginTop: "3%", marginBottom: "3%" }}>
-          <div className="col-md-7 text-center">
-            <h1 className={sty.titleFont}>Your Events list</h1>
-            <p>Have a look on your events and list of volunteers.</p>
+        (events.length == 0) ? <Typography variant="h6" gutterBottom style={{ marginTop: "3%", marginLeft: "19%" }}>Events not found!! </Typography> : <>
+          <div className="row justify-content-center" style={{ marginTop: "3%", marginBottom: "3%" }}>
+            <div className="col-md-7 text-center">
+              <h1 className={sty.titleFont}>Your Events list</h1>
+              <p>Have a look on your events and list of volunteers.</p>
+            </div>
           </div>
-        </div>
-        <Grid display="flex"
-          spacing={2}
-          style={{ backgroundColor: "#efefef", marginBottom: "2%", padding: "3%" }}
-          justifyContent="center"
-          container>
-          <TableContainer component={Paper}>
-            <Table aria-label="collapsible table">
-              <TableHead>
-                <TableRow>
-                  <TableCell />
-                  <TableCell align="center" sx={{ fontFamily: 'Inter, sans-serif;' }}>Event ID</TableCell>
-                  <TableCell align="center" sx={{ fontFamily: 'Inter, sans-serif;' }}>Name</TableCell>
-                  <TableCell align="center" sx={{ fontFamily: 'Inter, sans-serif;' }}>Date of event</TableCell>
-                  <TableCell align="center" sx={{ fontFamily: 'Inter, sans-serif;' }}>Venue</TableCell>
-                  <TableCell align="center" sx={{ fontFamily: 'Inter, sans-serif;' }}>Volunteers Strength</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {events.map((event, index) => (
-                  <Row key={event.id} row={event} />
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Grid></>}
+          <Grid display="flex"
+            spacing={2}
+            style={{ backgroundColor: "#efefef", marginBottom: "2%", padding: "3%" }}
+            justifyContent="center"
+            container>
+            <TableContainer component={Paper}>
+              <Table aria-label="collapsible table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell />
+                    <TableCell align="center" sx={{ fontFamily: 'Inter, sans-serif;' }}>Event ID</TableCell>
+                    <TableCell align="center" sx={{ fontFamily: 'Inter, sans-serif;' }}>Name</TableCell>
+                    <TableCell align="center" sx={{ fontFamily: 'Inter, sans-serif;' }}>Date of event</TableCell>
+                    <TableCell align="center" sx={{ fontFamily: 'Inter, sans-serif;' }}>Venue</TableCell>
+                    <TableCell align="center" sx={{ fontFamily: 'Inter, sans-serif;' }}>Volunteers Strength</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {events.map((event, index) => (
+                    <Row key={event.id} row={event} />
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid></>}
     </>
   )
 }

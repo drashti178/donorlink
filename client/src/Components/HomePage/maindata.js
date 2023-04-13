@@ -4,6 +4,7 @@ import Ngos from './ngos'
 import ViewProfile from '../User/ViewProfile';
 import ViewDonations from '../User/ViewDonations';
 import Events from './Events';
+import Collaborations from './collaborations';
 
 const Maindata = (props) => {
     if(props.load==="Ngos")
@@ -25,11 +26,12 @@ const Maindata = (props) => {
             
           )
     }
-    if(props.load==="Events")
+
+    if(props.load==="Collaborations")
     {
         return (
             <>
-            <Events></Events>
+              <Collaborations></Collaborations>
             </>
             
           )

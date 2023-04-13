@@ -53,9 +53,9 @@ public class DonorController {
     @Autowired
     public Environment env;
 
-    private String taxdedcertipath = "C:/Users/Drashti Patel/Documents/GitHub/donorlink/client/public/pdf/taxdedCertificates";
+    private String taxdedcertipath = "C:/Users/Tilak/Documents/GitHub/donorlink/client/public/pdf/taxdedCertificates";
 
-    private String userprofilepath = "C:/Users/Drashti/Documents/GitHub/donorlink/client/public/images/userprofileImgs";
+    private String userprofilepath = "C:/Users/Tilak/Documents/GitHub/donorlink/client/public/images/userprofileImgs";
     private PasswordEncoder passwordEncoder;
 
 //    private DonorService donorService;

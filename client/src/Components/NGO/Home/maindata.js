@@ -1,11 +1,11 @@
 import React from 'react'
-import Collaborations from './collaborations';
+import Collaboration from './collaborations';
 import Ngos from '../../HomePage/ngos';
 import Fundraisers from '../../HomePage/fundraisers';
 
 
 const Maindata = (props) => {
-    if(props.load==="Ngos")
+    if(props.load === "Ngos")
     {
         return (
             <>
@@ -18,7 +18,7 @@ const Maindata = (props) => {
     {
         return (
             <>
-           <Collaborations />
+           <Collaboration />
             </>
             
           )
