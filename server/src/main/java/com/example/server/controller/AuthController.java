@@ -27,7 +27,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 
@@ -231,6 +233,21 @@ public class AuthController {
         emailService.sendMail(email,"\tHello, " + ngo.getNgoname() + "\nWe have provided security Key to you for password resetting. You can use this key only one time.\nSecurity Key:- " + securityKey + "\nRegards, donorlinker.");
         return new ResponseEntity<>(securityKey,HttpStatus.OK);
     }
+    @GetMapping("getCategories")
+    public ResponseEntity getAllCategories()
+    {
+        List<String> Categories= new ArrayList<String>();
+        Categories.add("Study");
+        Categories.add("Enviroment");
+        Categories.add("Women Empowerment");
+        Categories.add("Orphan&Widows");
+        Categories.add("Food");
+        Categories.add("Health");
+        Categories.add("Others");
+        return  new ResponseEntity<>(Categories,HttpStatus.OK);
+
+    }
+
 
     @PutMapping("/user/passwordChange")
     public ResponseEntity<String> changeUserPassword(@RequestBody DonorLoginDto logindto){

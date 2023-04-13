@@ -12,6 +12,8 @@ import {
   Switch,
   FormControlLabel,
   Stack,
+  Box,
+  Container,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -95,7 +97,7 @@ const NgoLogin = () => {
       (response) => {
         localStorage.setItem("AccessToken", response.data.accessToken);
         const token = "Bearer " + localStorage.getItem("AccessToken");
-        // console.log(token);
+        
         axios.get(`${base_url}/ngo/profile`, {
           headers: {
             'Authorization': token,
@@ -148,6 +150,14 @@ const NgoLogin = () => {
 
   return (
     <>
+    <div
+        style={{
+          backgroundImage: "url('/images/lbg.jpg')",
+          backgroundSize: "cover",
+          height: "100vh",
+          
+        }}
+      >
       <Stack spacing={2} sx={{ width: '100%' }}>
         <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
           <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
@@ -155,6 +165,7 @@ const NgoLogin = () => {
           </Alert>
         </Snackbar>
       </Stack>
+      
       <Grid align="center" className="gridUserStyle">
         <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
           <Grid align="center">
@@ -263,6 +274,7 @@ const NgoLogin = () => {
           </form>
         </Paper>
       </Grid>
+      </div>
     </>
 
   );

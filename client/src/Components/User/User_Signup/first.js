@@ -38,6 +38,7 @@ const First = (props) => {
 
     return (
         <>
+       
             <Grid >
                 <form>
                     <FileInput nextfun={props.nextFun} changefun={props.changefun} inputs={props.inputs} onFileUpload={props.onFileUpload} profile={props.profile} imageUrl={props.imageUrl} />
@@ -180,6 +181,7 @@ const First = (props) => {
                     </Grid>
                 </form>
             </Grid>
+          
         </>
     );
 };

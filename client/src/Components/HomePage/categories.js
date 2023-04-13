@@ -30,7 +30,7 @@ const Categories = (props) => {
   return (
     <>
 
-    <Box sx={{ flexGrow: 1,alignItems:"center" ,display: { xs: 'none', md: 'flex' } }}>
+    <Box sx={{ flexGrow: 1,alignItems:"center" ,display: { xs: 'none', md: 'flex' } ,ml:"30%"}}>
             {categories.map((c) => (
               <Button
                 key={c.cr}

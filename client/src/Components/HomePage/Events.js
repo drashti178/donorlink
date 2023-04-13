@@ -43,7 +43,6 @@ const Events = () => {
     const context = useContext(UserContext);
     const sty = useStyles();
     const [events, setEvents] = useState([]);
-    // const imgPath = '/images/ngoprofileImgs/';
     const navigate = useNavigate();
     const [updated, setUpdated] = useState(false);
 
@@ -208,7 +207,7 @@ const Events = () => {
             </Modal>
 
             {events.length > -1 && <>
-                <div className="row justify-content-center" style={{ marginTop: "8%", marginBottom: "3%" }}>
+                <div className="row justify-content-center" style={{ marginTop: "5%", marginBottom: "3%" }}>
                     <div className="col-md-7 text-center">
                         <h1 className={sty.titleFont}>Be a Volunteer</h1>
                         <p>Be a part of our family by volunteering in any event organized by our NGOs and take a pride of being servent.</p>

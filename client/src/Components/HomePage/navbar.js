@@ -83,6 +83,15 @@ function HomeNavBar(props) {
         localStorage.setItem("role", context.user.role);
       }
     }, 100);
+    const handleScroll = () => {
+      if (window.pageYOffset > 0) {
+        setNavBackground("#129398");
+      } else {
+        setNavBackground("transparent");
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [context.user]);
 
   
@@ -105,13 +114,15 @@ function HomeNavBar(props) {
     props.onDataReceived("Fundraisers");
   
   }
+  const [navBackground, setNavBackground] = useState("transparent");
 
+ 
 
   const pages = [{"page":"Ngos","event":clickNgos}, {"page":"Fundraisers","event":clickFundraisers}];
   console.log("home");
 
   return (
-    <AppBar position="static" style={{backgroundColor: (localStorage.getItem("role") === 'ngo') ? "darkcyan": "#075456" }}>
+    <AppBar position="fixed"  style={{ backgroundColor: navBackground, boxShadow: "none" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           
@@ -194,7 +205,7 @@ function HomeNavBar(props) {
               <Button
                 key={p.page}
                 onClick={p.event}
-                sx={{ my: 2, backgroundColor: (localStorage.getItem("role") === 'ngo') ? "darkcyan": "#075456", color:'white'  }}
+                sx={{ my: 2,borderRadius:0, backgroundColor: "transperent", color:'white'  }}
               >
                 {p.page}
               </Button>
@@ -205,9 +216,9 @@ function HomeNavBar(props) {
                 <Button sx={{ color: "white" }} onClick={() => LoginPage()}>Login</Button>
               </Box> :
               <Box sx={{ flexGrow: 0 }}>
-                <Button sx={{ color: "white" }} onClick={() => LogoutUser()}>Logout</Button>
-                <IconButton onClick={UserProfile} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Button sx={{ color: "white" }} onClick={() => Logout()}>Logout</Button>
+                <IconButton onClick={Profile} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src={`/images/userprofileImgs/${context.user.profileImgName}`} />
                 </IconButton>
             </Box>}
          

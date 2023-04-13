@@ -13,6 +13,7 @@ const Logout = () => {
     useEffect(() => {
         Logout();
     },[])
+    
 }
 
 export default Logout;
