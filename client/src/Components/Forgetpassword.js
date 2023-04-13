@@ -12,6 +12,8 @@ import {
     Switch,
     FormControlLabel,
     Stack,
+    Backdrop,
+    CircularProgress,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -36,13 +38,14 @@ export function Forgetpassword() {
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const [severity, setSeverity] = useState("error");
-    const [resseckey,setResSecKey] = useState("");
+    const [resseckey, setResSecKey] = useState("");
+    const [loading, setLoading] = useState(false);
     const [inputs, setInputs] = useState({
         email: '',
         username: '',
         showPassword: false,
         password: '',
-        securitykey:0
+        securitykey: 0
     });
 
     var schema = new passwordValidator();
@@ -70,10 +73,12 @@ export function Forgetpassword() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setLoading(true);
         if (!verified && localStorage.getItem("role") === 'user') {
             axios.get(`${base_url}/auth/user/ifExists/${inputs.email}/${inputs.username}`).then(
                 (response) => {
                     console.log(response);
+                    setLoading(false);
                     setSeverity("success");
                     setMsg("Email Verification Succeded, now check your email for password reset.");
                     handleClick();
@@ -82,8 +87,16 @@ export function Forgetpassword() {
                 },
                 (error) => {
                     console.log(error);
-                    setSeverity("error");
+                    setTimeout(() => {
+                        setLoading(false);
+                    },1000)
+                    if(error.response.status === 401){
+                        setMsg("Invalid Email and Username !!");
+                        setSeverity("error");
+                        handleClick();
+                    }
                     setMsg(error.response.data);
+                    setSeverity("error");
                     handleClick();
                 }
             )
@@ -92,6 +105,7 @@ export function Forgetpassword() {
             axios.get(`${base_url}/auth/user/ifExists/${inputs.email}/${inputs.username}`).then(
                 (response) => {
                     console.log(response);
+                    setLoading(false);
                     setSeverity("success");
                     setMsg("Email Verification Succeded, now check your email for password reset.");
                     handleClick();
@@ -100,80 +114,95 @@ export function Forgetpassword() {
                 },
                 (error) => {
                     console.log(error);
+                    setTimeout(() => {
+                        setLoading(false);
+                    },1000)
+                    if(error.response.status === 401){
+                        setMsg("Invalid Email and Username !!");
+                        setSeverity("error");
+                        handleClick();
+                    }
+                    setMsg(error.response.data);
+                    setSeverity("error");
+                    handleClick();
                 }
             )
         }
-        else if(verified && localStorage.getItem("role") === 'user'){
-            if(!(schema.validate(inputs.password))){
+        else if (verified && localStorage.getItem("role") === 'user') {
+            if (!(schema.validate(inputs.password))) {
                 setSeverity("error");
                 setMsg("Password must contain atleast one uppercase character,one lowercase character, two digits and one special character, and minimum length of 8 (without containing space).");
                 handleClick();
             }
-            else if(resseckey.toString() != inputs.securitykey.toString()){
+            else if (resseckey.toString() != inputs.securitykey.toString()) {
                 console.log(resseckey.toString());
                 console.log(inputs.securitykey.toString());
                 setSeverity("error");
                 setMsg("Security Key doesn't matched!!");
                 handleClick();
             }
-            else{
-                axios.put(`${base_url}/auth/user/passwordChange`,{
-                    username:inputs.username,
-                    email:inputs.email,
-                    password:inputs.password
+            else {
+                axios.put(`${base_url}/auth/user/passwordChange`, {
+                    username: inputs.username,
+                    email: inputs.email,
+                    password: inputs.password
                 }).then(
                     (response) => {
                         console.log(response);
                         console.log(response);
+                        setLoading(false);
                         setSeverity("success");
                         setMsg(response.data);
                         setTimeout(() => {
                             navigate('/user/login');
-                        },2000)
+                        }, 2000)
                         setVerified(false);
                         handleClick();
                     },
                     (error) => {
                         console.log(error);
+                        setLoading(false);
                     }
                 )
             }
-            
+
         }
-        else if(verified && localStorage.getItem("role") === 'ngo'){
-            if(!(schema.validate(inputs.password))){
+        else if (verified && localStorage.getItem("role") === 'ngo') {
+            if (!(schema.validate(inputs.password))) {
                 setSeverity("error");
                 setMsg("Password must contain atleast one uppercase character,one lowercase character, two digits and one special character, and minimum length of 8 (without containing space).");
                 handleClick();
             }
-            else if(resseckey.toString() != inputs.securitykey.toString()){
+            else if (resseckey.toString() != inputs.securitykey.toString()) {
                 setSeverity("error");
                 setMsg("Security Key doesn't matched!!");
                 handleClick();
             }
-            else{
-                axios.put(`${base_url}/auth/ngo/passwordChange`,{
-                    username:inputs.username,
-                    email:inputs.email,
-                    password:inputs.password
+            else {
+                axios.put(`${base_url}/auth/ngo/passwordChange`, {
+                    username: inputs.username,
+                    email: inputs.email,
+                    password: inputs.password
                 }).then(
                     (response) => {
                         console.log(response);
+                        setLoading(false);
                         setSeverity("success");
                         setMsg(response.data);
                         setTimeout(() => {
                             navigate('/ngo/login');
-                        },2000)
+                        }, 2000)
                         setVerified(false);
                         handleClick();
 
                     },
                     (error) => {
                         console.log(error);
+                        setLoading(false);
                     }
                 )
             }
-          
+
         }
     }
 
@@ -214,125 +243,134 @@ export function Forgetpassword() {
 
     const theme = useTheme();
     const isMatch = useMediaQuery(theme.breakpoints.down("md"));
-
+   
     return (
         <>
-            <Stack spacing={2} sx={{ width: '100%' }}>
-                <Snackbar open={open} autoHideDuration={8000} onClose={handleClose}>
-                    <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
-                        {msg}
-                    </Alert>
-                </Snackbar>
-            </Stack>
-            <Grid align="center" className="gridUserStyle"  >
-                <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
-                    <Grid align="center">
-                        <Avatar sx={{ width: 60, height: 60 }}>
-                            <AccountCircleRoundedIcon
-                                sx={{ fontSize: 60, backgroundColor: "#9C7875" }}
-                            />
-                        </Avatar>
-                        <Typography sx={{ mt: 1.5 }} variant="h6">
-                            Log In
-                        </Typography>
-                    </Grid>
-                    <form onSubmit={handleSubmit}>
-                        <TextField
-                            name="username"
-                            varient="outlined"
-                            label="Username"
-                            value={inputs.username}
-                            style={{ marginTop: "25px" }}
-                            onChange={handleChange}
-                            fullWidth
-                            disabled={verified}
-                            required
-                        />
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={loading}
+            // onClick={handleClose}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+            {!loading && <>
+                <Stack spacing={2} sx={{ width: '100%' }}>
+                    <Snackbar open={open} autoHideDuration={8000} onClose={handleClose}>
+                        <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+                            {msg}
+                        </Alert>
+                    </Snackbar>
+                </Stack>
 
-                        <TextField
-                            name="email"
-                            varient="outlined"
-                            label="Email"
-                            value={inputs.email}
-                            style={{ marginTop: "10px" }}
-                            onChange={handleChange}
-                            disabled={verified}
-                            fullWidth
-                            required
-                        />
-
-                        {verified && <TextField
-                            name="securitykey"
-                            varient="outlined"
-                            label="Security Key"
-                            value={inputs.securitykey}
-                            style={{ marginTop: "10px" }}
-                            onChange={handleChange}
-                            fullWidth
-                            required
-                        />}
-
-                        {verified && <FormControl sx={{ width: "100%", marginTop: 2 }} variant="outlined">
-                            <InputLabel htmlFor="outlined-adornment-password">
-                                Password
-                            </InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-password"
-                                name="password"
-                                type={inputs.showPassword ? "text" : "password"}
-                                value={inputs.password}
+                <Grid align="center" className="gridUserStyle"  >
+                    <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
+                        <Grid align="center">
+                            <Avatar sx={{ width: 60, height: 60 }}>
+                                <AccountCircleRoundedIcon
+                                    sx={{ fontSize: 60, backgroundColor: "#9C7875" }}
+                                />
+                            </Avatar>
+                            <Typography sx={{ mt: 1.5 }} variant="h6">
+                                Password Reset
+                            </Typography>
+                        </Grid>
+                        <form onSubmit={handleSubmit}>
+                            <TextField
+                                name="username"
+                                varient="outlined"
+                                label="Username"
+                                value={inputs.username}
+                                style={{ marginTop: "25px" }}
                                 onChange={handleChange}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                            edge="end"
-                                        >
-                                            {inputs.showPassword ? <Visibility /> : <VisibilityOff />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                                label="Password"
+                                fullWidth
+                                disabled={verified}
+                                required
+                            />
+
+                            <TextField
+                                name="email"
+                                varient="outlined"
+                                label="Email"
+                                value={inputs.email}
+                                style={{ marginTop: "10px" }}
+                                onChange={handleChange}
+                                disabled={verified}
                                 fullWidth
                                 required
                             />
-                        </FormControl>}
-                        <Grid
-                            container
-                            spacing={2}
-                            style={{ marginTop: "20px" }}
-                            direction="row"
-                            justifyContent="space-around"
-                            alignItems="center"
-                        >
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                sx={{ "&:hover": { backgroundColor: '#9C7875', color: 'white', }, marginTop: 1, width: "50%", backgroundColor: '#9C7875' }}
-                            >
-                                Submit
-                            </Button>
-                            {!verified &&
-                                <FormControlLabel
-                                    control={
-                                        <Switch
-                                            checked={!inputs.isUser}
-                                            onClick={() => {
-                                                setInputs({ ...inputs, isUser: !inputs.isUser });
-                                                localStorage.setItem("role", !inputs.isUser ? "user" : "ngo");
-                                            }}
-                                            name="isUser"
-                                            value={inputs.isUser}
-                                        />
+
+                            {verified && <TextField
+                                name="securitykey"
+                                varient="outlined"
+                                label="Security Key"
+                                value={inputs.securitykey}
+                                style={{ marginTop: "10px" }}
+                                onChange={handleChange}
+                                fullWidth
+                                required
+                            />}
+
+                            {verified && <FormControl sx={{ width: "100%", marginTop: 2 }} variant="outlined">
+                                <InputLabel htmlFor="outlined-adornment-password">
+                                    Password
+                                </InputLabel>
+                                <OutlinedInput
+                                    id="outlined-adornment-password"
+                                    name="password"
+                                    type={inputs.showPassword ? "text" : "password"}
+                                    value={inputs.password}
+                                    onChange={handleChange}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                                edge="end"
+                                            >
+                                                {inputs.showPassword ? <Visibility /> : <VisibilityOff />}
+                                            </IconButton>
+                                        </InputAdornment>
                                     }
-                                    label="NGO"
-                                />}
-                        </Grid>
-                    </form>
-                </Paper>
-            </Grid>
+                                    label="Password"
+                                    fullWidth
+                                    required
+                                />
+                            </FormControl>}
+                            <Grid
+                                container
+                                spacing={2}
+                                style={{ marginTop: "20px" }}
+                                direction="row"
+                                justifyContent="space-around"
+                                alignItems="center"
+                            >
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    sx={{ "&:hover": { backgroundColor: '#9C7875', color: 'white', }, marginTop: 1, width: "50%", backgroundColor: '#9C7875' }}
+                                >
+                                    Submit
+                                </Button>
+                                {!verified &&
+                                    <FormControlLabel
+                                        control={
+                                            <Switch
+                                                checked={!inputs.isUser}
+                                                onClick={() => {
+                                                    setInputs({ ...inputs, isUser: !inputs.isUser });
+                                                    localStorage.setItem("role", !inputs.isUser ? "user" : "ngo");
+                                                }}
+                                                name="isUser"
+                                                value={inputs.isUser}
+                                            />
+                                        }
+                                        label="NGO"
+                                    />}
+                            </Grid>
+                        </form>
+                    </Paper>
+                </Grid></>}
         </>
     )
 } 

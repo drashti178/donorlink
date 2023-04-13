@@ -1,8 +1,9 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from "axios";
 import base_url from '../../api/bootapi';
 import Ngocard from './NgoCard';
+import { UserContext } from '../../Context/UserContext';
 
 
 
@@ -39,6 +40,8 @@ const useStyles = makeStyles({
 
 const NgoList = (props) => {
   const [ngos,setNgos] = useState([]);
+
+  const context = useContext(UserContext);
   useEffect(() => {   
     if(props.category==="All")
     {
@@ -86,6 +89,7 @@ const NgoList = (props) => {
     <>
    <div className={classes.list}>
     {ngos.map((product) => (
+      (product.ngoId !== (context.user && context.user.ngoId)) &&
       <Ngocard key={product.ngoId} product={product}/>
       
     ))}

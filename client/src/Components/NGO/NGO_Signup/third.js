@@ -108,13 +108,13 @@ const Third = (props) => {
             justifyContent="space-around"
             alignItems="center"
           >
-            <Button onClick={props.prevfun} variant="contained" sx={{ "&:hover" :{backgroundColor: "#14ae72"}, width: "20%",
-            marginRight:"28%",marginLeft:"2%", marginTop: 1, align: "center", color: 'white', backgroundColor: '#1bbd7e' }} >
+            <Button onClick={props.prevfun} variant="contained" sx={{ "&:hover" :{backgroundColor: "darkcyan"}, width: "20%",
+            marginRight:"28%",marginLeft:"2%", marginTop: 1, align: "center", color: 'white', backgroundColor: 'darkcyan' }} >
               Prev
             </Button>
             
-            <Button type="submit" onClick={props.submitfun} variant="contained" sx={{ "&:hover" :{backgroundColor: "#14ae72"}, width: "20%",
-            marginLeft:"30%", marginTop: 1, align: "center", color: 'white', backgroundColor: '#1bbd7e' }} >
+            <Button type="submit" onClick={props.submitfun} variant="contained" sx={{ "&:hover" :{backgroundColor: "darkcyan"}, width: "20%",
+            marginLeft:"30%", marginTop: 1, align: "center", color: 'white', backgroundColor: 'darkcyan' }} >
               Submit
             </Button>
             

@@ -35,8 +35,7 @@ function HomeNavBar(props) {
     }
   };
   const Logout = (event) => {
-    localStorage.removeItem("role");
-    localStorage.removeItem("AccessToken");
+    localStorage.clear();
     if(context.user.role === 'user'){
       context.setUser(null);
       navigate('/user/login');
@@ -67,10 +66,6 @@ function HomeNavBar(props) {
       },
       (error) => {
         console.log(error);
-        localStorage.removeItem("AccessToken");
-        localStorage.removeItem("role");
-        window.location.reload(true);
-      
       }
     )
   }
@@ -106,8 +101,13 @@ function HomeNavBar(props) {
   
   }
 
+  const clickCollaborations = (event) =>{
+    props.onDataReceived("Collaborations");
+  
+  }
 
-  const pages = [{"page":"Ngos","event":clickNgos}, {"page":"Fundraisers","event":clickFundraisers}];
+
+  const pages = [{"page":"Ngos","event":clickNgos}, {"page":"Fundraisers","event":clickFundraisers},{"page":"Collaborations","event":clickCollaborations}];
   console.log("home");
 
   return (
@@ -183,6 +183,7 @@ function HomeNavBar(props) {
               display: { xs: 'none', md: 'flex' },
               fontFamily: "'Aboreto', 'cursive'",
               fontWeight: 700,
+              marginRight:"1%",
               color: 'white',
               textDecoration: 'none',
               "&:hover": { color: 'white', }, 
@@ -205,9 +206,9 @@ function HomeNavBar(props) {
                 <Button sx={{ color: "white" }} onClick={() => LoginPage()}>Login</Button>
               </Box> :
               <Box sx={{ flexGrow: 0 }}>
-                <Button sx={{ color: "white" }} onClick={() => LogoutUser()}>Logout</Button>
-                <IconButton onClick={UserProfile} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Button sx={{ color: "white" }} onClick={() => Logout()}>Logout</Button>
+                <IconButton onClick={Profile} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src={(localStorage.getItem("role") === 'user') ? `/images/userprofileImgs/${context.user.profileImgName}` :  `/images/ngoprofileImgs/${context.user.profileImgName}`} />
                 </IconButton>
             </Box>}
          

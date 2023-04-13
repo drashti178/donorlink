@@ -68,9 +68,8 @@ function NavBar(props) {
   };
 
   const LogoutUser = (event) => {
+    localStorage.clear();
     context.setUser(null);
-    localStorage.removeItem("role");
-    localStorage.removeItem("AccessToken");
     navigate('/user/login');
   };
 
@@ -140,6 +139,7 @@ function NavBar(props) {
               flexGrow: 1,
               fontFamily: "'Aboreto', 'cursive'",
               fontWeight: 700,
+              marginRight:"1%",
               letterSpacing: '.3rem',
               color: 'white',
               textDecoration: 'none',
@@ -159,6 +159,7 @@ function NavBar(props) {
               display: { xs: 'none', md: 'flex' },
               fontFamily: "'Aboreto', 'cursive'",
               fontWeight: 700,
+              marginRight:"1%",
               color: 'white',
               textDecoration: 'none',
               "&:hover": { color: 'white', }, 

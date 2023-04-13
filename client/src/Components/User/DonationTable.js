@@ -1,4 +1,4 @@
-import { Button, Tooltip } from "@mui/material";
+import { Backdrop, Button, CircularProgress, Tooltip } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import base_url from "../../api/bootapi";
@@ -7,12 +7,10 @@ import React from 'react';
 
 const DonationTable = (props) => {
 
-    useEffect(() => {
-
-    })
     const [claim,setClaim] = useState("");
+    const [loading,setLoading] = useState(false);
     const addClaim = (donationId, index) => {
-
+        setLoading(true);
         const token = "Bearer " + localStorage.getItem("AccessToken");
         axios.post(`${base_url}/claim/add/${donationId}`, {}, {
             headers: {
@@ -22,6 +20,7 @@ const DonationTable = (props) => {
             (response) => {
                 console.log(index, response);
                 setClaim("hello");
+                setLoading(false);
             },
             (error) => {
                 console.log(error);
@@ -39,8 +38,6 @@ const DonationTable = (props) => {
             }
         }).then(
             (response) => { 
-                // console.log(response);
-                // if(res == "")
                 setRes(response.data);
             },
             (error) => {
@@ -50,7 +47,7 @@ const DonationTable = (props) => {
     }
     useEffect(() => {   
         isApproved(props.i.d_id);
-    },[]);
+    },[loading]);
     const changeFormat = (date) => {
         const d = new Date(date);
         return (d.toUTCString()).split("GMT");
@@ -73,10 +70,15 @@ const DonationTable = (props) => {
             }
         )
     }
-    // let res ="";
+    
     return (
         <>
-            
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={loading}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop> 
             <tr>
                 <td>{props.i.d_id}</td>
                 <td>{props.i.amount}</td>

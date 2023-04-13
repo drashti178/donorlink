@@ -230,7 +230,7 @@ const NgoSignup = () => {
         </Snackbar>
       </Stack>
    
-      <Grid align="center" className="gridStyle">
+      <Grid align="center" className="gridNgoSignupStyle">
 
         <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
           <Box>

@@ -155,7 +155,7 @@ const NgoLogin = () => {
           </Alert>
         </Snackbar>
       </Stack>
-      <Grid align="center" className="gridUserStyle">
+      <Grid align="center" className="gridLoginNgoStyle">
         <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
           <Grid align="center">
             <Avatar sx={{ width: 60, height: 60 }}>

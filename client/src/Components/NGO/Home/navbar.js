@@ -63,8 +63,7 @@ const Navbar = (props) => {
   };
 
   const LogoutNgo = (event) => {
-    localStorage.removeItem("role");
-    localStorage.removeItem("AccessToken");
+    localStorage.clear();
     navigate('/ngo/login');
   };
 
