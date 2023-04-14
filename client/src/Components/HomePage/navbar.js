@@ -35,7 +35,8 @@ function HomeNavBar(props) {
     }
   };
   const Logout = (event) => {
-    localStorage.clear();
+    localStorage.removeItem("role");
+    localStorage.removeItem("AccessToken");
     if(context.user.role === 'user'){
       context.setUser(null);
       navigate('/user/login');
@@ -87,6 +88,8 @@ function HomeNavBar(props) {
   };
 
   
+
+  
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -101,13 +104,8 @@ function HomeNavBar(props) {
   
   }
 
-  const clickCollaborations = (event) =>{
-    props.onDataReceived("Collaborations");
-  
-  }
 
-
-  const pages = [{"page":"Ngos","event":clickNgos}, {"page":"Fundraisers","event":clickFundraisers},{"page":"Collaborations","event":clickCollaborations}];
+  const pages = [{"page":"Ngos","event":clickNgos}, {"page":"Fundraisers","event":clickFundraisers}];
   console.log("home");
 
   return (
@@ -183,7 +181,6 @@ function HomeNavBar(props) {
               display: { xs: 'none', md: 'flex' },
               fontFamily: "'Aboreto', 'cursive'",
               fontWeight: 700,
-              marginRight:"1%",
               color: 'white',
               textDecoration: 'none',
               "&:hover": { color: 'white', }, 
@@ -195,7 +192,7 @@ function HomeNavBar(props) {
               <Button
                 key={p.page}
                 onClick={p.event}
-                sx={{ my: 2, backgroundColor: (localStorage.getItem("role") === 'ngo') ? "darkcyan": "#075456", color:'white'  }}
+                sx={{ my: 2,backgroundColor: (localStorage.getItem("role") === 'ngo') ? "darkcyan": "#075456", color: 'white',"&:hover": { backgroundColor: "#075456", color: 'white', },  display: 'block' }}
               >
                 {p.page}
               </Button>
@@ -211,7 +208,6 @@ function HomeNavBar(props) {
                   <Avatar alt="Remy Sharp" src={(localStorage.getItem("role") === 'user') ? `/images/userprofileImgs/${context.user.profileImgName}` :  `/images/ngoprofileImgs/${context.user.profileImgName}`} />
                 </IconButton>
             </Box>}
-         
         </Toolbar>
       </Container>
     </AppBar>
