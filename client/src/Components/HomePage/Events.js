@@ -213,7 +213,7 @@ const Events = () => {
                         </BootButton>
                     </Modal.Footer>
                 </Modal>
-                <div className="row justify-content-center" style={{ marginTop: "5%", marginBottom: "3%" }}>
+                <div className="row justify-content-center" style={{ marginBottom: "3%" }}>
                     <div className="col-md-7 text-center">
                         <h1 className={sty.titleFont}>Be a Volunteer</h1>
                         <p>Be a part of our family by volunteering in any event organized by our NGOs and take a pride of being servent.</p>

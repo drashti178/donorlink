@@ -20,7 +20,7 @@ import java.io.IOException;
 public class ClaimController {
 
 //    private String taxdedcertipath = "C:/Users/Drashti/Documents/GitHub/donorlink/client/public/pdfs/taxdedCertificates";
-    private String taxdedcertipath = "C:/Users/Tilak/Documents/GitHub/donorlink/client/public/pdf/taxdedCertificates";
+    private String taxdedcertipath = "C:/Users/Drashti Patel/Documents/GitHub/donorlink/client/public/pdf/taxdedCertificates";
 
     @Autowired
     private DonationDao donationDao;

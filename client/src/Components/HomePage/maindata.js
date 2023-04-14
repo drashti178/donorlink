@@ -23,7 +23,7 @@ const Maindata = (props) => {
             <>
           <Ngos />
           <Donors />
-      <Box style={{backgroundColor:"darkcyan",height:"4px",width:"60%",marginInline:"20%",marginBlock:"5%"}}></Box>
+      <Box style={{backgroundColor:"#c4cccc",height:"4px",width:"60%",marginInline:"20%",marginBlock:"5%"}}></Box>
       { ((context.user && context.user.role === 'user') || context.user === null) &&  
     <Events />}
             </>
@@ -36,9 +36,9 @@ const Maindata = (props) => {
         return (
             <>
             <Fundraisers></Fundraisers>
-            <Box style={{backgroundColor:"darkcyan",height:"4px",width:"60%",marginInline:"20%",marginBlock:"5%"}}></Box>
+            <Box style={{backgroundColor:"#c4cccc",height:"4px",width:"60%",marginInline:"20%",marginBlock:"5%"}}></Box>
             <Donors />
-      <Box style={{backgroundColor:"darkcyan",height:"4px",width:"60%",marginInline:"20%",marginBlock:"5%"}}></Box>
+      <Box style={{backgroundColor:"#c4cccc",height:"4px",width:"60%",marginInline:"20%",marginBlock:"5%"}}></Box>
       { ((context.user && context.user.role === 'user') || context.user === null) &&  
     <Events />}
             </>
@@ -52,10 +52,10 @@ const Maindata = (props) => {
             <>
             { ((context.user && context.user.role === 'user') || context.user === null) ?<Collaborations />:<NgoCollaborations />
     }
-     <Box style={{backgroundColor:"darkcyan",height:"4px",width:"60%",marginInline:"20%",marginBlock:"5%"}}></Box>
+     <Box style={{backgroundColor:"#c4cccc",height:"4px",width:"60%",marginInline:"20%",marginBlock:"5%"}}></Box>
               
               <Donors />
-      <Box style={{backgroundColor:"darkcyan",height:"4px",width:"60%",marginInline:"20%",marginBlock:"5%"}}></Box>
+      <Box style={{backgroundColor:"#c4cccc",height:"4px",width:"60%",marginInline:"20%",marginBlock:"5%"}}></Box>
       { ((context.user && context.user.role === 'user') || context.user === null) &&  
     <Events />}
             </>

@@ -15,6 +15,8 @@ import org.springframework.util.MultiValueMap;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 @Service
 public class PdfServiceImpl implements PdfService {
@@ -24,7 +26,9 @@ public class PdfServiceImpl implements PdfService {
            Donation donation = claim.getDonation();
            Ngo ngo = donation.getNgo();
            Donor donor = donation.getDonor();
-            Document doc = new Document();
+           DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+           String donation_date=sdf.format(donation.getDate());
+           Document doc = new Document();
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             PdfWriter.getInstance(doc, out);
 
@@ -35,15 +39,26 @@ public class PdfServiceImpl implements PdfService {
             font.setSize(25);
             Paragraph title = new Paragraph("Tax Deduction Certificate", new Font(font));
             title.add(new Chunk("\n"));
-
-            font.setSize(30);
-            title.add(new Chunk("By", font));
-            title.add(new Chunk(ngo.getNgoname(), font));
-            title.add(new Chunk("\n"));
             title.add(new Chunk("\n"));
 
-            font.setSize(40);
+            font.setSize(20);
+           title.add(new Chunk("Tax deduction certificate is issued to ", font));
             title.add(new Paragraph(donor.getName(), font));
+           title.add(new Chunk("for donating ", font));
+           title.add(new Chunk(donation.getAmount().toString(), font));
+           title.add(new Chunk("Rs. on date : ", font));
+           title.add(new Chunk(donation_date, font));
+           title.add(new Chunk(" by ", font));
+           title.add(new Chunk(ngo.getNgoname(), font));
+           title.add(new Chunk(" using 80G taxdeduxtion certificate of our Ngo.", font));
+
+
+           font.setSize(25);
+           title.add(new Chunk("\n"));
+           title.add(new Chunk("\n"));
+           title.add(new Chunk("Thankyou!!!", font));
+           title.add(new Chunk("\n"));
+           title.add(new Chunk("Keep donating, Keep Helping", font));
 
             title.setAlignment(Element.ALIGN_CENTER);
             doc.add(title);
