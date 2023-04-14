@@ -49,8 +49,6 @@ const Navbar = (props) => {
   useEffect(() => {
     setTimeout(() => {
       if (context.user) {
-        // console.log(context);
-        // role = context.user.role;
         setLogin(true);
         localStorage.setItem("role", context.user.role);
       }
@@ -86,37 +84,17 @@ const Navbar = (props) => {
     <AppBar position="static" style={{ backgroundColor: "darkcyan" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon style={{ display: { xs: 'none', md: 'flex' }, mr: 1, color: 'white' }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              fontFamily: "'Aboreto', cursive;",
-            }}
-            style={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontWeight: 700,
-              marginRight: "1%",
-              color: 'white',
-              textDecoration: 'none',
-            }}
-          >
-            Donor Link
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              color="white"
             >
-              <MenuIcon />
+              <MenuIcon style={{color
+              :"white"}} />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -137,38 +115,58 @@ const Navbar = (props) => {
               }}
             >
               {pages.map((p) => (
-                <MenuItem key={p.page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center" >{p.page}</Typography>
-                </MenuItem>
-              ))}
+                  <MenuItem key={p.page} onClick={p.event}>
+                    <Typography textAlign="center" >{p.page}</Typography>
+                  </MenuItem>
+                ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          
+          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1,color: 'white' }} />
           <Typography
             variant="h5"
             noWrap
             component="a"
             href=""
-            
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
-              fontFamily:  "'Aboreto', cursive;",
+              fontFamily: "'Aboreto', 'cursive'",
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: 'white',
               textDecoration: 'none',
+              "&:hover": { color: 'white', },
             }}
           >
             Donor Link
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, color: 'white',mt:2.5 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/"
+            style={{
+              marginTop:'1.5%',
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: "'Aboreto', 'cursive'",
+              fontWeight: 700,
+              marginRight:"1%",
+              color: 'white',
+              textDecoration: 'none',
+              "&:hover": { color: 'white', }, 
+            }}
+          >
+            Donor Link
+          </Typography>
             {pages.map((p) => (
               <Button
                 key={p.page}
                 onClick={p.event}
-                sx={{ my: 2, backgroundColor: "darkcyan", color: 'white', display: 'block' }}
+                sx={{ my: 2,borderRadius:0, backgroundColor: "transperent", color:'white'  }}
               >
                 {p.page}
               </Button>

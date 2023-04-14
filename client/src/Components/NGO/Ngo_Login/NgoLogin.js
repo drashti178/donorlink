@@ -95,7 +95,7 @@ const NgoLogin = () => {
       (response) => {
         localStorage.setItem("AccessToken", response.data.accessToken);
         const token = "Bearer " + localStorage.getItem("AccessToken");
-        // console.log(token);
+        
         axios.get(`${base_url}/ngo/profile`, {
           headers: {
             'Authorization': token,
@@ -105,7 +105,7 @@ const NgoLogin = () => {
             console.log(res.data)
             setUser(res.data);
             localStorage.setItem("role", res.data.role);
-            navigate('/ngo/home');
+            navigate('/');
           },
           (err) => {
             console.log(err);
@@ -148,6 +148,14 @@ const NgoLogin = () => {
 
   return (
     <>
+    <div
+        style={{
+          backgroundImage: "url('/images/lbg.jpg')",
+          backgroundSize: "cover",
+          height: "100vh",
+          
+        }}
+      >
       <Stack spacing={2} sx={{ width: '100%' }}>
         <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
           <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
@@ -155,7 +163,8 @@ const NgoLogin = () => {
           </Alert>
         </Snackbar>
       </Stack>
-      <Grid align="center" className="gridLoginNgoStyle">
+      
+      <Grid align="center" className="gridUserStyle">
         <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
           <Grid align="center">
             <Avatar sx={{ width: 60, height: 60 }}>
@@ -263,6 +272,7 @@ const NgoLogin = () => {
           </form>
         </Paper>
       </Grid>
+      </div>
     </>
 
   );

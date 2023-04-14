@@ -31,7 +31,7 @@ const useStyles = makeStyles({
     },
 });
 
-export default function Collaborations() {
+export default function NgoCollaborations() {
     const sty = useStyles();
     const [loading, setLoading] = useState(true);
     const [ngos, setNgos] = useState([]);
@@ -243,13 +243,14 @@ export default function Collaborations() {
                         >Collaboration Requests</Button>
                     </Badge>
                 </Grid>
-                {ngos.length === 0 ? <Typography variant="h6" gutterBottom style={{ marginTop: "3%", marginLeft: "1%" }}>No Collaboration found!! </Typography>  : <>
-                    <div className="row justify-content-center" style={{ marginTop: "5%", marginBottom: "3%" }}>
+                <div className="row justify-content-center" style={{ marginTop: "5%", marginBottom: "3%" }}>
                         <div className="col-md-7 text-center">
                             <h1 className={sty.titleFont}>Your Collaborations</h1>
                             <p>Below are your collaborated ngo's details.</p>
                         </div>
                     </div>
+                {ngos.length === 0 ? <Typography variant="h6" gutterBottom style={{ marginTop: "3%", marginLeft: "1%",textAlign:"center" }}>No Collaboration found!! </Typography>  : <>
+                    
                     <Table bordered hover style={{ marginTop: "4%" }}>
                         <thead>
                             <tr>

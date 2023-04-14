@@ -8,7 +8,7 @@ const Datacomponent = (props) => {
     {
         return (
             <>
-            <Donations></Donations>
+            <Donations />
             </>
             
           )

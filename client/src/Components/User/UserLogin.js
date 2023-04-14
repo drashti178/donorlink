@@ -93,7 +93,6 @@ const UserLogin = () => {
       (response) => {
         localStorage.setItem("AccessToken", response.data.accessToken);
         const token = "Bearer " + localStorage.getItem("AccessToken");
-        // console.log(token);
         axios.get(`${base_url}/user/profile`, {
           headers: {
             'Authorization': token,

@@ -30,12 +30,12 @@ const Categories = (props) => {
   return (
     <>
 
-    <Box sx={{ flexGrow: 1,alignItems:"center" ,display: { xs: 'none', md: 'flex' } }}>
+    <Box sx={{ flexGrow: 1,alignItems:"center" ,display: { xs: 'none', md: 'flex' } ,ml:"30%"}}>
             {categories.map((c) => (
               <Button
                 key={c.cr}
                 onClick={c.event}
-                sx={{ "&:hover": { backgroundColor: "darkcyan", color: 'white', },alignItems:"center" ,mr:"8px",ml:"8px",my: 2, backgroundColor:"#075456", color: 'white', display: 'block' }}
+                sx={{ "&:hover": { backgroundColor: "#075456", color: 'white', },alignItems:"center" ,mr:"8px",ml:"8px",my: 2, backgroundColor:"#075456", color: 'white', display: 'block' }}
               >
                 {c.cr}
               </Button>

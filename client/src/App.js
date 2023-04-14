@@ -14,7 +14,7 @@ import UserIndex from "./Components/User/UserIndex";
 import NgoPage from "./Components/HomePage/NgoPage";
 import { Forgetpassword } from "./Components/Forgetpassword";
 import Fundraiserdonation from "./Components/HomePage/Fundraiserdonation";
-// import ProductCard from "./test";
+
 
 
 const App = () => {
@@ -39,6 +39,7 @@ const App = () => {
             <Route exact path='/ngo/profile' element={<NgoProfile />} />
             <Route exact path='/ngopage' element={<NgoPage />} />
             <Route exact path='/' element={<Home />} />
+            {/* <Route exact path='/' element={<Carousel />} /> */}
             <Route exact path='/forgetPassword' element={<Forgetpassword />} />
           </Routes>
         </BrowserRouter>

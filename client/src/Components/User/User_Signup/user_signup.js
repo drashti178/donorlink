@@ -151,7 +151,7 @@ const UserSignup = () => {
     const paperStyle = {
         padding: 20,
         width: 900,
-        marginTop: "4%"
+        marginTop: "1%"
 
     };
 
@@ -170,6 +170,14 @@ const UserSignup = () => {
     const isMatch = useMediaQuery(theme.breakpoints.down("md"));
     return (
         <>
+         <div
+        style={{
+          backgroundImage: "url('/images/bgLogin.jpg')",
+          backgroundSize: "cover",
+          height: "100vh",
+          paddingTop: "64px", 
+        }}
+      >
             <Stack spacing={2} sx={{ width: '100%' }}>
                 <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
@@ -201,6 +209,7 @@ const UserSignup = () => {
                     {(pageno === 1) ? <First nextfun={next} changefun={onChangeData} inputs={inputs} onFileUpload={onProfileUpload} profile={profile} imageUrl={imageUrl} /> : <Second nextfun={next} prevfun={prev} submitfun={submit} changefun={onChangeData} inputs={inputs} />}
                 </Paper>
             </Grid>
+            </div>
         </>
 
 
