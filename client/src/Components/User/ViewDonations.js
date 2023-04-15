@@ -134,8 +134,8 @@ const ViewDonation = () => {
                                 <th>Id</th>
                                 <th>Amount</th>
                                 <th>Date</th>
-                                <th>Ngo name</th>
-                                <th>Claim Your Certificate (if applicable)</th>
+                                <th>Fundraiser name</th>
+                                <th>Ngo Name</th>
                             </tr>
                         </thead>
                         <tbody>

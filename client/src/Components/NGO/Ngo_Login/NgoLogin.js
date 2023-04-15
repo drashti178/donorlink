@@ -148,14 +148,7 @@ const NgoLogin = () => {
 
   return (
     <>
-    <div
-        style={{
-          backgroundImage: "url('/images/lbg.jpg')",
-          backgroundSize: "cover",
-          height: "100vh",
-          
-        }}
-      >
+    
       <Stack spacing={2} sx={{ width: '100%' }}>
         <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
           <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
@@ -164,7 +157,7 @@ const NgoLogin = () => {
         </Snackbar>
       </Stack>
       
-      <Grid align="center" className="gridUserStyle">
+      <Grid align="center" className="gridLoginNgoStyle">
         <Paper elevation={5} style={!isMatch ? paperStyle : smallDev}>
           <Grid align="center">
             <Avatar sx={{ width: 60, height: 60 }}>
@@ -272,7 +265,7 @@ const NgoLogin = () => {
           </form>
         </Paper>
       </Grid>
-      </div>
+  
     </>
 
   );

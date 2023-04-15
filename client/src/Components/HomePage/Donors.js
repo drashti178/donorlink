@@ -44,7 +44,7 @@ const Donors = () => {
             >
                 <CircularProgress color="inherit" />
             </Backdrop>
-            <div className="row justify-content-center" style={{ marginTop: "8%", marginBottom: "3%" }}>
+            <div className="row justify-content-center" style={{ marginTop: "4%", marginBottom: "3%" }}>
                     <div className="col-md-7 text-center">
                         <h1 className={sty.titleFont}>Our Top Donors</h1>
                         <p>Below is our donors, which have donated at various NGO using our site. You can also showcase your donation by helping to NGOs.</p>

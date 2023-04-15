@@ -9,7 +9,7 @@ const Categories = (props) => {
   }
   const clickStudy = (event) =>
   {
-    props.onDataReceived("Study");
+    props.onDataReceived("Education");
    
   }
   const clickEnviroment = (event) =>{
@@ -25,8 +25,12 @@ const Categories = (props) => {
     props.onDataReceived("WomenEmpowerment");
    
   }
+  const clickHealth = (event) =>{
+    props.onDataReceived("Health");
+   
+  }
  
-    const categories = [{"cr":"All","event":clickAll},{"cr":"Study","event":clickStudy}, {"cr":"Enviroment","event":clickEnviroment},{"cr":"Orphan","event":clickOrphan},{"cr":"WomenEmpowerment","event":clickWomenEmpowerment}];
+    const categories = [{"cr":"All","event":clickAll},{"cr":"Education","event":clickStudy}, {"cr":"Enviroment","event":clickEnviroment},{"cr":"Orphan","event":clickOrphan},{"cr":"WomenEmpowerment","event":clickWomenEmpowerment},{"cr":"Health","event":clickHealth}];
   return (
     <>
 

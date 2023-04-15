@@ -57,9 +57,9 @@ public class NgoController {
 
 
 
-    private String activitypath = "C:/Users/Tilak/Documents/GitHub/donorlink/client/public/images/activity";
+    private String activitypath = "C:/Users/Drashti Patel/Documents/GitHub/donorlink/client/public/images/activity";
 
-    private String fundraiserpath = "C:/Users/Tilak/Documents/GitHub/donorlink/client/public/images/fundraiser";
+    private String fundraiserpath = "C:/Users/Drashti Patel/Documents/GitHub/donorlink/client/public/images/fundraiser";
 
     @GetMapping("/")
     public String home()

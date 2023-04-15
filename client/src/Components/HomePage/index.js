@@ -57,7 +57,7 @@ const Home = () => {
       >
    
      
-        <Typography variant="h3" style={{ color: "#08b9c0", textAlign:'center',width:"50%",marginInline:"25%",marginTop:"10%"}}>{displayedSentence}</Typography>
+        <Typography variant="h4" style={{ color: "#08b9c0", textAlign:'center',width:"50%",marginInline:"25%",marginTop:"15%"}}>{displayedSentence}</Typography>
     
   
       </div>
@@ -85,7 +85,7 @@ const Home = () => {
         </Grid>
       </Grid>
     </Box>
-    <Box style={{ flexGrow: 1,marginInline:"8%",marginTop:"10%",height:"200px",display:"flex",flexDirection:"row",marginBlockEnd:"8%"}}>
+    <Box style={{ flexGrow: 1,marginInline:"8%",marginTop:"8%",height:"200px",display:"flex",flexDirection:"row",marginBlockEnd:"3%"}}>
    
           
             <Box style={{display:"flex",flexDirection:"row",padding:"2%"}}>
@@ -119,7 +119,7 @@ const Home = () => {
           
        
     </Box>
-    <Box style={{backgroundColor:"darkcyan",height:"4px",width:"60%",marginInline:"20%"}}></Box>
+    <Box style={{backgroundColor:"#c4cccc",height:"4px",width:"60%",marginInline:"20%"}}></Box>
    
     <Maindata load={data} />
     <Footer />

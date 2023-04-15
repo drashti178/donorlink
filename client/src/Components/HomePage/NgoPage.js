@@ -299,7 +299,7 @@ const NgoPage = () => {
                     </Typography>
                     {(!login || (login && localStorage.getItem("role") === "user")) ?
                       <Box sx={{ flexGrow: 1, display: 'flex', mt: "5%", marginLeft: "31%" }}>
-                        <Button variant="contained" sx={{ "&:hover": { backgroundColor: '#075456', color: 'white', }, width: "50%", backgroundColor: '#075456', marginRight: "3%" }} onClick={DonateToNgo}>Donate</Button>
+                        <Button variant="contained" style={{ "&:hover": { backgroundColor: '#075456', color: 'white', }, width: "50%", backgroundColor: '#075456', marginRight: "3%" }} onClick={DonateToNgo}>Donate</Button>
                       </Box> :
                       <Box sx={{ flexGrow: 1, display: 'flex', mt: "5%", marginLeft: "31%" }}>
                         <Button variant="contained" sx={{ "&:hover": { backgroundColor: '#075456', color: 'white', }, width: "50%", backgroundColor: '#075456' }} disabled={requested} onClick={() => onCollaborate(ngo.ngoId)}>{buttonmsg}</Button>
@@ -310,7 +310,7 @@ const NgoPage = () => {
             </Grid>
           </Grid>
         </div>
-        <Box style={{backgroundColor:"darkcyan",height:"4px",width:"60%",marginInline:"20%",marginBlock:"1%"}}></Box>
+        <Box style={{backgroundColor:"#c4cccc",height:"4px",width:"60%",marginInline:"20%",marginBlock:"1%"}}></Box>
 
         {activities.length > 0 && <div className={classes.second}>
           <div className="row justify-content-center" style={{ marginTop: "5%" }}>
@@ -327,7 +327,7 @@ const NgoPage = () => {
             ))}
           </Box>
         </div>}
-        <Box style={{backgroundColor:"darkcyan",height:"4px",width:"60%",marginInline:"20%",marginBlock:"1%"}}></Box>
+        <Box style={{backgroundColor:"#c4cccc",height:"4px",width:"60%",marginInline:"20%",marginBlock:"1%"}}></Box>
 
         {fundraisers.length > 0 && <div className={classes.fund}>
           <div className="row justify-content-center" style={{ marginTop: "5%" }}>
