@@ -212,7 +212,7 @@ const PaymentInfo = () => {
                 ...prevState,
                 [e.target.name]: e.target.value,
             }));
-            if (e.target.value > 0) {
+            if ((e.target.name == 'amount' && e.target.value > 0) || inputs.amount > 0) {
                 setValid(true);
             }
             else {
@@ -264,7 +264,7 @@ const PaymentInfo = () => {
                             />
                         </Avatar>
                         <Typography sx={{ mt: 1.5 }} variant="h6">
-                            Payment
+                            Donation
                         </Typography>
                     </Grid>
                     <form onSubmit={handleSubmit}>
