@@ -37,7 +37,6 @@ const DonationRow = (props) => {
     useEffect(() => {   
         CheckForCerti(props.donation.d_id);
     },[]);
-    
     const CheckForCerti = (donationId) => {
         const token = "Bearer " + localStorage.getItem("AccessToken");
         // console.log(token);

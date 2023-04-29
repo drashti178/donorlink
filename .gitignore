@@ -13,4 +13,12 @@ client/public/pdf/taxdedCertificates/eedfdfe8-3cc3-47e3-ab30-049f0c72af22.pdf
 client/public/images/certiImgs/c97cebc6-a4ca-45c3-8032-4632692a890d.pdf
 client/public/images/certiImgs/c97cebc6-a4ca-45c3-8032-4632692a890d.pdf
 server/src/main/resources/application.properties
-client/public/pdf/taxdedCertificates/0e27d945-641d-4dcb-aaf4-51dd601e476d.pdf
+client/public/images/certiImgs/0bae9b02-b3c2-4b67-bfe1-e375b9904491.pdf
+client/public/images/ngoprofileImgs/3ac78b49-7555-40ad-add5-5ce6d81739ed.jpg
+client/public/pdf/taxdedCertificates/fb4f46ac-c8c3-428f-a5eb-253a2af824be.pdf
+server/src/main/resources/application.properties
+server/src/main/resources/application.properties
+server/src/main/resources/application.properties
+server/src/main/resources/application.properties
+server/src/main/resources/application.properties
+*.properties
