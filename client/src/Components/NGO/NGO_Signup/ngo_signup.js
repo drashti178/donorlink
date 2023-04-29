@@ -129,7 +129,7 @@ const NgoSignup = () => {
   }
 
   let nextToThird = () => {
-    if (inputs.pincode.trim().length != 6 || inputs.pincode.match(/^[0-9]+$/) == null) {
+    if (inputs.pincode.trim().length !== 6 || inputs.pincode.match(/^[0-9]+$/) == null) {
       setSeverity("error");
       setMsg("Invalid Pin number!! (Should be Containing 7-digit number)");
       handleClick();
