@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from "axios";
 import base_url from '../../api/bootapi';
@@ -12,6 +12,7 @@ import "react-multi-carousel/lib/styles.css";
 import { useNavigate } from 'react-router-dom';
 import { Tooltip } from '@mui/material';
 import { Card } from '@material-ui/core';
+import { UserContext } from '../../Context/UserContext';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -50,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 const NgoList = (props) => {
   const [ngos,setNgos] = useState([]);
+  const context = useContext(UserContext);
   useEffect(() => {   
     if(props.category==="All")
     {
@@ -140,6 +142,7 @@ const NgoList = (props) => {
       height={800}
     >
       {ngos.map((item, index) => (
+        
         <Card 
           key={item.id}
           className={[
