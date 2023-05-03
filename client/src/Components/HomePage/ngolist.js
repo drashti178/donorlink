@@ -142,7 +142,7 @@ const NgoList = (props) => {
       height={800}
     >
       {ngos.map((item, index) => (
-        (!context.user || (context.user.type==='ngo' && context.user.ngoname !== item.ngoname) || context.user.type==='user') &&
+        ((!context.user || (context.user.role ==='ngo' && context.user.ngoname !== item.ngoname) || context.user.role==='user') &&
         <Card 
           key={item.id}
           className={[
@@ -189,7 +189,7 @@ const NgoList = (props) => {
                             </CardActions>
                             </div>
                         
-        </Card>
+        </Card>)
       ))}
     </MultiCarousel>
   

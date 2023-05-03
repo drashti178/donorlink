@@ -22,3 +22,14 @@ server/src/main/resources/application.properties
 server/src/main/resources/application.properties
 server/src/main/resources/application.properties
 *.properties
+server/src/main/java/com/example/server/controller/AuthController.java
+server/src/main/java/com/example/server/controller/ClaimController.java
+server/src/main/java/com/example/server/controller/DonorController.java
+server/src/main/java/com/example/server/controller/NgoController.java
+server/src/main/resources/application.properties
+server/src/main/java/com/example/server/controller/AuthController.java
+server/src/main/java/com/example/server/controller/AuthController.java
+server/src/main/java/com/example/server/controller/ClaimController.java
+server/src/main/java/com/example/server/controller/DonorController.java
+server/src/main/java/com/example/server/controller/NgoController.java
+server/src/main/resources/application.properties
