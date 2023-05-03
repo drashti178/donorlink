@@ -142,7 +142,7 @@ const NgoList = (props) => {
       height={800}
     >
       {ngos.map((item, index) => (
-        
+        (!context.user || (context.user.type==='ngo' && context.user.ngoname !== item.ngoname) || context.user.type==='user') &&
         <Card 
           key={item.id}
           className={[
