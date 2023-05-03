@@ -47,7 +47,6 @@ const Activities = () => {
           <Activity key={product.a_id} product={product} />
         ))}</div>
       }
-
     </div>
 
   )
