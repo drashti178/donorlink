@@ -57,7 +57,7 @@ const Home = () => {
       >
    
      
-        <Typography variant="h4" style={{ color: "#08b9c0", textAlign:'center',width:"50%",marginInline:"25%",marginTop:"15%"}}>{displayedSentence}</Typography>
+        <Typography variant="h4" style={{ color: "rgb(76 248 255)", textAlign:'center',width:"50%",marginInline:"25%",marginTop:"15%"}}>{displayedSentence}</Typography>
     
   
       </div>

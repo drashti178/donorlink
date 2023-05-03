@@ -17,7 +17,8 @@ import Third from "./third";
 import { Box } from "@mui/system";
 import axios from "axios";
 import base_url from "../../../api/bootapi";
-import { json, useNavigate } from "react-router-dom";
+import {
+   useNavigate } from "react-router-dom";
 import MuiAlert from '@mui/material/Alert';
 var passwordValidator = require('password-validator');
 var emailvalidator = require("email-validator");
@@ -129,7 +130,7 @@ const NgoSignup = () => {
   }
 
   let nextToThird = () => {
-    if (inputs.pincode.trim().length != 6 || inputs.pincode.match(/^[0-9]+$/) == null) {
+    if (inputs.pincode.trim().length !== 6 || inputs.pincode.match(/^[0-9]+$/) == null) {
       setSeverity("error");
       setMsg("Invalid Pin number!! (Should be Containing 7-digit number)");
       handleClick();

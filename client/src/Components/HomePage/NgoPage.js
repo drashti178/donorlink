@@ -25,7 +25,7 @@ const useStyles = makeStyles({
     flexWrap: "nowrap",
 
     overflowX: "auto",
-    marginBlock: "8%"
+    marginBlock: "2%"
 
   },
   root: {
@@ -313,7 +313,7 @@ const NgoPage = () => {
         <Box style={{backgroundColor:"#c4cccc",height:"4px",width:"60%",marginInline:"20%",marginBlock:"1%"}}></Box>
 
         {activities.length > 0 && <div className={classes.second}>
-          <div className="row justify-content-center" style={{ marginTop: "5%" }}>
+          <div className="row justify-content-center" style={{ marginTop: "2%" }}>
             <div className="col-md-7 text-center">
               <h1 className={sty.titleFont}>Activities</h1>
               <p>Below are activities running by this NGO. Have a look on these and understand the work done by this NGO.</p>
